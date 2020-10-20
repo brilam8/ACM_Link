@@ -2,7 +2,7 @@ const express = require('express');
 const request = require('request');
 const fetch = require('node-fetch');
 const app = express();
-const firebase = require("firebase/app")
+const firebase = require("firebase/app");
 
 const firebaseConfig = {
   apiKey: "AIzaSyCnpmFxTTaEFuGu-DweMM3sQFH1v_xT7TE",
@@ -16,11 +16,42 @@ const firebaseConfig = {
 };
 
 // Firebase products
-require("firebase/auth")
-require("firebase/firestore")
+require("firebase/auth");
+require("firebase/firestore");
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig)
+// Initialize Firebase and Firestore
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Configure app to use bodyParser
+app.use(express.urlencoded({
+  extended: true
+}));
+app.use(express.json());
+
+
+
+// @route POST user
+// @desc Creates a user object and stores it in firestore database
+app.post('/api/create_user', (req, res) => {
+  console.log(req.body)
+  const user = {
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email
+  }
+  db.collection("users").add({
+    user
+  })
+  .then(function(docRef) {
+    console.log("Document written with ID: ", docRef.id)
+    res.json(user);
+  })
+  .catch(function(error) {
+    console.error("Error adding document: ", error)
+    res.status(400).send(error)
+  })
+})
 
 app.get('/api/customers', (req, res) => {
   const customers = {
