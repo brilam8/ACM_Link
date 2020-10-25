@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Button from '@material-ui/core/Button'
 
 function SampleAPI() {
   const [customerName, setCustomerName] = useState('');
@@ -15,9 +16,28 @@ function SampleAPI() {
     fetchURL();
   }, []);
 
+  async function handleClick() {
+    const data = {
+      firstName: 'Tristin',
+      lastName: 'The Coder',
+      email: 'yeet@ucsd.edu'
+    }
+    fetch('/users/create',{
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {"Content-Type": "application/json"}
+    })
+    .then(function(response){
+      return response.json()
+    }).then(function(body){
+      console.log(body);
+    });
+  }
+
   return (
     <div className="SampleAPI">
       Hello {customerName}
+      <Button onClick={()=>handleClick()}>Post Data</Button>
     </div>
   );
 }
