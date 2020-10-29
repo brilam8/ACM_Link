@@ -18,9 +18,10 @@ function SampleAPI() {
 
   async function handleClick() {
     const data = {
-      firstName: 'Tristin',
-      lastName: 'The Coder',
-      email: 'yeet@ucsd.edu'
+      firstName: 'Elias',
+      lastName: 'Arghand',
+      email: 'Elias@ucsd.edu',
+      password: 'password'
     }
     fetch('/users/create',{
       method: 'POST',
