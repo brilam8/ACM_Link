@@ -21,7 +21,7 @@ function SampleAPI() {
       firstName: 'Elias',
       lastName: 'Arghand',
       email: 'Elias@ucsd.edu',
-      user_events: []
+      password: 'password'
     }
     fetch('/users/create',{
       method: 'POST',
