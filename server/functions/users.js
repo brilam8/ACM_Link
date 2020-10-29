@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
 const { json } = require('express');
-const db = require('../firebase');
+const {db, admin} = require('../firebase');
 
 // Configure app to use bodyParser
 router.use(express.urlencoded({
@@ -15,29 +15,42 @@ const groupCollection = db.collection("groups")
 // @route POST user
 // @desc Creates a user object and stores it in the "users" collection in firestore
 router.post('/create', async (req, res) => {
-  if (!req.body | !req.body.firstName | !req.body.lastName | !req.body.email){
+  if (!req.body | !req.body.firstName | !req.body.lastName | !req.body.email | !req.body.password){
     res.send("Missing fields on request")
   }
   else {
-    console.log(req.body)
-    const newUserRef = userCollection.doc() // Generate a reference to a doc with unique ID
-    const user = {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
+    //console.log(req.body)
+     // Generate a reference to a doc with unique ID
+
+    admin.auth().createUser({
       email: req.body.email,
-      user_id: newUserRef.id
-    }
-    
-    // Use the previous doc reference to update it with actual information
-    newUserRef.set(user)
-    .then( function(){
-      console.log("Document written with ID: ", newUserRef.id)
-      res.json(user);
+      disabled: false,
+      password: req.body.password
     })
-    .catch(function(error) {
-      console.error("Error adding document: ", error)
-      res.status(400).send(error)
+    .then(function(userRecord){
+      const newUserRef = userCollection.doc(userRecord.uid)
+      const user = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        user_id: userRecord.uid,
+        user_events: []
+      }
+
+      newUserRef.set(user)
+      .then(function(){
+        console.log("Successfully created a new user: ", userRecord.uid);
+        res.json(userRecord);
+      })
+      .catch(function(error) {
+        console.error("Error adding user document: ", error)
+        res.status(400).send(error)
+      })
     })
+    .catch(function(error){
+      console.log("Error creating a new user: ", error);
+      res.status(400).send(error);
+    });
   }
 })
 
