@@ -74,36 +74,12 @@ router.get(':userId', async (req, res) => {
 // @route GET user(s)
 // @desc returns user object(s) from the "users" collection in firestore given query (or queries)
 router.get('/', async (req, res) => {
-  let querySize = Object.keys(req.query).length; // Check size of queries
-
-  // If no query, retrieve all user objects
-  if (querySize == 0) {
-    
-    let queryResults = await userCollection.get();
-    let results = [];
-    queryResults.forEach(doc => {
-      results.push(doc.data())
-    })
-    res.json(results);
-  }
-  // Else, search by query
-  else {
-  
-    let queryResults;
-    
-    // Go through each query provided and search through database for them
-    for (query in req.query) {
-      console.log(req.query[query])
-      queryResults = userCollection.orderBy(query).startAt(req.query[query]).endAt(req.query[query]+"\uf8ff")
-    }
-    queryResults = await queryResults.get();
-    let results = []; 
-    queryResults.forEach(doc => {
-      results.push(doc.data())
-    })
-    res.json(results);
-  
-  }
+  let queryResults = await userCollection.get();
+  let results = [];
+  queryResults.forEach(doc => {
+    results.push(doc.data())
+  })
+  res.json(results);
 })
 
 module.exports = router
