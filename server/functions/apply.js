@@ -17,7 +17,7 @@ const applyCollection = db.collection("applications");
 router.post('/send', async (req, res) => {
   if (!req.body | !req.body.desc) {
     console.log(req.body);
-    console.log(req.body.desc);
+    console.log("here2 " + req.body.desc);
     res.send("Missing fields on request");
   } else {
     console.log(req.body);
