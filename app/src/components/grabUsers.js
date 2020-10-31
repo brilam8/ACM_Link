@@ -18,30 +18,28 @@ function GrabUsers() {
       .catch((error) => {
         setStatus("Error getting auth token")
       });
-      fetch('/users',{
-        method: 'GET',
-        headers: {"Content-Type": "application/json", "AuthToken" : idToken}
-      })
-      .then(function(response){
-        return response.json()
-      }).then(function(body){
-        console.log(body);
-        setUsers(body);
-      });
+      try {
+        const res = await fetch('/users',{
+          method: 'GET',
+          headers: {"Content-Type": "application/json", "AuthToken" : idToken}
+        })
+        setUsers(await res.json())
+      } catch(error) {
+        setStatus(`Error grabbing users: ${error.code} - ${error.message}`)
+        setUsers([]);
+      }
     }
     else {
       setUsers([])
-      fetch('/users',{
-        method: 'GET'
-      }).then(function(res) {      
-        console.log(res.stringify)  
-        return res.text();
-      }).then(function(body){
-        console.log(body);
-        setStatus(body);
-      }).catch((error) => {
-        setStatus("Error grabbing users: " + error.code + " - " + error.message)
-      })
+      try {
+        const res = await fetch('/users', {
+          method: 'GET'
+        })
+        setStatus(await res.text())
+      }
+      catch (error) {
+        setStatus(`Error grabbing users: ${error.code} - ${error.message}`)
+      }
     }
   }
 

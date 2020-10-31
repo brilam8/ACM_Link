@@ -15,18 +15,16 @@ function LoginComp() {
   const [output, setOutput] = useState([]);
   const [users, setUsers] = useState([]);
 
-  function handleLogin () {
+  async function handleLogin () {
     if (emailInput.length > 0 & passInput.length > 0) {
       if (passInput.length > 7) {
         setLoginStatus("Logging in");
-        firebase.auth().signInWithEmailAndPassword(emailInput, passInput)
-        .then(() => {
-          console.log("Signed in as user!")
+        try {
+          await firebase.auth().signInWithEmailAndPassword(emailInput, passInput)
           setLoginStatus("Logged in!")
-        })
-        .catch(function(error) {
+        } catch (error) {
           setLoginStatus("login error: " + error.code + " - " + error.message)
-        });
+        }
         setOutput([...output, [emailInput, passInput]]);
         setEmailInput('');
         setPassInput('');  
@@ -42,7 +40,8 @@ function LoginComp() {
       setLoginStatus("Signed out!")
     })
     .catch(function(error) {
-      setLoginStatus("sign out error: " + error.code + " - " + error.message)
+      setLoginStatus(`Sign out error: ${error.code} - ${error.message}`)
+      setUsers([]);
     })
   }
 
@@ -52,30 +51,28 @@ function LoginComp() {
       .catch((error) => {
         setLoginStatus("Error getting auth token")
       });
-      fetch('/users',{
-        method: 'GET',
-        headers: {"Content-Type": "application/json", "AuthToken" : idToken}
-      })
-      .then(function(response){
-        return response.json()
-      }).then(function(body){
-        console.log(body);
-        setUsers(body);
-      });
+      try {
+        const res = await fetch('/users',{
+          method: 'GET',
+          headers: {"Content-Type": "application/json", "AuthToken" : idToken}
+        })
+        setUsers(await res.json())
+      } catch(error) {
+        setLoginStatus(`Error grabbing users: ${error.code} - ${error.message}`)
+        setUsers([]);
+      }
     }
     else {
       setUsers([])
-      fetch('/users',{
-        method: 'GET'
-      }).then(function(res) {      
-        console.log(res.stringify)  
-        return res.text();
-      }).then(function(body){
-        console.log(body);
-        setLoginStatus(body);
-      }).catch((error) => {
-        setLoginStatus("Error grabbing users: " + error.code + " - " + error.message)
-      })
+      try {
+        const res = await fetch('/users', {
+          method: 'GET'
+        })
+        setLoginStatus(await res.text())
+      }
+      catch (error) {
+        setLoginStatus(`Error grabbing users: ${error.code} - ${error.message}`)
+      }
     }
   }
 
