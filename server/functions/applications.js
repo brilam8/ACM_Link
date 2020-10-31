@@ -9,3 +9,4 @@ router.use(express.urlencoded({
 }));
 router.use(express.json());
 
+module.exports = router
