@@ -1,6 +1,4 @@
 const express = require('express');
-const fetch = require('node-fetch');
-const { db } = require('./firebase');
 const app = express();
 const fetch = require('node-fetch');
 const { db, admin } = require('./firebase');
