@@ -64,10 +64,10 @@ router.post('/setOwnerEvent/:event_id/:status', async (req, res) => {
 })
 //creates a new Event
 router.post('/createEvent', async (req, res) => {
-  if(!req.body | !req.body.applications | !req.body.creator_id | !req.body.description | !req.body.end_date | !req.body.event_id | 
-    !req.body.max_applicants | !req.body.start_date | !req.body.status | !req.body.title | !req.body.type){
+  if(!req.body || !req.body.applications || !req.body.creator_id || !req.body.description || !req.body.end_date || !req.body.event_id || 
+    !req.body.max_applicants || !req.body.start_date || !req.body.status || !req.body.title || !req.body.type){
 
-    //console.log(!req.body.applications, !req.body.creator_id, !req.body.description , !req.body.end_date , !req.body.event_id , 
+    //console.log(!req.body, !req.body.applications, !req.body.creator_id, !req.body.description , !req.body.end_date , !req.body.event_id , 
     //!req.body.max_applicants , !req.body.start_date , !req.body.status , !req.body.title , !req.body.type)
 
     res.send("Missing fields on request")
