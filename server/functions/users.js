@@ -10,12 +10,11 @@ router.use(express.urlencoded({
 router.use(express.json());
 
 const userCollection = db.collection("users")
-const groupCollection = db.collection("groups")
 
 // @route POST user
 // @desc Creates a user object and stores it in the "users" collection in firestore
 router.post('/create', async (req, res) => {
-  if (!req.body | !req.body.firstName | !req.body.lastName | !req.body.email | !req.body.password){
+  if (!req.body || !req.body.firstName || !req.body.lastName || !req.body.email || !req.body.password){
     res.send("Missing fields on request")
   }
   else {

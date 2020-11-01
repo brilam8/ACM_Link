@@ -1,9 +1,9 @@
 const express = require('express');
+const app = express();
 const fetch = require('node-fetch');
 const { admin } = require('./firebase');
-const app = express();
-const users = require('./functions/users');
 const cors = require('cors');
+const users = require('./functions/users');
 
 // Configure app to use bodyParser
 app.use(express.urlencoded({
@@ -40,7 +40,6 @@ function checkAuth(req, res, next){
 //get all the user routes from users.js
 app.use('/users', checkAuth)
 app.use('/users', users)
-
 
 const port = 5000;
 
