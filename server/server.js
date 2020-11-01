@@ -3,6 +3,8 @@ const app = express();
 const fetch = require('node-fetch');
 const { db, admin } = require('./firebase');
 const cors = require('cors');
+
+// Routers
 const users = require('./functions/users');
 const events = require('./functions/events');
 const applications = require('./functions/applications');
