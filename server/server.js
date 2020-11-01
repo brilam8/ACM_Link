@@ -1,12 +1,9 @@
 const express = require('express');
-<<<<<<< HEAD
-=======
 const fetch = require('node-fetch');
 const { db } = require('./firebase');
->>>>>>> 095b637aced6faf15b314b28aaf8a585e6f9541b
 const app = express();
 const fetch = require('node-fetch');
-const { admin } = require('./firebase');
+const { db, admin } = require('./firebase');
 const cors = require('cors');
 const users = require('./functions/users');
 const events = require('./functions/events');

@@ -23,7 +23,7 @@ function LoginComp() {
           await firebase.auth().signInWithEmailAndPassword(emailInput, passInput)
           setLoginStatus("Logged in!")
         } catch (error) {
-          setLoginStatus("login error: " + error.code + " - " + error.message)
+          setLoginStatus(`login error: ${error.code} - ${error.message}`)
         }
         setOutput([...output, [emailInput, passInput]]);
         setEmailInput('');
