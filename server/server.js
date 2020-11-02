@@ -1,7 +1,10 @@
 const express = require('express');
-const fetch = require('node-fetch');
-const { db } = require('./firebase');
 const app = express();
+const fetch = require('node-fetch');
+const { db, admin } = require('./firebase');
+const cors = require('cors');
+
+// Routers
 const users = require('./functions/users');
 const events = require('./functions/events');
 const applications = require('./functions/applications');
@@ -11,6 +14,7 @@ app.use(express.urlencoded({
   extended: true
 }));
 app.use(express.json());
+app.use(cors());
 
 //example API call
 app.get('/api/customers', (req, res) => {
@@ -21,6 +25,21 @@ app.get('/api/customers', (req, res) => {
   collection.set(customers);
   res.json(customers)
 })
+
+function checkAuth(req, res, next){
+  if (req.headers.authtoken) {
+    admin.auth().verifyIdToken(req.headers.authtoken)
+    .then(() => {
+      next();
+    })
+    .catch(() => {
+      res.status(403).send("Unauthorized")
+    });
+  }
+  else {
+    res.status(403).send("Unauthorized")
+  }
+}
 
 app.get('/api/getCustomers/:postID/:userID', async (req, res) => {
 
@@ -42,6 +61,7 @@ app.get('/api/getCustomers/:postID/:userID', async (req, res) => {
 })
 
 //get all the user routes from users.js
+app.use('/users', checkAuth)
 app.use('/users', users)
 app.use('/events', events)
 app.use('/applications', applications)
