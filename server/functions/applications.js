@@ -15,36 +15,11 @@ const applyCollection = db.collection('applications');
 const eventsCollection = db.collection('events');
 
 
-
-// @route POST addApplicant(event_id, application_id)
-// @desc Adds an application to an event_id
-router.post('/addToEvent', async (req,res) => {
-  if (!req.body || !req.body.event_id || !req.application_id) {
-    res.status(400).send("Missing fields on request");
-  } else {
-    // Adds application id to corresponding event in database
-    const query = await eventsCollection.where(
-      'event_id', '==', req.body.event_id).get();
-    if (query.empty) {
-      res.status(400).send('No such event found');
-    }
-    let results = [];
-    query.forEach(doc => {
-      results = [...results, doc.data()];
-    })
-    results = results[0];
-    results.applications.push(application_id);
-    eventsCollection.doc(req.body.event_id).set(results);
-  }
-})
-
-
-// TODO: Should above method be nested in here?
 // @route POST createApplication(event_id, applicant_id, description, comments)
 // @desc Creates an application object and stores it in the 
 //       "application" collection in firestore
 router.post('/create/:applicant_id/:event_id', async (req, res) => {
-  if (!req.body || !req.body.desc) {
+  if (!req.body || !req.body.desc || !req.body.whyDesc) {
     res.status(400).send("Missing fields on request");
   } else {
     // Generates a reference to a doc with unique ID
@@ -55,7 +30,8 @@ router.post('/create/:applicant_id/:event_id', async (req, res) => {
       applicant_id: req.params.applicant_id,
       event_id: req.params.event_id,
       comments: req.body.comments,
-      desc: req.body.desc
+      desc: req.body.desc,
+      whyDesc: req.body.whyDesc
     }
 
     // Attaches application to the corresponding event

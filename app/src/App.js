@@ -22,7 +22,7 @@ function App() {
         <Route path='/test' component={sampleComponent} /> 
         <Route path='/login' component={loginComp} />
         <Route path='/grabUsers' component={grabUsers} />
-        <Route component={<div>Page not found</div>} />
+        {/* <Route component={<div>Page not found</div>} /> */}
         <Route exact path='/test' component={sampleComponent} /> 
         <Route exact path='/test2' component={sampleComponent3} /> 
         <Route exact path='/buttonPage/:UID/:firstName' component={buttonPage} />
