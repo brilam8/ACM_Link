@@ -43,9 +43,8 @@ router.post('/addToEvent', async (req,res) => {
 // @route POST createApplication(event_id, applicant_id, description, comments)
 // @desc Creates an application object and stores it in the 
 //       "application" collection in firestore
-router.post('/create', async (req, res) => {
-  if (!req.body || !req.body.desc || 
-      !req.body.applicant_id || !req.body.event_id) {
+router.post('/create/:applicant_id/:event_id', async (req, res) => {
+  if (!req.body || !req.body.desc) {
     res.status(400).send("Missing fields on request");
   } else {
     // Generates a reference to a doc with unique ID
@@ -53,11 +52,25 @@ router.post('/create', async (req, res) => {
     // Creates the application object
     const application = {
       app_id: newApplicationRef.id,
-      applicant_id: req.body.applicant_id,
-      event_id: req.body.event_id,
+      applicant_id: req.params.applicant_id,
+      event_id: req.params.event_id,
       comments: req.body.comments,
       desc: req.body.desc
     }
+
+    // Attaches application to the corresponding event
+    const query = await eventsCollection.where(
+      'event_id', '==', req.params.event_id).get();
+    if (query.empty) {
+      res.status(400).send('No such event found');
+    }
+    let results = [];
+    query.forEach(doc => {
+      results = [...results, doc.data()];
+    })
+    results = results[0];
+    results.applications.push(newApplicationRef.id);
+    eventsCollection.doc(req.params.event_id).set(results);
 
     // Updates application collection with a new document
     await newApplicationRef.set(application).then(function() {
@@ -67,7 +80,7 @@ router.post('/create', async (req, res) => {
     .catch(function(error) {
       console.error("Error adding document ", error);
       res.status(400).send(error);
-    })
+    })    
   }
 });
 
@@ -99,7 +112,7 @@ router.get('/getApplicant/:application_id', async (req,res) => {
 // @desc Returns the application with the given id, or none if 
 //       it doesn't exist
 router.get('/:application_id', async (req, res) => {
-  const applicationRef = await applyCollection.doc(req.params.application_id);
+  const applicationRef = applyCollection.doc(req.params.application_id);
   const query = await applicationRef.get();
   if (!query.exists) {
     res.status(400).send("No such application exists");
