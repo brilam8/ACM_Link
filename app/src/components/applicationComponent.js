@@ -7,7 +7,8 @@ import {
   DialogTitle, 
   DialogContent, 
   DialogActions, 
-  DialogButton 
+  DialogButton,
+  SimpleDialog
 } from '@rmwc/dialog';
 import { Link, useParams } from 'react-router-dom';
 
@@ -15,6 +16,28 @@ import '@rmwc/textfield/styles';
 import '@rmwc/button/styles';
 import '@rmwc/typography/styles';
 import '@rmwc/dialog/styles';
+
+
+{/* TODO: 
+
+1. Don't know how to make multiline TextField components.
+  
+2. Enter key reroutes page to '/'. handleCancel nor handleSubmit are 
+called. Don't know how to fix this.
+
+Solutions Tried:
+1. Instead of Dialog, used Simple Dialog. First con: there is a redundant
+built-in Cancel button. Second con: Cancel and Accept buttons cannot reroute
+to another page. Both call handleSubmit() and send identical applications to 
+the database.
+2. Commenting out SOLELY dialog component fixes form and submits application 
+upon pressing Enter key.
+
+Sites visited: 
+1. https://stackoverflow.com/questions/33211672/how-to-submit-a-form-using-enter-key-in-react-js
+2. https://stackoverflow.com/questions/33211672/how-to-submit-a-form-using-enter-key-in-react-js/33212911 
+
+*/}
 
 
 function ApplicationForm() {
@@ -36,11 +59,17 @@ function ApplicationForm() {
     console.log(event);
   }
 
+  function handleCancel(event) {
+    event.preventDefault();
+    console.log('onCancel handler called');
+  }
+
   function handleSubmit(event) {
-    if (descInput == '' || whyInput == '') {
+    event.preventDefault();
+    if (descInput === '' || whyInput === '') {
       return;
     }
-    event.preventDefault();
+    console.log('onSubmit handler called');
     setOpen(true);
     const output = {
       desc: descInput,
@@ -62,37 +91,63 @@ function ApplicationForm() {
 
   return (
     <div className='ApplicationForm'>
-      <form>
+      <form onSubmit={event => handleSubmit(event)}>
+        <div style={{
+          'display':'flex',
+          'justify-content': 'space-between',
+          'align-items':'center',
+          'background-color': 'black',
+          'height': '8vh',
+        }}>
+          {/* PLACE HAMBURGER COMPONENT HERE */}
+          <Typography use='headline5' style={{
+            'color': 'white',
+            'margin-left': '4%',
+          }}>
+            burger
+          </Typography>
+
+          <Typography use='headline3' style={{
+            'color': 'white',
+          }}>
+            {event.title} Application
+          </Typography>
+
+          <Typography use='headline4' style={{
+            'font-family': 'Nunito',
+            'color': 'white',
+            'margin-right': '4%',
+          }}>
+            acm
+          </Typography>
+        </div>       
+
         <div style={{
           'display': 'flex', 
           'flex-direction': 'column',
           'justify-content': 'center', 
           'align-items':'center', 
-          'height': '100vh'
+          'height': '55vh',
         }}>
-          <Typography use='headline3'>
-            {event.title} Application
-          </Typography>
-
           <Typography use='headline5' style={{
-            'margin-top': '50px'
+            'margin-top': '50px',
           }}>
             {event.description}
           </Typography>
 
           <Typography use='headline5' style={{
-            'margin-top': '25px'
+            'margin-top': '25px',
           }}>
             Maximum Number of Teammates: {event.max_applicants}
           </Typography>
 
           <Typography use='headline5' style={{
-            'margin-top': '25px'
+            'margin-top': '25px',
           }}>
             Time: {event.start_date} -> {event.end_date}
           </Typography>
 
-          <Dialog
+          {/* <Dialog
             open={open}
             onClose={evt => {
               console.log(evt.detail.action);
@@ -100,8 +155,10 @@ function ApplicationForm() {
             }}
             onClosed={evt => console.log(evt.detail.action)}
           >
-            <DialogTitle>Dialog Title</DialogTitle>
-            <DialogContent>This is a standard dialog.</DialogContent>
+            <DialogTitle>Application Submitted!</DialogTitle>
+            <DialogContent>
+              You've submitted your application for {event.title}.
+            </DialogContent>
             <DialogActions>
               <Link to='/'>
                 <DialogButton action="accept" isDefaultAction>
@@ -109,15 +166,17 @@ function ApplicationForm() {
                 </DialogButton>
               </Link>
             </DialogActions>
-          </Dialog>
+          </Dialog> */}
+          
 
           <TextField 
             label="Tell us a bit about yourself"
+            multiline
             required
             outlined
             style={{
               'width': '80%',
-              'margin-top': '25px'
+              'margin-top': '40px',
             }}
             onChange={e=>setDescInput(e.target.value)}
           />
@@ -128,7 +187,7 @@ function ApplicationForm() {
             outlined
             style={{
               'width': '80%',
-              'margin-top': '25px'
+              'margin-top': '25px',
             }}
             onChange={e=>setWhyInput(e.target.value)}
           />
@@ -138,20 +197,25 @@ function ApplicationForm() {
             outlined
             style={{
               'width': '80%',
-              'margin-top': '25px'
+              'margin-top': '25px',
             }}
             onChange={e=>setCommentInput(e.target.value)}
           />
 
           <div style={{
-            'margin-top': '25px'
+            'display': 'flex',
+            'justify-content': 'space-between',
+            'width': '25vw',
+            'margin-top': '25px',
           }}>
-            <Link to={'/'} style={{
-              'text-decoration': 'none'
+            <Link type='button' to={'/'} style={{
+              'text-decoration': 'none',
             }}>
-              <Button>Cancel</Button>
+              <Button type='button'>Cancel</Button>
             </Link>
-            <Button raised onClick={event => handleSubmit(event)}>Submit</Button>
+            <Button raised>
+              Submit
+            </Button>
           </div>
         </div>
       </form>
