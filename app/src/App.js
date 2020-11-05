@@ -12,8 +12,12 @@ import loginComp from './components/loginComp';
 import grabUsers from './components/grabUsers';
 import sampleComponent3 from './components/sampleComponent3';
 import buttonPage from './components/buttonPageComponent';
+<<<<<<< HEAD
 import searchComponent from './components/searchComponent';
 // import searchComponent from './components/searchComponent';
+=======
+import hamburgerMenuComponent from './components/hamburgerMenuComponent';
+>>>>>>> db57e228aa35fb408cdf1c40484af5b863e7d30b
 
 function App() {
   return (
@@ -23,12 +27,15 @@ function App() {
         <Route path='/test' component={sampleComponent} /> 
         <Route path='/login' component={loginComp} />
         <Route path='/grabUsers' component={grabUsers} />
-        <Route component={<div>Page not found</div>} />
         <Route exact path='/test' component={sampleComponent} /> 
         <Route exact path='/test2' component={sampleComponent3} /> 
         <Route exact path='/search' component={searchComponent} /> 
         <Route exact path='/buttonPage/:UID/:firstName' component={buttonPage} /> 
+<<<<<<< HEAD
         {/* <Route exact path='/search' component={searchComponent} />  */}
+=======
+        <Route exact path='/drawer' component={hamburgerMenuComponent} /> 
+>>>>>>> db57e228aa35fb408cdf1c40484af5b863e7d30b
         <Route component={() => <div>Page not found</div>} />
       </Switch>
     </Router>

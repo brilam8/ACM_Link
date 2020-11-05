@@ -3,6 +3,18 @@ import Textfield from '@material-ui/core/Textfield';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider'
 import {Typography} from '@rmwc/typography'
+import styled from 'styled-components';
+
+//coding default html elements
+const Div = styled.div`
+  margin-left: 50px;
+  color: red;
+`;
+
+//changing styles for rmwc
+const TextfieldStyled = styled(Textfield)`
+  width: 80%;
+`
 
 function SampleAPI2() {
 
@@ -18,19 +30,19 @@ function SampleAPI2() {
 
   return (
     <div className="SampleAPI2">
-      <div style={{'marginLeft': '50px'}}>
-        <Textfield value={input} label="Outlined" onChange={e=>setInput(e.target.value)}/>
+      <Div>
+        <TextfieldStyled value={input} label="Outlined" onChange={e=>setInput(e.target.value)}/>
         <Button variant="contained" color="primary" onClick={() => handleSubmit()}>
           Submit
         </Button>
-      </div>
-      <div style={{'marginLeft': '50px'}}>
+      </Div>
+      <Div>
         <Typography>
           text entered: {inputSubmit}
         </Typography>
-      </div>
+      </Div>
       <Divider/>
-      <div style={{'marginLeft': '50px'}}>
+      <Div>
         {
           output.map((text) => {
             return (
@@ -42,7 +54,7 @@ function SampleAPI2() {
             )
           })
         }
-      </div>
+      </Div>
     </div>
   );
 }
