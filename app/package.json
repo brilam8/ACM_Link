@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@rmwc/button": "^6.1.4",
+    "@rmwc/dialog": "^6.1.4",
     "@rmwc/textfield": "^6.1.4",
     "@rmwc/typography": "^6.1.4",
     "@testing-library/jest-dom": "^4.2.4",
