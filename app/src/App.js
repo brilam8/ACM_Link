@@ -13,6 +13,8 @@ import grabUsers from './components/grabUsers';
 import sampleComponent3 from './components/sampleComponent3';
 import buttonPage from './components/buttonPageComponent';
 import createEvent from './components/createEvent'
+import hamburgerMenuComponent from './components/hamburgerMenuComponent';
+
 function App() {
   return (
     <Router>
@@ -21,11 +23,11 @@ function App() {
         <Route path='/test' component={sampleComponent} /> 
         <Route path='/login' component={loginComp} />
         <Route path='/grabUsers' component={grabUsers} />
-        <Route component={<div>Page not found</div>} />
         <Route exact path='/test' component={sampleComponent} /> 
         <Route exact path='/test2' component={sampleComponent3} /> 
         <Route exact path='/createevent' component={createEvent} />
         <Route exact path='/buttonPage/:UID/:firstName' component={buttonPage} /> 
+        <Route exact path='/drawer' component={hamburgerMenuComponent} /> 
         <Route component={() => <div>Page not found</div>} />
       </Switch>
     </Router>
