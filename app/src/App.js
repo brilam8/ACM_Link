@@ -12,6 +12,8 @@ import loginComp from './components/loginComp';
 import grabUsers from './components/grabUsers';
 import sampleComponent3 from './components/sampleComponent3';
 import buttonPage from './components/buttonPageComponent';
+import searchComponent from './components/searchComponent';
+// import searchComponent from './components/searchComponent';
 
 function App() {
   return (
@@ -24,7 +26,9 @@ function App() {
         <Route component={<div>Page not found</div>} />
         <Route exact path='/test' component={sampleComponent} /> 
         <Route exact path='/test2' component={sampleComponent3} /> 
+        <Route exact path='/search' component={searchComponent} /> 
         <Route exact path='/buttonPage/:UID/:firstName' component={buttonPage} /> 
+        {/* <Route exact path='/search' component={searchComponent} />  */}
         <Route component={() => <div>Page not found</div>} />
       </Switch>
     </Router>
