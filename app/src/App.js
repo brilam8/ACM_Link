@@ -9,9 +9,12 @@ import {
 import sampleComponent from './components/sampleComponent';
 import sampleComponent2 from './components/sampleComponent2';
 import loginComp from './components/loginComp';
+import login from './components/login'
 import grabUsers from './components/grabUsers';
 import sampleComponent3 from './components/sampleComponent3';
 import buttonPage from './components/buttonPageComponent';
+import resetPass from './components/resetPass'
+import createAccount from './components/createAccount'
 
 function App() {
   return (
@@ -19,8 +22,11 @@ function App() {
       <Switch>
         <Route exact path='/' component={sampleComponent2} />
         <Route path='/test' component={sampleComponent} /> 
-        <Route path='/login' component={loginComp} />
+        <Route path='/login' component={login} />
+        <Route path='/loginTest' component={loginComp} />
         <Route path='/grabUsers' component={grabUsers} />
+        <Route path='/resetPassword' component={resetPass}/>
+        <Route path='/createAccount' component={createAccount}/>
         <Route component={<div>Page not found</div>} />
         <Route exact path='/test' component={sampleComponent} /> 
         <Route exact path='/test2' component={sampleComponent3} /> 
