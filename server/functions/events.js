@@ -90,4 +90,172 @@ router.post('/createEvent', async (req, res) => {
   }
 })
 
+router.get('/api/homework', async(req, res) => {
+  const eventCollection = await db.collection('events').doc();
+  const test = {
+    event_id: "0101",
+    creater_id: "1010",
+    title: "Homework group",
+    type: "HOMEWORK",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const test2 = {
+    event_id: "1111",
+    creater_id: "2222",
+    title: "Looking for gaming team",
+    type: "VIDEOGAMES",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const test3 = {
+    event_id: "3333",
+    creater_id: "3232",
+    title: "Side project group",
+    type: "PROJECTS",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const homework = await eventCollection.where('type', '==', 'HOMEWORK').get();
+  await homework.forEach(event=>{
+    console.log(event.data())
+  });
+ 
+  res.json(homework);
+});
+ 
+router.get('/api/videogames', async(req, res) => {
+  const eventCollection = await db.collection('events');
+  const test = {
+    event_id: "1234",
+    creater_id: "4321",
+    title: "Finding homework group",
+    type: "HOMEWORK",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const test2 = {
+    event_id: "1357",
+    creater_id: "7531",
+    title: "Looking for League team",
+    type: "VIDEOGAMES",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const test3 = {
+    event_id: "2468",
+    creater_id: "8642",
+    title: "Seeking project group",
+    type: "PROJECTS",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const videoGame = await eventCollection.where('type', '==', 'VIDEOGAMES');
+  const query = await videoGame.get();
+  let results = [];
+  query.forEach(doc => {
+    results = [...results, doc.data()]
+  });
+  /*
+  await videoGame.forEach(event=>{
+    console.log(event.data())
+  });
+ */
+  console.log(results);
+  res.json(results);
+});
+ 
+router.get('/api/projects', async(req, res) => {
+  const eventCollection = await db.collection('events').doc();
+  const test = {
+    event_id: "4500",
+    creater_id: "0123",
+    title: "Hw group",
+    type: "HOMEWORK",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const test2 = {
+    event_id: "1357",
+    creater_id: "7531",
+    title: "Looking for League team",
+    type: "VIDEOGAMES",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const test3 = {
+    event_id: "2468",
+    creater_id: "8642",
+    title: "Seeking project group",
+    type: "PROJECTS",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const projects = await eventCollection.where('type', '==', 'PROJECTS').get();
+  await projects.forEach(event=>{
+    console.log(event.data())
+  });
+ 
+  res.json(projects);
+});
+ 
+router.get('/api/misc', async(req, res) => {
+  const eventCollection = await db.collection('events').doc();
+  const test = {
+    event_id: "1234",
+    creater_id: "4321",
+    title: "Finding homework group",
+    type: "HOMEWORK",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const test2 = {
+    event_id: "1357",
+    creater_id: "7531",
+    title: "Looking for League team",
+    type: "VIDEOGAMES",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const test3 = {
+    event_id: "2468",
+    creater_id: "8642",
+    title: "Seeking project group",
+    type: "PROJECTS",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const misc = await eventCollection.where('type', '==', 'OTHER').get();
+  await misc.forEach(event=>{
+    console.log(event.data())
+  });
+ 
+  res.json(misc);
+});
+
+
 module.exports = router
