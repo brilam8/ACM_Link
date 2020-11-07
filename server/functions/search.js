@@ -19,7 +19,6 @@ router.get('/', cors(), async (req, res) => {
     let results = [];
     const events = await db 
       .collection('events')
-      // .where('type', '==', "Game")
       .get();
     events.forEach(doc => {
         results = [...results, doc.data()]

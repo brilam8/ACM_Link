@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router()
 const { json } = require('express');
 const {db, admin} = require('../firebase');
+const { app } = require('firebase');
+var cors = require('cors')
 
 // Configure app to use bodyParser
 router.use(express.urlencoded({
@@ -10,6 +12,8 @@ router.use(express.urlencoded({
 router.use(express.json());
 
 const eventsCollection = db.collection('events')
+const userCollection = db.collection("events")
+const groupCollection = db.collection("groups")
 //getEvents
 router.get('/', async (req, res) => {
   const query = await eventsCollection.get()
@@ -19,6 +23,22 @@ router.get('/', async (req, res) => {
   })
   res.json(result)
 })
+
+//Get all events 
+router.get('/getAllEvents', cors(), async (req, res) => {
+  console.log("GET FUNCTION CALLED");
+  const collection = await db.collection('events');
+  let results = [];
+  const events = await db 
+    .collection('events')
+    .get();
+  events.forEach(doc => {
+      results = [...results, doc.data()]
+  })
+
+  res.json(results)
+})
+
 //getEvent by id
 router.get('/:event_id', async (req, res) => {
   const query = await eventsCollection.where('event_id', '==', req.params.event_id).get()
@@ -52,6 +72,7 @@ router.get('/OwnerEvent/:creator_id/:event_id', async (req, res) => {
   })
   res.json(result)
 })
+
 //setOwnerEvent status with a boolean value
 router.post('/setOwnerEvent/:event_id/:status', async (req, res) => {
   const query = await eventsCollection.where('event_id', '==', req.params.event_id).get()
