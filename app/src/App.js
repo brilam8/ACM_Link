@@ -36,7 +36,6 @@ function App() {
         <Route component={() => <div>Page not found</div>} />
       </Switch>
     </Router>
-    
   );
 }
 
