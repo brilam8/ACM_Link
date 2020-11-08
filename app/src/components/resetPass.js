@@ -16,10 +16,10 @@ firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 function PasswordReset() {
 
   const history = useHistory();
-  const [emailInput, setEmailInput] = useState('example@ucsd.edu');
-  const [loginStatus, setLoginStatus] = useState('No login status');
+  const [emailInput, setEmailInput] = useState('');
+  const [loginStatus, setLoginStatus] = useState('');
   const [open, setOpen] = useState(false);
-  const [snackMessage, setMessage] = useState("An error occurred");
+  const [snackMessage, setMessage] = useState("");
 
   async function sendPasswordReset() {
     try {
@@ -27,7 +27,7 @@ function PasswordReset() {
       let res = await firebase.auth().sendPasswordResetEmail(emailInput);
       
         console.log("Email sent!")
-        setMessage("An email has been sent!")
+        setMessage("An email has been sent! Please check your email to reset your password.")
         setOpen(true);
         
         await new Promise(r => setTimeout(r, 4000));

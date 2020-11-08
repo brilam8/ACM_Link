@@ -17,8 +17,8 @@ firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 function Login() {
 
   const history = useHistory();
-  const [emailInput, setEmailInput] = useState('example@ucsd.edu');
-  const [passInput, setPassInput] = useState('hunter123');
+  const [emailInput, setEmailInput] = useState('');
+  const [passInput, setPassInput] = useState('');
   const [open, setOpen] = useState(false);
   const [snackMessage, setMessage] = useState("An error occurred");
   const [loginStatus, setLoginStatus] = useState('');
@@ -36,8 +36,10 @@ function Login() {
         setLoginStatus("Logging in");
         try {
           await firebase.auth().signInWithEmailAndPassword(emailInput, passInput)
-          setMessage("Logged in!")
+          setMessage("Logged in! Please wait while you are redirected.")
           setOpen(true);
+          await new Promise(r => setTimeout(r, 4000));
+          history.push("/loginTest")
         } catch (error) {
           setLoginStatus('')
           setMessage("Error. Make sure you have an account under that email!")

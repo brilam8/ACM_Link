@@ -16,10 +16,10 @@ import firebase from '../firebase';
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
 const defaultValues = {
-  FirstNameTextField: "Brian",
-  LastNameTextField: "Lam",
-  EmailTextField: "bqlam@ucsd.edu",
-  PasswordTextField: "hunter13215125124"
+  FirstNameTextField: "",
+  LastNameTextField: "",
+  EmailTextField: "",
+  PasswordTextField: ""
 }
 
 function CreateAccount() {
@@ -28,7 +28,7 @@ function CreateAccount() {
   const history = useHistory();
   const [revealPassword, setReveal] = useState(false)
   const [open, setOpen] = useState(false);
-
+  const [snackMessage, setMessage] = useState("");
 
   async function createAccount(data) {
     console.log(JSON.stringify(data))
@@ -46,9 +46,15 @@ function CreateAccount() {
         headers: {"Content-Type": "application/json"}
       })
       if (res.ok){
-        history.replace("/login")
+
+        
+        setMessage("Creation successful! Please wait while you are redirected.");
+        setOpen(true);
+        await new Promise(r => setTimeout(r, 4000));
+        history.push("/login")
       }
       else{
+        setMessage("An error occured. Maybe your email is already in use?");
         setOpen(true);
       }
       
@@ -69,7 +75,7 @@ function CreateAccount() {
         <Snackbar
           open={open}
           onClose={evt => setOpen(false)}
-          message="An error occured. Maybe your email is already in use?"
+          message={snackMessage}
           dismissesOnAction
           action = {
             <SnackbarAction
