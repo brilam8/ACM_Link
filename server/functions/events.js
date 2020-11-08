@@ -91,7 +91,7 @@ router.post('/createEvent', async (req, res) => {
 })
 
 router.get('/api/homework', async(req, res) => {
-  const eventCollection = await db.collection('events').doc();
+  const eventCollection = await db.collection('events');
   const test = {
     event_id: "0101",
     creater_id: "1010",
@@ -121,13 +121,22 @@ router.get('/api/homework', async(req, res) => {
     start: "2020-10-31",
     end: "2020-11-01"
   }
+
+  eventCollection.set(test);
+  res.json(test);
+  eventCollection.set(test2);
+  res.json(test2);
+  eventCollection.set(test3);
+  res.json(test3);
  
-  const homework = await eventCollection.where('type', '==', 'HOMEWORK').get();
-  await homework.forEach(event=>{
-    console.log(event.data())
+  const homework = await eventCollection.where('type', '==', 'HOMEWORK');
+  const query = await homework.get();
+  let results = [];
+  query.forEach(doc => {
+    results = [...results, doc.data()]
   });
- 
-  res.json(homework);
+  console.log(results);
+  res.json(results);
 });
  
 router.get('/api/videogames', async(req, res) => {
@@ -161,6 +170,13 @@ router.get('/api/videogames', async(req, res) => {
     start: "2020-10-31",
     end: "2020-11-01"
   }
+
+  eventCollection.set(test);
+  res.json(test);
+  eventCollection.set(test2);
+  res.json(test2);
+  eventCollection.set(test3);
+  res.json(test3);
  
   const videoGame = await eventCollection.where('type', '==', 'VIDEOGAMES');
   const query = await videoGame.get();
@@ -168,17 +184,12 @@ router.get('/api/videogames', async(req, res) => {
   query.forEach(doc => {
     results = [...results, doc.data()]
   });
-  /*
-  await videoGame.forEach(event=>{
-    console.log(event.data())
-  });
- */
   console.log(results);
   res.json(results);
 });
  
 router.get('/api/projects', async(req, res) => {
-  const eventCollection = await db.collection('events').doc();
+  const eventCollection = await db.collection('events');
   const test = {
     event_id: "4500",
     creater_id: "0123",
@@ -208,17 +219,26 @@ router.get('/api/projects', async(req, res) => {
     start: "2020-10-31",
     end: "2020-11-01"
   }
+
+  eventCollection.set(test);
+  res.json(test);
+  eventCollection.set(test2);
+  res.json(test2);
+  eventCollection.set(test3);
+  res.json(test3);
  
-  const projects = await eventCollection.where('type', '==', 'PROJECTS').get();
-  await projects.forEach(event=>{
-    console.log(event.data())
+  const project = await eventCollection.where('type', '==', 'PROJECTS');
+  const query = await project.get();
+  let results = [];
+  query.forEach(doc => {
+    results = [...results, doc.data()]
   });
- 
-  res.json(projects);
+  console.log(results);
+  res.json(results);
 });
  
 router.get('/api/misc', async(req, res) => {
-  const eventCollection = await db.collection('events').doc();
+  const eventCollection = await db.collection('events');
   const test = {
     event_id: "1234",
     creater_id: "4321",
@@ -248,13 +268,22 @@ router.get('/api/misc', async(req, res) => {
     start: "2020-10-31",
     end: "2020-11-01"
   }
- 
-  const misc = await eventCollection.where('type', '==', 'OTHER').get();
-  await misc.forEach(event=>{
-    console.log(event.data())
+
+  eventCollection.set(test);
+  res.json(test);
+  eventCollection.set(test2);
+  res.json(test2);
+  eventCollection.set(test3);
+  res.json(test3);
+
+  const misc = await eventCollection.where('type', '==', 'OTHER');
+  const query = await misc.get();
+  let results = [];
+  query.forEach(doc => {
+    results = [...results, doc.data()]
   });
- 
-  res.json(misc);
+  console.log(results);
+  res.json(results);
 });
 
 
