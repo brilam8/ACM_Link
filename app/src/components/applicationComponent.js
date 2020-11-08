@@ -10,12 +10,14 @@ import {
   DialogButton,
   SimpleDialog
 } from '@rmwc/dialog';
+import { Select } from '@rmwc/select';
 import { Link, useParams } from 'react-router-dom';
 
 import '@rmwc/textfield/styles';
 import '@rmwc/button/styles';
 import '@rmwc/typography/styles';
 import '@rmwc/dialog/styles';
+import '@rmwc/select/styles';
 
 
 {/* TODO: 
@@ -218,6 +220,17 @@ function ApplicationForm() {
             </Button>
           </div>
         </div>
+        <Select
+              label="Outlined"
+              outlined
+              required
+              enhanced
+              style={{
+                'width': '10%'
+              }}
+              placeholder='Select one'
+              options={['Cookies', 'Pizza', 'Icecream']}
+            />
       </form>
     </div>
   );
