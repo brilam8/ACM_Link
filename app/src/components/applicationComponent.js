@@ -149,7 +149,7 @@ function ApplicationForm() {
             Time: {event.start_date} -> {event.end_date}
           </Typography>
 
-          {/* <Dialog
+          <Dialog
             open={open}
             onClose={evt => {
               console.log(evt.detail.action);
@@ -168,7 +168,7 @@ function ApplicationForm() {
                 </DialogButton>
               </Link>
             </DialogActions>
-          </Dialog> */}
+          </Dialog>
           
 
           <TextField 
@@ -207,7 +207,7 @@ function ApplicationForm() {
           <div style={{
             'display': 'flex',
             'justify-content': 'space-between',
-            'width': '25vw',
+            'width': '10vw',
             'margin-top': '25px',
           }}>
             <Link type='button' to={'/'} style={{
@@ -220,17 +220,6 @@ function ApplicationForm() {
             </Button>
           </div>
         </div>
-        <Select
-              label="Outlined"
-              outlined
-              required
-              enhanced
-              style={{
-                'width': '10%'
-              }}
-              placeholder='Select one'
-              options={['Cookies', 'Pizza', 'Icecream']}
-            />
       </form>
     </div>
   );
