@@ -15,6 +15,7 @@ import sampleComponent3 from './components/sampleComponent3';
 import buttonPage from './components/buttonPageComponent';
 import resetPass from './components/resetPass'
 import createAccount from './components/createAccount'
+import hamburgerMenuComponent from './components/hamburgerMenuComponent';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route exact path='/test' component={sampleComponent} /> 
         <Route exact path='/test2' component={sampleComponent3} /> 
         <Route exact path='/buttonPage/:UID/:firstName' component={buttonPage} /> 
+        <Route exact path='/drawer' component={hamburgerMenuComponent} /> 
         <Route component={() => <div>Page not found</div>} />
       </Switch>
     </Router>
