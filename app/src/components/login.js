@@ -38,8 +38,10 @@ function Login() {
           await firebase.auth().signInWithEmailAndPassword(emailInput, passInput)
           setMessage("Logged in! Please wait while you are redirected.")
           setOpen(true);
+          setLoginStatus('Login success!')
           await new Promise(r => setTimeout(r, 4000));
           history.push("/loginTest")
+          
         } catch (error) {
           setLoginStatus('')
           setMessage("Error. Make sure you have an account under that email!")
