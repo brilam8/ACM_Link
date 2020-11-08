@@ -25,7 +25,7 @@ function App() {
         <Route path='/grabUsers' component={grabUsers} />
         <Route exact path='/test' component={sampleComponent} /> 
         <Route exact path='/test2' component={sampleComponent3} /> 
-        <Route exact path='/createevent' component={createEvent} />
+        <Route exact path='/createEvent/:user_id' component={createEvent} />
         <Route exact path='/buttonPage/:UID/:firstName' component={buttonPage} /> 
         <Route exact path='/drawer' component={hamburgerMenuComponent} /> 
         <Route component={() => <div>Page not found</div>} />

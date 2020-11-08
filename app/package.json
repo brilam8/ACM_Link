@@ -9,6 +9,8 @@
     "@rmwc/drawer": "^6.1.4",
     "@rmwc/icon": "^6.1.4",
     "@rmwc/list": "^6.1.4",
+    "@rmwc/select": "^6.1.4",
+    "@rmwc/textfield": "^6.1.4",
     "@rmwc/typography": "^6.1.4",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",

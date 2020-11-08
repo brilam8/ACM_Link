@@ -1,39 +1,41 @@
 import React, {useState,useEffect} from 'react';
-import Textfield from '@material-ui/core/Textfield';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider'
 import {Typography} from '@rmwc/typography'
+import { TextField } from '@rmwc/textfield'
+import { Select } from '@rmwc/select'
+import '@rmwc/select/styles'
+import '@rmwc/textfield/styles';
+import { useParams } from 'react-router-dom';
 const CreateEvent = () => {
     const [greeting, setGreeting] = useState('')
     const [description, setDescription] = useState('')
     const [title, setTitle] = useState('')
-    const [type, setType] = useState('Game')
+    const [type, setType] = useState('')
     const [maxApplicants, setMaxApplicants] = useState()
     const [startDate, setStartDate] = useState()
     const [endDate, setEndDate] = useState()
-
-
+    const params = useParams();
     const createOwnerEvent = async (event) => {
         event.preventDefault()
-        
+        console.log(params.user_id)
         const data = {
-            applications: [],
-            creator_id: "test",
+            creator_id: params.user_id,
             description: description,
             end_date: endDate,
-            event_id: Math.floor(Math.random() * 10000),
             max_applicants: maxApplicants,
             start_date: startDate,
             status: true,
             title: title,
             type: type
         }
-        fetch('/events/createEvent', {
+        fetch(`/events/create/${params.user_id}`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {'Content-Type': 'application/json'}
         })
         .then((res) => {
+            console.log(res) 
             return res.json()
         })
         .then((body) => {
@@ -41,7 +43,7 @@ const CreateEvent = () => {
         })
     }
     const fetchGreeting = async () => {
-        const response = await fetch('/users?user_id=2dQLZ6swxN7EwAsqkPsv')
+        const response = await fetch(`/users?user_id=${params.user_id}`)
         const json = await response.json();
         setGreeting(`${json[0].firstName} ${json[0].lastName}'s Event`) 
     }
@@ -80,24 +82,32 @@ const CreateEvent = () => {
         setType(event.target.value)
     }
     return(
-        <div>
+        <div style={{
+            'display': 'flex',
+            'flex-direction': 'column',
+        }}>
             <h1>{greeting}</h1>
             <form onSubmit={createOwnerEvent}>
-                <Typography>Event Type</Typography>
-                <select onChange={handleTypeChange}>
-                    <option value='Game'>Game</option>
-                    <option value='Homework'>Homework</option>
-                    <option value='Project'>Project</option>
-                    <option value='Other'>Other</option>
-                </select> <br/>
-                <Typography>Event Title</Typography><Textfield onChange={handleTitleChange} /> <br/>
-                <Typography>Max Applicants </Typography><Textfield onChange={handleMaxApplicantChange} /> <br/>
-                <Typography>Event Description </Typography> <Textfield onChange={handleDescriptionChange} /> <br/>
-                <Typography>Start Date </Typography><Textfield onChange={handleStartDateChange} /> <br/> 
-                <Typography>End Date </Typography><Textfield onChange={handleEndDateChange} /> <br/>
+
+                <Select required style={{
+                   'width': '100%',
+                   flex: '1'
+                }}label='Event Type' placeholder='Select one' options={['Games', 'Homework', 'Projects']} />
+
+                <TextField required style={{
+                    'width': '80%',
+                    flex: '1'
+                }}label='Event Title' onChange={handleTitleChange} /> <br/>
+                <TextField required label='Max Applicants' onChange={handleMaxApplicantChange} /> <br/>
+                <TextField required textarea style={{ 
+                    backgroundColor: '#F5F5F5',
+                }} label='Description' onChange={handleDescriptionChange} /> <br/>
+                <TextField required label='Start Date' type='date' onChange={handleStartDateChange} />
+                <TextField required label='End Date' type='date' onChange={handleEndDateChange} /> <br/>
                 <br/>
                 <Button variant="contained" color="primary" type='submit'>Create Event</Button>
             </form>
+            
         </div>
     )
 }
