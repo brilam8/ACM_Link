@@ -6,6 +6,8 @@ import MenuIcon from '@material-ui/icons/Menu'
 import '@rmwc/drawer/styles';
 import '@rmwc/button/styles';
 import '@rmwc/list/styles';
+import styled from 'styled-components';
+import {Link} from 'react-router-dom';
 
 function HamburgerMenu () {
   const [open, setOpen] = useState(false);
@@ -14,7 +16,9 @@ function HamburgerMenu () {
     <div>
       <Button 
         onClick={()=>{setOpen(!open)}} 
-      ><MenuIcon/></Button>
+      >
+        <MenuIcon/>
+      </Button>
       <Drawer 
         modal open={open} 
         onClose={() => {setOpen(false)}}
@@ -24,10 +28,17 @@ function HamburgerMenu () {
           <DrawerSubtitle></DrawerSubtitle>
         </DrawerHeader>
         <DrawerContent>
-          <List>
-            <ListItem>Homepage</ListItem>
-            <ListItem>Search for Posts</ListItem>
-            <ListItem>My Posts</ListItem>
+        <List>
+            <Link to={`/`} onClick={() => setOpen(false)} style={{ textDecoration: 'none' }}>
+              <ListItem>Homepage</ListItem>
+            </Link>
+            <Link to={`/test`} onClick={() => setOpen(false)} style={{ textDecoration: 'none' }}>
+              <ListItem>Search for Posts</ListItem>
+            </Link>
+            <Link to={`/test2`} onClick={() => setOpen(false)} style={{ textDecoration: 'none' }}>
+              <ListItem>My Posts</ListItem>
+            </Link>
+            <ListItem>Log Out</ListItem>
           </List>
         </DrawerContent>
       </Drawer>
