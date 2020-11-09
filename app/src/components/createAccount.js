@@ -24,14 +24,14 @@ const defaultValues = {
 }
 
 const OuterDiv = styled.div`
-display: flex;
-flex: 1;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-height: 100vh;
-width: 85vh;
-margin: auto;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 85vh;
+  margin: auto;
 `;
 
 function CreateAccount() {
