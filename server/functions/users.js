@@ -55,7 +55,7 @@ router.post('/create', async (req, res) => {
 
 // @route GET user
 // @desc returns a user object from the "users" collection in firestore given an id
-router.get(':userId', async (req, res) => {
+router.get('/:userId', async (req, res) => {
   
   console.log(req.params)
   if (!req.params.userId) res.status(400).send("No user id provided");
