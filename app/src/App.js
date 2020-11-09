@@ -22,8 +22,8 @@ function App() {
     <Router>
       <Switch>
         <Route exact path='/' component={login} />
-        <Route path='/test' component={sampleComponent} /> 
-        <Route path='/test2' component={sampleComponent2} />
+        <Route exact path='/test' component={sampleComponent} /> 
+        <Route exact path='/test2' component={sampleComponent2} />
         <Route exact path='/test3' component={sampleComponent3} /> 
         <Route exact path='/loginTest' component={loginComp} />
         <Route exact path='/resetPassword' component={resetPass}/>

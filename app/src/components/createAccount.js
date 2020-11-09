@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import {useHistory } from 'react-router-dom';
-import {useForm, Controller} from "react-hook-form"
-import {Typography} from '@rmwc/typography';
-import {Button} from '@rmwc/button';
-import {TextField} from '@rmwc/textfield'
-import {Snackbar, SnackbarAction} from '@rmwc/snackbar'
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useForm, Controller } from "react-hook-form"
+import { Typography } from '@rmwc/typography';
+import { Button } from '@rmwc/button';
+import { TextField } from '@rmwc/textfield'
+import { Snackbar, SnackbarAction } from '@rmwc/snackbar'
 import "typeface-roboto";
 import '@rmwc/snackbar/styles'
 import '@rmwc/button/styles';
@@ -12,6 +12,7 @@ import '@rmwc/typography/styles';
 import '@rmwc/textfield/styles';
 import '@rmwc/icon/styles';
 import firebase from '../firebase';
+import styled from 'styled-components';
 
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
@@ -22,11 +23,22 @@ const defaultValues = {
   PasswordTextField: ""
 }
 
+const OuterDiv = styled.div`
+display: flex;
+flex: 1;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+height: 100vh;
+width: 85vh;
+margin: auto;
+`;
+
 function CreateAccount() {
 
   const {register, handleSubmit, reset, control, errors} = useForm({defaultValues});
   const history = useHistory();
-  const [revealPassword, setReveal] = useState(false)
+  const [revealPassword, setRevealPassword] = useState(false)
   const [open, setOpen] = useState(false);
   const [snackMessage, setMessage] = useState("");
 
@@ -46,8 +58,6 @@ function CreateAccount() {
         headers: {"Content-Type": "application/json"}
       })
       if (res.ok){
-
-        
         setMessage("Creation successful! Please wait while you are redirected.");
         setOpen(true);
         await new Promise(r => setTimeout(r, 4000));
@@ -64,13 +74,13 @@ function CreateAccount() {
   }
 
   function toggleReveal() {
-    setReveal(!revealPassword);
+    setRevealPassword(!revealPassword);
   }
 
 
   return (
     
-      <div style = {{display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '85vh', margin: "auto"}} className = "LoginPage" >
+      <OuterDiv className = "LoginPage" >
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
         <Snackbar
           open={open}
@@ -116,11 +126,11 @@ function CreateAccount() {
               }}
               label="Password" />} 
               />
-              <Button className="button" type="submit" style = {{marginLeft:'15%',marginTop: '25px', width: "70%"}} label="CREATE ACCOUNT" raised /> 
+              <Button className="button" type="submit" style = {{marginLeft:'15%', marginTop: '25px', width: "70%"}} label="CREATE ACCOUNT" raised /> 
             </form>
           </div>
         
-      </div>
+      </OuterDiv>
   )
 }
 
