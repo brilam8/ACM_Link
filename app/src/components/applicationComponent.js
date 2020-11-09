@@ -12,6 +12,7 @@ import {
 } from '@rmwc/dialog';
 import { Select } from '@rmwc/select';
 import { Link, useParams } from 'react-router-dom';
+import styled from 'styled-components';
 
 import '@rmwc/textfield/styles';
 import '@rmwc/button/styles';
@@ -42,6 +43,10 @@ Sites visited:
 */}
 
 
+// @params Takes a user_id and creator_id. 
+// @desc Used for the application form. For integration with buttons
+//       simply use a Link component and have it linked to:
+//       /applicationPage/user_id/event_id
 function ApplicationForm() {
   const params = useParams();
   const [descInput, setDescInput] = useState('');
@@ -94,13 +99,8 @@ function ApplicationForm() {
   return (
     <div className='ApplicationForm'>
       <form onSubmit={event => handleSubmit(event)}>
-        <div style={{
-          'display':'flex',
-          'justify-content': 'space-between',
-          'align-items':'center',
-          'background-color': 'black',
-          'height': '8vh',
-        }}>
+        {/* Div1 contains the main top bar for the page */}
+        <Div1>
           {/* PLACE HAMBURGER COMPONENT HERE */}
           <Typography use='headline5' style={{
             'color': 'white',
@@ -122,15 +122,12 @@ function ApplicationForm() {
           }}>
             acm
           </Typography>
-        </div>       
+        </Div1>       
 
-        <div style={{
-          'display': 'flex', 
-          'flex-direction': 'column',
-          'justify-content': 'center', 
-          'align-items':'center', 
-          'height': '55vh',
-        }}>
+        {/* Div2 will contain the main content of the form including event 
+        details and text fields */}
+        <Div2>
+          {/* First few Typography elements are for event details */}
           <Typography use='headline5' style={{
             'margin-top': '50px',
           }}>
@@ -146,9 +143,45 @@ function ApplicationForm() {
           <Typography use='headline5' style={{
             'margin-top': '25px',
           }}>
-            Time: {event.start_date} -> {event.end_date}
-          </Typography>
+            Time: {event.start_date} to {event.end_date}
+          </Typography>          
 
+
+          <TextFieldStyled1
+            label="Tell us a bit about yourself"
+            multiline
+            required
+            outlined
+            onChange={e=>setDescInput(e.target.value)}
+          />
+
+          <TextFieldStyled2
+            label='Why do you want to join us?'
+            required
+            outlined
+            onChange={e=>setWhyInput(e.target.value)}
+          />
+
+          <TextFieldStyled2
+            label='Any extra comments?' 
+            outlined
+            onChange={e=>setCommentInput(e.target.value)}
+          />
+
+          {/* Used for submitting and cancel buttons */}
+          <Div3>
+            <LinkStyled type='button' to={'/'}>
+              <Button type='button'>
+                Cancel
+              </Button>
+            </LinkStyled>
+
+            <Button raised>
+              Submit
+            </Button>
+          </Div3>
+
+          {/* Dialog box upon hitting Submit */}
           <Dialog
             open={open}
             onClose={evt => {
@@ -169,61 +202,58 @@ function ApplicationForm() {
               </Link>
             </DialogActions>
           </Dialog>
-          
-
-          <TextField 
-            label="Tell us a bit about yourself"
-            multiline
-            required
-            outlined
-            style={{
-              'width': '80%',
-              'margin-top': '40px',
-            }}
-            onChange={e=>setDescInput(e.target.value)}
-          />
-
-          <TextField 
-            label='Why do you want to join us?'
-            required
-            outlined
-            style={{
-              'width': '80%',
-              'margin-top': '25px',
-            }}
-            onChange={e=>setWhyInput(e.target.value)}
-          />
-
-          <TextField 
-            label='Any extra comments?' 
-            outlined
-            style={{
-              'width': '80%',
-              'margin-top': '25px',
-            }}
-            onChange={e=>setCommentInput(e.target.value)}
-          />
-
-          <div style={{
-            'display': 'flex',
-            'justify-content': 'space-between',
-            'width': '10vw',
-            'margin-top': '25px',
-          }}>
-            <Link type='button' to={'/'} style={{
-              'text-decoration': 'none',
-            }}>
-              <Button type='button'>Cancel</Button>
-            </Link>
-            <Button raised>
-              Submit
-            </Button>
-          </div>
-        </div>
+        </Div2>
       </form>
     </div>
   );
 }
+
+
+const Div1 = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  height: 8vh;
+`;
+
+const Div2 = styled.div`
+  display: flex; 
+  flex-direction: column;
+  justify-content: center ;
+  align-items: center;
+  height: 55vh;
+`;
+
+const Div3 = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 10vw;
+  margin-top: 25px;
+`;
+
+const TextFieldStyled1 = styled(TextField)`
+  width: 80%;
+  margin-top: 40px;
+`;
+
+const TextFieldStyled2 = styled(TextField)`
+  width: 80%;
+  margin-top: 25px;
+`;
+
+const BurgerMenu = styled(Typography)`
+  color: white;
+  margin-left: 4%;
+`;
+
+const MainHeadline = styled(Typography)`
+  color: white;
+`;
+
+const LinkStyled = styled(Link)`
+  text-decoration: none;
+`;
 
 
 export default ApplicationForm;
