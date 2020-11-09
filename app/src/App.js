@@ -21,16 +21,13 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path='/' component={sampleComponent2} />
+        <Route exact path='/' component={login} />
         <Route path='/test' component={sampleComponent} /> 
-        <Route path='/login' component={login} />
-        <Route path='/loginTest' component={loginComp} />
-        <Route path='/grabUsers' component={grabUsers} />
-        <Route path='/resetPassword' component={resetPass}/>
-        <Route path='/createAccount' component={createAccount}/>
-        <Route component={<div>Page not found</div>} />
-        <Route exact path='/test' component={sampleComponent} /> 
-        <Route exact path='/test2' component={sampleComponent3} /> 
+        <Route path='/test2' component={sampleComponent2} />
+        <Route exact path='/test3' component={sampleComponent3} /> 
+        <Route exact path='/loginTest' component={loginComp} />
+        <Route exact path='/resetPassword' component={resetPass}/>
+        <Route exact path='/createAccount' component={createAccount}/>
         <Route exact path='/buttonPage/:UID/:firstName' component={buttonPage} /> 
         <Route exact path='/drawer' component={hamburgerMenuComponent} /> 
         <Route component={() => <div>Page not found</div>} />
