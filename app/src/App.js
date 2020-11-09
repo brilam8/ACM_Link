@@ -15,6 +15,7 @@ import sampleComponent3 from './components/sampleComponent3';
 import buttonPage from './components/buttonPageComponent';
 import resetPass from './components/resetPass'
 import createAccount from './components/createAccount'
+import applicationComponent from './components/applicationComponent';
 import hamburgerMenuComponent from './components/hamburgerMenuComponent';
 
 function App() {
@@ -29,6 +30,8 @@ function App() {
         <Route exact path='/resetPassword' component={resetPass}/>
         <Route exact path='/createAccount' component={createAccount}/>
         <Route exact path='/buttonPage/:UID/:firstName' component={buttonPage} /> 
+        <Route exact path='/buttonPage/:UID/:firstName' component={buttonPage} />
+        <Route exact path='/applicationPage/:UID/:event_id' component={applicationComponent} />
         <Route exact path='/drawer' component={hamburgerMenuComponent} /> 
         <Route component={() => <div>Page not found</div>} />
       </Switch>

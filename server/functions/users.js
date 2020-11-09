@@ -70,7 +70,7 @@ router.post('/create', async (req, res) => {
 
 // @route GET user
 // @desc returns a user object from the "users" collection in firestore given an id
-router.get(':userId', checkAuth, async (req, res) => {
+router.get('/:userId', checkAuth, async (req, res) => {
   if (!req.params.userId) res.status(400).send("No user id provided");
   const userRef = await userCollection.doc(req.params.userId);
   const doc = await userRef.get();
