@@ -11,6 +11,7 @@
     "@material-ui/icons": "^4.9.1",
     "@rmwc/drawer": "^6.1.4",
     "@rmwc/icon": "^6.1.4",
+    "@rmwc/snackbar": "^6.1.4",
     "@rmwc/list": "^6.1.4",
     "@rmwc/typography": "^6.1.4",
     "@testing-library/jest-dom": "^4.2.4",
@@ -19,8 +20,10 @@
     "firebase": "^8.0.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "react-hook-form": "^6.10.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "typeface-roboto": "^1.1.13",
     "styled-components": "^5.2.1"
   },
   "scripts": {
