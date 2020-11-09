@@ -42,9 +42,12 @@ function CreateAccount() {
   const [open, setOpen] = useState(false);
   const [snackMessage, setMessage] = useState("");
 
-  async function createAccount(data) {
-    console.log(JSON.stringify(data))
-    
+  /*
+    Given data from the text inputs, does a POST request to
+    "/users/create," creating an account in Firebase with
+    the corresponding user document.
+  */
+  async function createAccount(data) {    
     const userData = {
       firstName: data.FirstNameTextField,
       lastName: data.LastNameTextField,
@@ -73,6 +76,7 @@ function CreateAccount() {
     }
   }
 
+  // Toggles whether or not you can visibly see the password.
   function toggleReveal() {
     setRevealPassword(!revealPassword);
   }
@@ -80,7 +84,7 @@ function CreateAccount() {
 
   return (
     
-      <OuterDiv className = "LoginPage" >
+      <OuterDiv className = "CreateAccount" >
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"></link>
         <Snackbar
           open={open}
@@ -96,40 +100,82 @@ function CreateAccount() {
         <Typography style = {{textAlign: 'center', marginBottom: '45px'}} use="headline2">Account Creation</Typography>
         <div style = {{width: "65%", alignSelf: 'center'}}>
           <form onSubmit={handleSubmit(createAccount)} className="form">
-              <Controller name="FirstNameTextField" rules={{required: true}} control={control} as=
-                {<TextField required style = {{width: "100%"}} label="First Name"/>} />
-
-              <Controller name="LastNameTextField" rules={{required: true}} control={control} as=
-                {<TextField required style = {{marginTop: '25px', width: "100%"}} label="Last Name" />} />
-
-              <Controller name="EmailTextField" rules={{pattern: /\b[A-Za-z0-9._%+-]+@([Uu][Cc][Ss][Dd].[Ee][Dd][Uu])\b/, required: true}} control={control} as=
-              {<TextField required pattern="\b[A-Za-z0-9._%+-]+@([Uu][Cc][Ss][Dd].[Ee][Dd][Uu])\b" style = {{marginTop: '25px', width: "100%"}} helpText={{
-                persistent: false,
-                validationMsg: true,
-                children: 'You must use a UCSD email!'
-              }} label="Email" />} />
-              
-              <Controller name="PasswordTextField" rules={{pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,26}$/, required: true}} control={control}  as=
-              {<TextField required type={revealPassword ? "text" : "password"} pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,26}$" style = {{marginTop: '10px', width: "100%"}} trailingIcon={revealPassword ? {
-                icon: "visibility_off",
-                tabIndex: 0,
-                onClick: () => toggleReveal()
-              } : {
-                icon: 'visibility',
-                tabIndex: 0,
-                onClick: () => toggleReveal()
-              }} 
-              helpText={{
-                persistent: false,
-                validationMsg: true,
-                children: 'Your password must be 8-26 characters long and contain a letter and number!'
-              }}
-              label="Password" />} 
+              <Controller 
+                name="FirstNameTextField" 
+                rules={{required: true}} 
+                control={control} 
+                as={
+                  <TextField required 
+                    style = {{width: "100%"}} 
+                    label="First Name"
+                  />
+                } 
               />
-              <Button className="button" type="submit" style = {{marginLeft:'15%', marginTop: '25px', width: "70%"}} label="CREATE ACCOUNT" raised /> 
+              <Controller 
+                name="LastNameTextField" 
+                rules={{required: true}} 
+                control={control} 
+                as={
+                  <TextField required 
+                    style = {{marginTop: '25px', width: "100%"}} 
+                    label="Last Name" 
+                  />
+                }
+              />
+              <Controller 
+                name="EmailTextField" 
+                rules={{pattern: /\b[A-Za-z0-9._%+-]+@([Uu][Cc][Ss][Dd].[Ee][Dd][Uu])\b/, required: true}} 
+                control={control} 
+                as={
+                  <TextField required 
+                    pattern="\b[A-Za-z0-9._%+-]+@([Uu][Cc][Ss][Dd].[Ee][Dd][Uu])\b" 
+                    style = {{marginTop: '25px', width: "100%"}} 
+                    helpText={{
+                      persistent: false,
+                      validationMsg: true,
+                      children: 'You must use a UCSD email!'
+                    }} 
+                    label="Email" 
+                  />
+                }
+              />
+              <Controller 
+                name="PasswordTextField" 
+                rules={{pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,26}$/, required: true}} 
+                control={control} 
+                as={
+                  <TextField required 
+                    type={revealPassword ? "text" : "password"} 
+                    pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,26}$" 
+                    style = {{marginTop: '10px', width: "100%"}} 
+                    trailingIcon={revealPassword ? 
+                      {
+                        icon: "visibility_off",
+                        tabIndex: 0,
+                        onClick: () => toggleReveal()
+                      } : 
+                      {
+                        icon: 'visibility',
+                        tabIndex: 0,
+                        onClick: () => toggleReveal()
+                      }} 
+                    helpText={{
+                      persistent: false,
+                      validationMsg: true,
+                      children: 'Your password must be 8-26 characters long and contain a letter and number!'
+                    }}
+                    label="Password" 
+                  />
+                } 
+              />
+              <Button raised 
+                className="button" 
+                type="submit" 
+                style = {{marginLeft:'15%', marginTop: '25px', width: "70%"}} 
+                label="CREATE ACCOUNT"  
+              /> 
             </form>
           </div>
-        
       </OuterDiv>
   )
 }

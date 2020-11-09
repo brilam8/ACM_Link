@@ -16,26 +16,21 @@ function checkAuth(req, res, next){
       next();
     })
     .catch(() => {
-      res.status(403).send("Unauthorized")
+      res.status(403).send("Unauthorized");
     });
   }
   else {
-    res.status(403).send("Unauthorized")
+    res.status(403).send("Unauthorized");
   }
 }
 
-const userCollection = db.collection("users")
+const userCollection = db.collection("users");
 
 // @route POST user
 // @desc Creates a user object and stores it in the "users" collection in firestore
 router.post('/create', async (req, res) => {
-  console.log(req.body)
-  console.log(req.body.firstName)
-  console.log(req.body.lastName)
-  console.log(req.body.email)
-  console.log(req.body.password)
   if (!req.body || !req.body.firstName || !req.body.lastName || !req.body.email || !req.body.password){
-    res.json({error: "Missing fields on request"})
+    res.json({error: "Missing fields on request"});
   }
   else {
     //console.log(req.body)
@@ -76,10 +71,7 @@ router.post('/create', async (req, res) => {
 // @route GET user
 // @desc returns a user object from the "users" collection in firestore given an id
 router.get(':userId', checkAuth, async (req, res) => {
-  
-  console.log(req.params)
   if (!req.params.userId) res.status(400).send("No user id provided");
-  
   const userRef = await userCollection.doc(req.params.userId);
   const doc = await userRef.get();
   if (!doc.exists) {
