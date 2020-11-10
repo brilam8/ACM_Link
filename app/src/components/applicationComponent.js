@@ -11,7 +11,7 @@ import {
   SimpleDialog
 } from '@rmwc/dialog';
 import { Select } from '@rmwc/select';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Redirect, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import '@rmwc/textfield/styles';
@@ -53,7 +53,8 @@ function ApplicationForm() {
   const [commentInput, setCommentInput] = useState('');
   const [whyInput, setWhyInput] = useState('');
   const [event, setEvent] = useState({});
-  const [open, setOpen] = useState(false);
+  const [openSubDialog, setOpenSubDialog] = useState(false);
+  const [openCancelDialog, setOpenCancelDialog] = useState(false)
 
   useEffect(()=>{
     fetchEvent();
@@ -68,7 +69,8 @@ function ApplicationForm() {
 
   function handleCancel(event) {
     event.preventDefault();
-    console.log('onCancel handler called');
+    console.log('cancel')
+    setOpenCancelDialog(true);
   }
 
   function handleSubmit(event) {
@@ -77,7 +79,7 @@ function ApplicationForm() {
       return;
     }
     console.log('onSubmit handler called');
-    setOpen(true);
+    setOpenSubDialog(true);
     const output = {
       desc: descInput,
       comments: commentInput,
@@ -170,23 +172,28 @@ function ApplicationForm() {
 
           {/* Used for submitting and cancel buttons */}
           <Div3>
-            <LinkStyled type='button' to={'/'}>
-              <Button type='button'>
-                Cancel
-              </Button>
-            </LinkStyled>
+            <Button 
+              type='button' 
+              onClick={event => handleCancel(event)}
+              style={{'margin-right': '5%'}}
+            >
+              Cancel
+            </Button>
 
-            <Button raised>
+            <Button 
+              raised
+              style={{'margin-left': '5%'}}
+            >
               Submit
             </Button>
           </Div3>
 
           {/* Dialog box upon hitting Submit */}
           <Dialog
-            open={open}
+            open={openSubDialog}
             onClose={evt => {
               console.log(evt.detail.action);
-              setOpen(false);
+              setOpenSubDialog(false);
             }}
             onClosed={evt => console.log(evt.detail.action)}
           >
@@ -195,11 +202,32 @@ function ApplicationForm() {
               You've submitted your application for {event.title}.
             </DialogContent>
             <DialogActions>
-              <Link to='/'>
+              <LinkStyled to='/test3'>
                 <DialogButton action="accept" isDefaultAction>
                   Sweet!
                 </DialogButton>
-              </Link>
+              </LinkStyled>
+            </DialogActions>
+          </Dialog>
+
+          <Dialog
+            open={openCancelDialog}
+            onClose={evt => {
+              console.log(evt.detail.action);
+              setOpenCancelDialog(false);
+            }}
+            onClosed={evt => console.log(evt.detail.action)}
+          >
+            <DialogTitle>Canceling</DialogTitle>
+            <DialogContent>
+              Are you sure you want to cancel your application for {event.title}?
+            </DialogContent>
+            <DialogActions>
+              <LinkStyled to='/test3'>
+                <DialogButton action="accept" isDefaultAction>
+                  Cancel
+                </DialogButton>
+              </LinkStyled>
             </DialogActions>
           </Dialog>
         </Div2>
@@ -227,8 +255,8 @@ const Div2 = styled.div`
 
 const Div3 = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 10vw;
+  justify-content: center;
+  width: 50vw;
   margin-top: 25px;
 `;
 
@@ -252,7 +280,7 @@ const MainHeadline = styled(Typography)`
 `;
 
 const LinkStyled = styled(Link)`
-  text-decoration: none;
+text-decoration: none;
 `;
 
 
