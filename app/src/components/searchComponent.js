@@ -17,11 +17,7 @@ function SampleAPI2() {
     setOutput([...output, input]);
     setInput('');
     const results = await fetch("http://localhost:5000/events/getAllevents")
-    const reader = new FileReader()
-    reader.onload = async (results) => {
-    const text = (results.target.result)
-    }
-    setResults((await results.text()));
+    setResults(await results.text());
   }
   return (
     <div className="SampleAPI2">
@@ -32,9 +28,9 @@ function SampleAPI2() {
         </Button>
       </div>
       <div style={{'marginLeft': '50px'}}>
-        <Typography>
-          Results: {results}
-        </Typography>
+      <ul>
+                Results: {results}
+            </ul>
       </div>
       <Divider/>
       <div style={{'marginLeft': '50px'}}>
@@ -43,13 +39,13 @@ function SampleAPI2() {
             return (
               <div>
                 <Typography>
-                  {text}
+                  Searched Event: {text}
                 </Typography>
               </div>
             )
           })
         }
-      </div>
+      </div> 
     </div>
   );
 }

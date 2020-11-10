@@ -26,7 +26,6 @@ router.get('/', async (req, res) => {
 
 //Get all events 
 router.get('/getAllEvents', cors(), async (req, res) => {
-  console.log("GET FUNCTION CALLED");
   const collection = await db.collection('events');
   let results = [];
   const events = await db 
