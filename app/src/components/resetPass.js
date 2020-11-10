@@ -11,7 +11,6 @@ import '@rmwc/typography/styles';
 import '@rmwc/textfield/styles';
 import '@rmwc/icon/styles';
 import firebase from '../firebase';
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 
 const OuterDiv = styled.div`
   display: flex;

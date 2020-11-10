@@ -12,7 +12,7 @@ import '@rmwc/typography/styles';
 import '@rmwc/textfield/styles';
 import '@rmwc/icon/styles';
 import firebase from '../firebase';
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 const OuterDiv = styled.div`
   display: flex;
