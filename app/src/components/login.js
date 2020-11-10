@@ -12,7 +12,7 @@ import '@rmwc/typography/styles';
 import '@rmwc/textfield/styles';
 import '@rmwc/icon/styles';
 import firebase from '../firebase';
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 const OuterDiv = styled.div`
   display: flex;
@@ -63,7 +63,7 @@ function Login() {
           setOpen(true);
           setLoginStatus('Login success!')
           await new Promise(r => setTimeout(r, 4000));
-          history.push("/loginTest")
+          history.push("/homepage")
         } catch (error) {
           setLoginStatus('')
           setMessage("Error. Make sure you have an account under that email!")
