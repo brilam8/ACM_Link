@@ -60,11 +60,7 @@ app.get('/api/getCustomers/:postID/:userID', async (req, res) => {
   res.json(results)
 })
 
-<<<<<<< HEAD
-=======
 //get all the user routes from users.js
->>>>>>> 2ed27bbcd6001af30b7cbf06276d41e082adceee
-//app.use('/users', checkAuth)
 app.use('/users', users)
 app.use('/events', events)
 app.use('/applications', applications)
