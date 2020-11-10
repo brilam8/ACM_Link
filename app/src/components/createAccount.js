@@ -14,8 +14,6 @@ import '@rmwc/icon/styles';
 import firebase from '../firebase';
 import styled from 'styled-components';
 
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
-
 const defaultValues = {
   FirstNameTextField: "",
   LastNameTextField: "",
