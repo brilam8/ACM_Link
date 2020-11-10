@@ -6,6 +6,7 @@ import {Typography} from "@rmwc/typography"
 function ButtonArray() {
   
   const [buttons, setButtons] = useState([]);
+  const [appButtons, setAppButtons] = useState([]);
 
   async function fetchUsers() {
     const response = await fetch('/events/api/videogames');
@@ -16,43 +17,44 @@ function ButtonArray() {
     console.log(buttons);
   }
 
+  async function fetchEventApps() {
+    const response = await fetch('/events');
+    const json = await response.json();
+    console.log(json);
+    setAppButtons(appButtons.concat(json));
+    console.log(appButtons);
+  }
+
   useEffect(()=>{
     fetchUsers();
+    fetchEventApps();
   }, []);
   
   return (
     <div>
       <div>
-      {buttons.map((user) => {
-        return (
-            <Typography>
-              {user.event_id}
-              {user.max_applicants}
-            </Typography>
-        );
-      })}
+        {buttons.map((user) => (
+            <Link to={`/buttonPage/${user.user_id}/${user.firstName}`}>
+              <Button>
+                {user.firstName}
+              </Button>
+            </Link>
+          ))}
       </div>
-<div>
-{buttons.map((user) => {
-        return (
-            <Typography>
-              {user.event_id}
-            </Typography>
-        );
-      })}
-      </div>
-<div>
-{buttons.map((user) => {
-        return (
-            <Typography>
-              {user.event_id}
-            </Typography>
-        );
-      })}
+
+      {/* TODO: event.creator_id IS WRONG. It should be the id of the current
+      logged-in user. WE WILL NEED TO FIX THIS LATER. */}
+      <div>
+        {appButtons.map((event) => (
+            <Link to={`/applicationPage/${event.creator_id}/${event.event_id}`}>
+              <Button>
+                {event.title}
+              </Button>
+            </Link>
+        ))}
       </div>
     </div>
-  );
-  
+  ); 
 }
 
 export default ButtonArray;

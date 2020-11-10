@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider'
 import {Typography} from '@rmwc/typography'
 import styled from 'styled-components';
+import firebase from '../firebase';
 
 //coding default html elements
 const Div = styled.div`
@@ -27,6 +28,15 @@ function SampleAPI2() {
     setOutput([...output, input]);
     setInput('');
   }
+
+  useEffect(()=>{
+    var user = firebase.auth().currentUser;
+    console.log(user)
+    if (user != null) {
+      let uid = user.uid;
+      console.log(uid)
+    }
+  }, []);
 
   return (
     <div className="SampleAPI2">

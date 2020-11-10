@@ -1,0 +1,17 @@
+{
+  "editor.rulers": [
+    79,
+    120
+  ],
+  "todohighlight.keywords": [
+    {
+      "text": "TODO:",
+      "color": "ff0000",
+      "backgroundColor": "rgba(255,255,0,0.5)"
+    }
+  ],
+  "todohighlight.defaultStyle": {
+    "color": "red",
+    "backgroundColor": "$ffab00"
+  }
+}
