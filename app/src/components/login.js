@@ -63,7 +63,7 @@ function Login() {
           setOpen(true);
           setLoginStatus('Login success!')
           await new Promise(r => setTimeout(r, 4000));
-          history.push("/loginTest")
+          history.push("/homepage")
         } catch (error) {
           setLoginStatus('')
           setMessage("Error. Make sure you have an account under that email!")
