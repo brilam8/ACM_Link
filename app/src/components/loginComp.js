@@ -4,8 +4,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import {Typography} from '@rmwc/typography';
 import firebase from '../firebase';
-
-firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
+firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 function LoginComp() {
 
