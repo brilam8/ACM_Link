@@ -26,20 +26,20 @@ app.get('/api/customers', (req, res) => {
   res.json(customers)
 })
 
-function checkAuth(req, res, next){
-  if (req.headers.authtoken) {
-    admin.auth().verifyIdToken(req.headers.authtoken)
-    .then(() => {
-      next();
-    })
-    .catch(() => {
-      res.status(403).send("Unauthorized")
-    });
-  }
-  else {
-    res.status(403).send("Unauthorized")
-  }
-}
+// function checkAuth(req, res, next){
+//   if (req.headers.authtoken) {
+//     admin.auth().verifyIdToken(req.headers.authtoken)
+//     .then(() => {
+//       next();
+//     })
+//     .catch(() => {
+//       res.status(403).send("Unauthorized")
+//     });
+//   }
+//   else {
+//     res.status(403).send("Unauthorized")
+//   }
+// }
 
 app.get('/api/getCustomers/:postID/:userID', async (req, res) => {
 
