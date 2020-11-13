@@ -32,6 +32,10 @@ const TextLink = styled(Link)`
   font-family: Roboto;
 `
 
+const StyledButton = styled(Button)`
+  color: #333333;
+`
+
 function Login() {
 
   const history = useHistory();
@@ -46,6 +50,14 @@ function Login() {
   function toggleReveal() {
     setReveal(!revealPassword);
   }
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        history.push("/homepage");
+      } 
+    });
+  });
 
   /*
     Given an email and password from the text inputs, attempts to log
@@ -78,7 +90,7 @@ function Login() {
       }
     }
   }
-
+  
   return (
       <OuterDiv className = "LoginPage" >
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet"></link>
@@ -132,7 +144,7 @@ function Login() {
           />
           <TextLink to="/resetPassword">Forgot password?</TextLink>
         </div>
-        <Button raised
+        <StyledButton raised
           onClick={() => handleLogin()} 
           style = {{width: "30%", marginTop: "30px"}}
           label="SIGN IN"  
@@ -140,7 +152,7 @@ function Login() {
         <Typography style = {{marginTop: '5px', marginBottom: "15px"}}>
           {loginStatus}
         </Typography>
-        <Button raised
+        <StyledButton raised
           onClick={() => history.push("/createAccount")} 
           style = {{width: "30%"}} 
           label="CREATE NEW ACCOUNT"  
