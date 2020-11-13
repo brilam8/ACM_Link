@@ -16,49 +16,20 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(cors());
 
-//example API call
-app.get('/api/customers', (req, res) => {
-  const collection = db.collection('fakeCollection').doc();
-  const customers = {
-    eventName: "title"
+function checkAuth(req, res, next){
+  if (req.headers.authtoken) {
+    admin.auth().verifyIdToken(req.headers.authtoken)
+    .then(() => {
+      next();
+    })
+    .catch(() => {
+      res.status(403).send("Unauthorized")
+    });
   }
-  collection.set(customers);
-  res.json(customers)
-})
-
-// function checkAuth(req, res, next){
-//   if (req.headers.authtoken) {
-//     admin.auth().verifyIdToken(req.headers.authtoken)
-//     .then(() => {
-//       next();
-//     })
-//     .catch(() => {
-//       res.status(403).send("Unauthorized")
-//     });
-//   }
-//   else {
-//     res.status(403).send("Unauthorized")
-//   }
-// }
-
-app.get('/api/getCustomers/:postID/:userID', async (req, res) => {
-
-  //gets all docs in users that has the search id match the param sent in
-  const collection = await db.collection('users');
-  const query = await collection.where("search_id", "==", req.params.postID).where("user_id", "==", req.params.userID).get();
-
-  //results are stored in an array
-  let results = [];
-
-  //for each firestore doc returned, store the data into the array
-  query.forEach(doc=>{
-    //same as results.push(doc.data())
-    results = [...results, doc.data()]
-  })
-  console.log(results)
-  //return the data from firestore to the person loading the link
-  res.json(results)
-})
+  else {
+    res.status(403).send("Unauthorized")
+  }
+}
 
 //app.use('/users', checkAuth)
 app.use('/users', users)

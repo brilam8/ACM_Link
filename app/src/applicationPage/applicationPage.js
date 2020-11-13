@@ -8,7 +8,6 @@ import {
   DialogContent, 
   DialogActions, 
   DialogButton,
-  SimpleDialog
 } from '@rmwc/dialog';
 import { Select } from '@rmwc/select';
 import { Link, Redirect, useParams } from 'react-router-dom';
@@ -101,49 +100,30 @@ function ApplicationForm() {
   return (
     <div className='ApplicationForm'>
       <form onSubmit={event => handleSubmit(event)}>
-        {/* Div1 contains the main top bar for the page */}
-        <Div1>
-          {/* PLACE HAMBURGER COMPONENT HERE */}
-          <Typography use='headline5' style={{
-            'color': 'white',
-            'margin-left': '4%',
-          }}>
-            burger
-          </Typography>
-
-          <Typography use='headline3' style={{
-            'color': 'white',
-          }}>
-            {event.title} Application
-          </Typography>
-
-          <Typography use='headline4' style={{
-            'font-family': 'Nunito',
-            'color': 'white',
-            'margin-right': '4%',
-          }}>
-            acm
-          </Typography>
-        </Div1>       
-
         {/* Div2 will contain the main content of the form including event 
         details and text fields */}
         <Div2>
           {/* First few Typography elements are for event details */}
+          <Typography use='headline3' style={{
+            marginTop: 100,
+          }}>
+            {event.title}
+          </Typography>
+
           <Typography use='headline5' style={{
-            'margin-top': '50px',
+            marginTop: 25,
           }}>
             {event.description}
           </Typography>
 
           <Typography use='headline5' style={{
-            'margin-top': '25px',
+            marginTop: 25,
           }}>
             Maximum Number of Teammates: {event.max_applicants}
           </Typography>
 
           <Typography use='headline5' style={{
-            'margin-top': '25px',
+            marginTop: '25px',
           }}>
             Time: {event.start_date} to {event.end_date}
           </Typography>          
@@ -175,14 +155,14 @@ function ApplicationForm() {
             <Button 
               type='button' 
               onClick={event => handleCancel(event)}
-              style={{'margin-right': '5%'}}
+              style={{marginRight: '5%'}}
             >
               Cancel
             </Button>
 
             <Button 
               raised
-              style={{'margin-left': '5%'}}
+              style={{marginLeft: '5%'}}
             >
               Submit
             </Button>

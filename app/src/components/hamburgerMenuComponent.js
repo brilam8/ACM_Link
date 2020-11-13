@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Drawer, DrawerHeader, DrawerTitle, DrawerSubtitle, DrawerContent} from '@rmwc/drawer';
 import {List, ListItem} from '@rmwc/list'
 import {Button} from '@rmwc/button'
@@ -57,16 +57,16 @@ function HamburgerMenu () {
     </div>
     
     <Typography use='headline5' style={{
-      'color': 'white',
-      'margin-left': '4%',
+      color: 'white',
+      marginLeft: '4%',
     }}>
       Teammate Finder
     </Typography>
 
     <Typography use='headline4' style={{
-      'font-family': 'Nunito',
-      'color': 'white',
-      'margin-right': '4%',
+      fontFamily: 'Nunito',
+      color: 'white',
+      marginRight: '4%',
     }}>
       acm
     </Typography>
