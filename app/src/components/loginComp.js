@@ -50,7 +50,6 @@ function LoginComp() {
       .catch((error) => {
         setLoginStatus("Error getting auth token")
       });
-      console.log(idToken);
       try {
         const res = await fetch('/users',{
           method: 'GET',

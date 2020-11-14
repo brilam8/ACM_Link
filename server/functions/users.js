@@ -68,6 +68,25 @@ router.post('/create', async (req, res) => {
   }
 })
 
+// @route PUT user
+// @desc Updates a user object with new name fields
+router.put('/update/:userId', checkAuth, async (req, res) => {
+  if (!req.params.userId) res.status(400).send("No user id provided");
+  if (!req.body.firstName || !req.body.lastName) res.status(400).send("No names provided")
+  const userRef = await userCollection.doc(req.params.userId);
+  const doc = await userRef.get();
+  if (!doc.exists) {
+    res.status(400).send("No such user document exists");
+  }
+  else {
+    const resp = await userRef.update({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName
+    });
+    res.status(200).send("Success");
+  }
+})
+
 // @route GET user
 // @desc returns a user object from the "users" collection in firestore given an id
 router.get('/:userId', checkAuth, async (req, res) => {
