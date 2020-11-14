@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import { useForm, Controller } from "react-hook-form"
-import { Typography } from '@rmwc/typography';
 import { Button } from '@rmwc/button';
 import { TextField } from '@rmwc/textfield'
 import { Snackbar, SnackbarAction } from '@rmwc/snackbar'
@@ -14,7 +13,6 @@ import '@rmwc/textfield/styles';
 import '@rmwc/icon/styles';
 import firebase from '../firebase';
 import avatar from "../images/avatar1.png"
-import { ListItemText } from '@material-ui/core';
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
 
@@ -45,7 +43,6 @@ function Settings() {
   const history = useHistory();
   const [open, setOpen] = useState(false);
   const [snackMessage, setMessage] = useState("An error occurred");
-  const [loginStatus, setLoginStatus] = useState('');
   const [revealPassword, setReveal] = useState(false);
   const [origFirstName, setOrigFirstName] = useState('');
   const [origLastName, setOrigLastName] = useState('');

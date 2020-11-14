@@ -37,20 +37,18 @@ function App() {
 
 const loggedIn = () => (
     <div>
-      <Router>
-        <HamburgerMenuComponent/>
-        <Switch>
-          <Route exact path='/homepage' component={sampleComponent2} /> 
-          <Route exact path='/test2' component={sampleComponent} />
-          <Route exact path='/test3' component={sampleComponent3} /> 
-          <Route exact path='/loginTest' component={loginComp} />
-          <Route exact path='/settings' component={settings} />
-          <Route exact path='/buttonPage/:UID/:firstName' component={buttonPage} /> 
-          <Route exact path='/applicationPage/:UID/:event_id' component={applicationComponent} />
-          <Route exact path='/drawer' component={HamburgerMenuComponent} /> 
-          <Route path='*' component={() => <div>Page not found</div>} />
-        </Switch>
-      </Router>
+      <HamburgerMenuComponent/>
+      <Switch>
+        <Route exact path='/homepage' component={sampleComponent2} /> 
+        <Route exact path='/test2' component={sampleComponent} />
+        <Route exact path='/test3' component={sampleComponent3} /> 
+        <Route exact path='/loginTest' component={loginComp} />
+        <Route exact path='/settings' component={settings} />
+        <Route exact path='/buttonPage/:UID/:firstName' component={buttonPage} /> 
+        <Route exact path='/applicationPage/:UID/:event_id' component={applicationComponent} />
+        <Route exact path='/drawer' component={HamburgerMenuComponent} /> 
+        <Route path='*' component={() => <div>Page not found</div>} />
+      </Switch>
     </div>
 );
 
