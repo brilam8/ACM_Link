@@ -27,7 +27,6 @@ function HamburgerMenu () {
   function handleLogout () {
     firebase.auth().signOut().then(async function(){
       setOpen(false);
-      await new Promise(r => setTimeout(r, 2000));
       history.push('/login')
     })
     .catch(function(error) {
@@ -37,7 +36,6 @@ function HamburgerMenu () {
 
   return (
     <Div1>
-    
     <div>
       <Button 
         onClick={()=>{setOpen(!open)}} 

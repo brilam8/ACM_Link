@@ -74,7 +74,6 @@ function Login() {
           setMessage("Logged in! Please wait while you are redirected.")
           setOpen(true);
           setLoginStatus('Login success!')
-          await new Promise(r => setTimeout(r, 2000));
           history.push("/homepage")
         } catch (error) {
           setLoginStatus('')
