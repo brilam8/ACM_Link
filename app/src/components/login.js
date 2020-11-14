@@ -62,8 +62,7 @@ function Login() {
           setMessage("Logged in! Please wait while you are redirected.")
           setOpen(true);
           setLoginStatus('Login success!')
-          await new Promise(r => setTimeout(r, 1000));
-          history.push("/createEvent")
+          history.push("/homepage")
         } catch (error) {
           setLoginStatus('')
           setMessage("Error. Make sure you have an account under that email!")
