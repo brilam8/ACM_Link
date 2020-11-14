@@ -40,8 +40,8 @@ function PasswordReset() {
       let res = await firebase.auth().sendPasswordResetEmail(emailInput);
         setMessage("An email has been sent! Please check your email to reset your password.")
         setOpen(true);
-        await new Promise(r => setTimeout(r, 4000));
-        history.replace("/login")
+        await new Promise(r => setTimeout(r, 2000));
+        history.push("/login")
     }
     catch (error){
       setMessage("Error. Make sure you have an account under that email!")
