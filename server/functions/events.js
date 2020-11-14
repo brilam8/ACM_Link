@@ -29,11 +29,14 @@ router.get('/', async (req, res) => {
 // @route GET getEvent(event_id)
 // @desc Gets an event with a given id
 router.get('/:event_id', async (req, res) => {
+  // Queries for event
   const query = await eventsCollection.where(
     'event_id', '==', req.params.event_id).get();
   if (query.empty){
     res.status(400).send('No such event was found');
   }
+
+  // Pushes event to result array to form response
   let result = [];
   query.forEach(doc => {
     result.push(doc.data());
@@ -104,8 +107,7 @@ router.get('/getOwnerEvent/:creator_id/:event_id', async (req, res) => {
   }
 
   // Gets event data
-  const query = await eventsCollection.where(
-    'event_id', '==', req.params.event_id).get();
+  const query = await eventsCollection.where('event_id', '==', req.params.event_id).get();
   let finalResult = [];
   query.forEach(doc => {
     finalResult.push(doc.data());
@@ -119,15 +121,16 @@ router.get('/getOwnerEvent/:creator_id/:event_id', async (req, res) => {
 // @route setOwnerEvent(event_id, status)
 // @desc Sets the status as open or archived for an event
 router.post('/setStatus/:event_id', async (req, res) => {
-  console.log("in");
   if (!req.body || !req.body.status) {
     res.status(400).send("Missing fields on request");
   }
-  const query = await eventsCollection.where(
-    'event_id', '==', req.params.event_id).get();
+  // Queries for input event
+  const query = await eventsCollection.where('event_id', '==', req.params.event_id).get();
   if(query.empty) {
     res.status(400).send('No such event was found');
   }
+  
+  // Updates the event reference with the new status
   const event = query.docs[0];
   event.ref.update({ status: req.body.status });
   res.send(`Event ${req.params.event_id}'s status updated to ${req.body.status}`);
@@ -139,22 +142,20 @@ router.post('/setStatus/:event_id', async (req, res) => {
 // @desc creates an event and stores it in the database
 router.post('/create/:user_id', async (req, res) => {
   if(!req.body || !req.body.description || !req.body.end_date || 
-    !req.body.max_applicants || !req.body.start_date || !req.body.status ||
+    !req.body.max_applicants || !req.body.status ||
     !req.body.title || !req.body.type) {
     res.send("Missing fields on request");
-    console.log(!req.body || !req.body.description || !req.body.end_date || 
-      !req.body.max_applicants || !req.body.start_date || !req.body.status ||
-      !req.body.title || !req.body.type)
   } else {
+    // Generates a new event object with a randomly generated hash value
     const newEventRef = eventsCollection.doc();
     const event = {
       applications: [],
       creator_id: req.params.user_id,
       description: req.body.description,
-      end_date: req.body.end_date,
+      end_date: new Date(req.body.end_date),
       event_id: newEventRef.id,
       max_applicants: req.body.max_applicants,
-      start_date: req.body.start_date,
+      start_date: new Date(),
       status: req.body.status,
       title: req.body.title,
       type: req.body.type     

@@ -35,8 +35,7 @@ router.post('/create/:applicant_id/:event_id', async (req, res) => {
     }
 
     // Attaches application to the corresponding event
-    const query = await eventsCollection.where(
-      'event_id', '==', req.params.event_id).get();
+    const query = await eventsCollection.where('event_id', '==', req.params.event_id).get();
     if (query.empty) {
       res.status(400).send('No such event found');
     }
@@ -49,11 +48,11 @@ router.post('/create/:applicant_id/:event_id', async (req, res) => {
     eventsCollection.doc(req.params.event_id).set(results);
 
     // Updates application collection with a new document
-    await newApplicationRef.set(application).then(function() {
+    await newApplicationRef.set(application).then(() => {
       console.log("Document written with ID: ", newApplicationRef.id);
       res.json(application);
     })
-    .catch(function(error) {
+    .catch((error) => {
       console.error("Error adding document ", error);
       res.status(400).send(error);
     })    

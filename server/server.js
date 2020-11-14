@@ -64,7 +64,7 @@ app.get('/api/getCustomers/:postID/:userID', async (req, res) => {
 app.use('/users', checkAuth)
 app.use('/users', users)
 app.use('/events', events)
-app.use('./applications', applications)
+app.use('/applications', applications)
 
 const port = 5000;
 
