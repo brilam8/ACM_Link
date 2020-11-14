@@ -43,13 +43,12 @@ function Settings() {
   }
   const {register, handleSubmit, reset, control, errors, setValue} = useForm({defaultValues});
   const history = useHistory();
-  const [firstNameInput, setFirstNameInput] = useState('');
-  const [lastNameInput, setLastNameInput] = useState('');
   const [open, setOpen] = useState(false);
   const [snackMessage, setMessage] = useState("An error occurred");
   const [loginStatus, setLoginStatus] = useState('');
   const [revealPassword, setReveal] = useState(false);
-
+  const [origFirstName, setOrigFirstName] = useState('');
+  const [origLastName, setOrigLastName] = useState('');
   
 
   // Toggles whether or not you can visibly see the password.
@@ -57,8 +56,20 @@ function Settings() {
     setReveal(!revealPassword);
   }
 
-  function saveInfo() {
+  async function saveInfo(data) {
     console.log("should save info");
+    const userData = {
+      firstName: data.FirstNameTextField,
+      lastName: data.LastNameTextField,
+      password: data.PasswordTextField
+    }
+    console.log(userData);
+    if (userData.firstName != origFirstName || userData.lastName != origLastName) {
+
+    }
+    if (userData.password != "") {
+
+    }
   }
   
   useEffect(() => {
@@ -75,13 +86,11 @@ function Settings() {
               method: 'GET',
               headers: {"Content-Type": "application/json", "AuthToken" : idToken}
             })
-            res = await res.json();*/
-            res = {
-              firstName: "LOL",
-              lastName: "KEK"
-            }
-            setFirstNameInput(res.firstName);
-            setLastNameInput(res.lastName);
+            res = await res.json();
+            setValue("FirstNameTextField", res.firstName);
+            setValue("LastNameTextField", res.lastName);
+            setOrigFirstName(res.firstName);
+            setOrigLastName(res.lastName);*/
           } catch(error) {
             console.log(`Error grabbing users: ${error.code} - ${error.message}`)
           }
@@ -113,7 +122,6 @@ function Settings() {
                 control={control} 
                 as={
                   <TextField required 
-                    value = {firstNameInput}
                     style = {{width: "100%"}} 
                     label="First Name"
                   />
@@ -132,10 +140,10 @@ function Settings() {
               />
               <Controller 
                 name="PasswordTextField" 
-                rules={{pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,26}$/, required: true}} 
+                rules={{pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,26}$/}} 
                 control={control} 
                 as={
-                  <TextField required 
+                  <TextField 
                     type={revealPassword ? "text" : "password"} 
                     pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,26}$" 
                     style = {{marginTop: '50px', width: "100%"}} 
