@@ -74,15 +74,13 @@ function Login() {
           setMessage("Logged in! Please wait while you are redirected.")
           setOpen(true);
           setLoginStatus('Login success!')
-          await new Promise(r => setTimeout(r, 4000));
+          await new Promise(r => setTimeout(r, 2000));
           history.push("/homepage")
         } catch (error) {
           setLoginStatus('')
-          setMessage("Error. Make sure you have an account under that email!")
+          setMessage("Error. Double check your credentials!")
           setOpen(true);
         }
-        setEmailInput('');
-        setPassInput('');
         setLoginStatus('')
       }
       else {

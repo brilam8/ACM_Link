@@ -7,7 +7,7 @@ import '@rmwc/drawer/styles';
 import '@rmwc/button/styles';
 import '@rmwc/list/styles';
 import styled from 'styled-components';
-import {Link, useHistory} from 'react-router-dom';
+import {Link, useHistory, Redirect } from 'react-router-dom';
 import {Typography} from '@rmwc/typography';
 import firebase from '../firebase';
 
@@ -25,8 +25,9 @@ function HamburgerMenu () {
   const [open, setOpen] = useState(false);
 
   function handleLogout () {
-    firebase.auth().signOut().then(function(){
+    firebase.auth().signOut().then(async function(){
       setOpen(false);
+      await new Promise(r => setTimeout(r, 2000));
       history.push('/login')
     })
     .catch(function(error) {
@@ -61,6 +62,9 @@ function HamburgerMenu () {
             </Link>
             <Link to={`/test2`} onClick={() => setOpen(false)} style={{ textDecoration: 'none' }}>
               <ListItem>My Posts</ListItem>
+            </Link>
+            <Link to={`/settings`} onClick={() => setOpen(false)} style={{ textDecoration: 'none' }}>
+              <ListItem>Settings</ListItem>
             </Link>
             <ListItem onClick={() => handleLogout()}>Log Out</ListItem>
           </List>

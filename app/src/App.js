@@ -4,7 +4,7 @@ import {
   Switch, 
   Route, 
   Link,
-  Redirect
+  Redirect,
 } from 'react-router-dom';
 //import { route } from '../../server/functions/users';
 import sampleComponent from './components/sampleComponent';
@@ -46,7 +46,6 @@ const loggedIn = () => (
           <Route exact path='/loginTest' component={loginComp} />
           <Route exact path='/settings' component={settings} />
           <Route exact path='/buttonPage/:UID/:firstName' component={buttonPage} /> 
-          <Route exact path='/buttonPage/:UID/:firstName' component={buttonPage} />
           <Route exact path='/applicationPage/:UID/:event_id' component={applicationComponent} />
           <Route exact path='/drawer' component={HamburgerMenuComponent} /> 
           <Route path='*' component={() => <div>Page not found</div>} />

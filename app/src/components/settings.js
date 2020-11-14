@@ -56,19 +56,51 @@ function Settings() {
     setReveal(!revealPassword);
   }
 
+  function handleLogout () {
+    firebase.auth().signOut().then(function(){
+      setOpen(false);
+      history.push('/login')
+    })
+    .catch(function(error) {
+      console.log(error);
+    })
+  }
+
   async function saveInfo(data) {
     console.log("should save info");
-    const userData = {
-      firstName: data.FirstNameTextField,
-      lastName: data.LastNameTextField,
-      password: data.PasswordTextField
-    }
-    console.log(userData);
-    if (userData.firstName != origFirstName || userData.lastName != origLastName) {
-
-    }
-    if (userData.password != "") {
-
+    const currUser = firebase.auth().currentUser;
+    if (currUser) {
+      const pass = data.PasswordTextField;
+      const userData = {
+        firstName: data.FirstNameTextField,
+        lastName: data.LastNameTextField,
+      }
+      console.log(userData);
+      if (pass !== "") {
+        console.log("Updating password.");
+        currUser.updatePassword(pass).then(async function() {
+          setMessage("Update successful!");
+          setOpen(true);
+        }).catch(async function(error) {
+          setMessage("An error occurred. Please re-authenticate to change your password!");
+          setOpen(true);
+          await new Promise(r => setTimeout(r, 3000));
+          handleLogout();
+        });
+      }
+      if (userData.firstName !== origFirstName || userData.lastName !== origLastName) {
+        console.log("Updating name.");
+        const idToken = await firebase.auth().currentUser.getIdToken(true)
+        let res = await fetch(`/users/update/${currUser.uid}`,{
+          method: 'PUT',
+          body: JSON.stringify(userData),
+          headers: {"Content-Type": "application/json", "AuthToken" : idToken}
+        })
+        if (res.ok){
+          setMessage("Update successful!");
+          setOpen(true);
+        }
+      }
     }
   }
   
@@ -82,7 +114,7 @@ function Settings() {
             console.log("Error getting auth token")
           });
           try {
-            /*let res = await fetch(`/users/${user.uid}`,{
+            let res = await fetch(`/users/${user.uid}`,{
               method: 'GET',
               headers: {"Content-Type": "application/json", "AuthToken" : idToken}
             })
@@ -90,7 +122,7 @@ function Settings() {
             setValue("FirstNameTextField", res.firstName);
             setValue("LastNameTextField", res.lastName);
             setOrigFirstName(res.firstName);
-            setOrigLastName(res.lastName);*/
+            setOrigLastName(res.lastName);
           } catch(error) {
             console.log(`Error grabbing users: ${error.code} - ${error.message}`)
           }
