@@ -176,6 +176,7 @@ router.post('/create/:user_id', async (req, res) => {
     await newEventRef.set(event).then(function() {
       console.log("Document written with ID: ", newEventRef.id);
       res.json(event);
+      res.status(200).send();
     })
     .catch(function(error) {
       console.log("Error adding document", error);

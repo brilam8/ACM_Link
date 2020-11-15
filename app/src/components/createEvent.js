@@ -1,41 +1,33 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState} from 'react';
 import firebase from '../firebase';
 import styled from 'styled-components'
 import { Button } from '@rmwc/button';
-import {Typography} from '@rmwc/typography'
 import { TextField } from '@rmwc/textfield';
 import { Select } from '@rmwc/select';
 import { Snackbar, SnackbarAction } from '@rmwc/snackbar'
-import '@rmwc/select/styles';
-import '@rmwc/textfield/styles';
 import { useHistory } from 'react-router-dom';
 
-const RowDiv = styled.div`
-    display: flex;
-    justify-content: center;
-    //border:1px #ccc solid;
-`
-
-const InnerDiv = styled.div`
+const ContainerDiv = styled.div`
     //border:1px #ccc solid;
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     justify-content: center;
-    height: 60vh;
-    width: 50vh;
-    margin: 15px;
+    height: 35vw;
+    width: 60%;
+    margin: auto;
 `
-
 const EventFields = styled(TextField)`
-    margin: 13px;
+    margin: 20px;
 `
 
 const EventTextArea = styled(TextField)`
-    margin: 12px;
+    height: 344px;
+    margin: 20px;
 `
 
 const EventSelect = styled(Select)`
-    padding: 14px;
+    padding: 20px;
 `
 
 const CreateEvent = () => {
@@ -93,10 +85,8 @@ const CreateEvent = () => {
                 }
             />
 
-            <Typography style = {{display: 'flex', justifyContent: 'center', marginTop: 60}} use="headline2">Create New Event</Typography>
             <form onSubmit={createOwnerEvent}>
-                <RowDiv>
-                    <InnerDiv>
+                <ContainerDiv>
                         <EventSelect 
                             required 
                             label='Event Type' 
@@ -111,6 +101,7 @@ const CreateEvent = () => {
                         /> 
                         <EventFields 
                             required 
+                            type='number'
                             label='Max Applicants' 
                             onChange={(e) => setMaxApplicants(Number(e.target.value))} 
                         /> 
@@ -121,26 +112,24 @@ const CreateEvent = () => {
                         /> 
                         <Button 
                             raised 
-                            style={{alignSelf: 'flex-end', width: 180, height: 50, marginRight: 12, top: 32}}
+                            style={{width: 180, height: 50, alignSelf: 'flex-end', marginRight: '20px', top: 10}} 
                         >
                             Cancel
                         </Button>
-                    </InnerDiv>
-                    <InnerDiv>
                         <EventTextArea 
-                            required 
+                            required
                             textarea
-                            style={{backgroundColor: '#F5F5F5', marginTop: 45, marginBottom: 45}} 
-                            label='Description' rows={10} onChange={(e) => setDescription(e.target.value)} 
+                            style={{backgroundColor: '#F5F5F5'}} 
+                            label='Description' onChange={(e) => setDescription(e.target.value)} 
                         />
                         <Button 
                             raised 
-                            style={{alignSelf: 'flex-start', width: 180, height: 50, marginLeft: 12}} type='submit'
+                            style={{alignSelf: 'flex-start', width: 180, height: 50, marginLeft: '20px', top: 10}}
+                            type='submit'
                         >
                             Submit
                         </Button>
-                    </InnerDiv>
-                </RowDiv>
+                </ContainerDiv>
             </form>
         </div>
     )
