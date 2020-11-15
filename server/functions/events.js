@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router()
 const { json } = require('express');
 const {db, admin} = require('../firebase');
-const { app } = require('firebase');
-var cors = require('cors')
 
 // Configure app to use bodyParser
 router.use(express.urlencoded({
@@ -11,12 +9,6 @@ router.use(express.urlencoded({
 }));
 router.use(express.json());
 
-<<<<<<< HEAD
-const eventsCollection = db.collection('events')
-const userCollection = db.collection("events")
-const groupCollection = db.collection("groups")
-//getEvents
-=======
 const usersCollection = db.collection('users');
 const eventsCollection = db.collection('events');
 const applyCollection = db.collection('applications');
@@ -24,7 +16,6 @@ const applyCollection = db.collection('applications');
 
 // @route GET getEvents
 // @desc Gets all events in the database
->>>>>>> 667f7deefc221ba4d8eee15ca22c687bf1b7d554
 router.get('/', async (req, res) => {
   const query = await eventsCollection.get();
   let result = [];
@@ -34,27 +25,9 @@ router.get('/', async (req, res) => {
   res.json(result);
 })
 
-<<<<<<< HEAD
-//Get all events 
-router.get('/getAllEvents', cors(), async (req, res) => {
-  const collection = await db.collection('events');
-  let results = [];
-  const events = await db 
-    .collection('events')
-    .get();
-  events.forEach(doc => {
-      results = [...results, doc.data()]
-  })
-
-  res.json(results)
-})
-
-//getEvent by id
-=======
 
 // @route GET getEvent(event_id)
 // @desc Gets an event with a given id
->>>>>>> 667f7deefc221ba4d8eee15ca22c687bf1b7d554
 router.get('/:event_id', async (req, res) => {
   // Queries for event
   const query = await eventsCollection.where(
@@ -142,11 +115,6 @@ router.get('/getOwnerEvent/:creator_id/:event_id', async (req, res) => {
   res.json(finalResult);
 })
 
-<<<<<<< HEAD
-//setOwnerEvent status with a boolean value
-router.post('/setOwnerEvent/:event_id/:status', async (req, res) => {
-  const query = await eventsCollection.where('event_id', '==', req.params.event_id).get()
-=======
 
 // Changed status from param to json body. Don't know if this was the
 // right move. Change it back if you think status should be a parameter
@@ -158,7 +126,6 @@ router.post('/setStatus/:event_id', async (req, res) => {
   }
   // Queries for input event
   const query = await eventsCollection.where('event_id', '==', req.params.event_id).get();
->>>>>>> 667f7deefc221ba4d8eee15ca22c687bf1b7d554
   if(query.empty) {
     res.status(400).send('No such event was found');
   }

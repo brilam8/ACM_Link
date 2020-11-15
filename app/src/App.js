@@ -28,7 +28,7 @@ function App() {
         <Route exact path='/' component={sampleComponent2} />
         <Route path='/test' component={sampleComponent} /> 
         <Route path='/login' component={loginComp} />
-        <Route path='/grabUsers' component={grabUsers} />
+        {/* <Route path='/grabUsers' component={grabUsers} /> */}
         <Route exact path='/search' component={searchComponent} /> 
         <Route component={<div>Page not found</div>} />
         <Route exact path='/test' component={sampleComponent} /> 
