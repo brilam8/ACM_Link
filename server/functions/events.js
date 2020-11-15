@@ -186,6 +186,7 @@ router.post('/create/:user_id', async (req, res) => {
 
 router.get('/api/homework', async(req, res) => {
   const eventCollection = await db.collection('events');
+  
   const test = {
     event_id: "0101",
     creater_id: "1010",
@@ -235,6 +236,7 @@ router.get('/api/homework', async(req, res) => {
  
 router.get('/api/videogames', async(req, res) => {
   const eventCollection = await db.collection('events');
+  
   const test = {
     event_id: "1234",
     creater_id: "4321",
@@ -265,11 +267,11 @@ router.get('/api/videogames', async(req, res) => {
     end: "2020-11-01"
   }
 
-  eventCollection.set(test);
+  eventCollection.doc().set(test);
   res.json(test);
-  eventCollection.set(test2);
+  eventCollection.doc().set(test2);
   res.json(test2);
-  eventCollection.set(test3);
+  eventCollection.doc().set(test3);
   res.json(test3);
  
   const videoGame = await eventCollection.where('type', '==', 'VIDEOGAMES');
@@ -284,6 +286,7 @@ router.get('/api/videogames', async(req, res) => {
  
 router.get('/api/projects', async(req, res) => {
   const eventCollection = await db.collection('events');
+  
   const test = {
     event_id: "4500",
     creater_id: "0123",
@@ -333,6 +336,7 @@ router.get('/api/projects', async(req, res) => {
  
 router.get('/api/misc', async(req, res) => {
   const eventCollection = await db.collection('events');
+  
   const test = {
     event_id: "1234",
     creater_id: "4321",
