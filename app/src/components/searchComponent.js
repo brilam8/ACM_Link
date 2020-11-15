@@ -31,7 +31,7 @@ function SampleAPI2() {
           <input type="text" placeholder="Search Event Type" onChange={e => setSearch(e.target.value)}></input>
 
           {filteredEvents.map(event => {
-            event.status = event.status.toString();
+            // event.status = event.status.toString(); <-- Have yet to test
             return (
               // Printing the title and description of each event, along with the status
               <>
