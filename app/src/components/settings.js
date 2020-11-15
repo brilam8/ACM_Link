@@ -29,7 +29,9 @@ const OuterDiv = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  background-color: #333333;
+  && {
+    background-color: #333333;
+  }
 `
 
 function Settings() {

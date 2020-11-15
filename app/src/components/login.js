@@ -30,11 +30,13 @@ const TextLink = styled(Link)`
   text-decoration: none;
   color: #000000;
   font-family: Roboto;
-`
-
+`;
+ 
 const StyledButton = styled(Button)`
-  color: #333333;
-`
+  && {
+    background-color: #333333;
+  }
+`;
 
 function Login() {
 
@@ -142,6 +144,7 @@ function Login() {
           <TextLink to="/resetPassword">Forgot password?</TextLink>
         </div>
         <StyledButton raised
+          theme={['secondaryBg', 'onSecondary']}
           onClick={() => handleLogin()} 
           style = {{width: "30%", marginTop: "30px"}}
           label="SIGN IN"  
@@ -151,7 +154,7 @@ function Login() {
         </Typography>
         <StyledButton raised
           onClick={() => history.push("/createAccount")} 
-          style = {{width: "30%"}} 
+          style = {{width: "30%", marginTop: "10px"}} 
           label="CREATE NEW ACCOUNT"  
         /> 
       </OuterDiv>
