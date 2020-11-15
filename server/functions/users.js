@@ -68,9 +68,10 @@ router.post('/create', async (req, res) => {
   }
 })
 
+// TODO: Add checkauth arguement
 // @route PUT user
 // @desc Updates a user object with new name fields
-router.put('/update/:userId', checkAuth, async (req, res) => {
+router.put('/update/:userId', async (req, res) => {
   if (!req.params.userId) res.status(400).send("No user id provided");
   if (!req.body.firstName || !req.body.lastName) res.status(400).send("No names provided")
   const userRef = await userCollection.doc(req.params.userId);
