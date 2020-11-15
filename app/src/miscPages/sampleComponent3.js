@@ -8,7 +8,6 @@ import EventCard from '../components/eventCardComponent';
 function ButtonArray() {
   
   const [buttons, setButtons] = useState([]);
-  const [appButtons, setAppButtons] = useState([]);
 
   async function fetchUsers() {
     const response = await fetch('/users');
