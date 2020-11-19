@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router, 
   Switch, 
@@ -6,6 +6,7 @@ import {
   Link,
   Redirect,
 } from 'react-router-dom';
+<<<<<<< HEAD
 // import { route } from '../../server/functions/users';
 import sampleComponent from './components/sampleComponent';
 import sampleComponent2 from './components/sampleComponent2';
@@ -15,10 +16,18 @@ import settings from './components/settings';
 import sampleComponent3 from './components/sampleComponent3';
 import buttonPage from './components/buttonPageComponent';
 import searchComponent from './components/searchComponent';
+=======
+import sampleComponent2 from './miscPages/sampleComponent2';
+import loginComp from './profilePages/loginComp';
+import login from './profilePages/login';
+import settings from './components/settings';
+import sampleComponent3 from './miscPages/sampleComponent3';
+import buttonPage from './miscPages/buttonPageComponent';
+>>>>>>> b771d76b09e9a116343e15aafe90de2f028446a8
 import HamburgerMenuComponent from './components/hamburgerMenuComponent';
-import resetPass from './components/resetPass'
-import createAccount from './components/createAccount'
-import applicationComponent from './components/applicationComponent';
+import resetPass from './profilePages/resetPass'
+import createAccount from './profilePages/createAccount'
+import applicationPage from './applicationPage/applicationPage';
 
 function App() {
   return (
@@ -50,13 +59,12 @@ const loggedIn = () => (
     <div>
       <HamburgerMenuComponent/>
       <Switch>
-        <Route exact path='/homepage' component={sampleComponent2} /> 
-        <Route exact path='/test2' component={sampleComponent} />
-        <Route exact path='/test3' component={sampleComponent3} /> 
+        <Route exact path='/homepage' component={sampleComponent2} />
+        <Route exact path='/test' component={sampleComponent3} /> 
         <Route exact path='/loginTest' component={loginComp} />
         <Route exact path='/settings' component={settings} />
         <Route exact path='/buttonPage/:UID/:firstName' component={buttonPage} /> 
-        <Route exact path='/applicationPage/:UID/:event_id' component={applicationComponent} />
+        <Route exact path='/applicationPage/:UID/:event_id' component={applicationPage} />
         <Route exact path='/drawer' component={HamburgerMenuComponent} /> 
         <Route path='*' component={() => <div>Page not found</div>} />
       </Switch>

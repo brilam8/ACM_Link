@@ -18,6 +18,7 @@ function SampleAPI2() {
 
   // Submit function that fetches the data from getAllEvents CRUD function
   async function handleSubmit() {
+    console.log("FETCHING");
     const results = await fetch("http://localhost:5000/events/")
     setResults(await results.json());
   }
@@ -58,7 +59,7 @@ function SampleAPI2() {
         </div>
         {/* Button to get all the events and calls async handleSubmit function */}
         <Button variant="contained" color="primary" onClick={async () => { await handleSubmit(); }}>
-          Get All Events
+          Search Events
         </Button>
       </div>
       <Divider />
@@ -81,3 +82,7 @@ function SampleAPI2() {
 }
 
 export default SampleAPI2;
+
+//TODO: 
+//Incorportate the event cards for rickesh
+//ALSO: incorporate the search functionality 
