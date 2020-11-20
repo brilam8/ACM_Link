@@ -29,8 +29,13 @@ const userCollection = db.collection("users");
 // @route POST user
 // @desc Creates a user object and stores it in the "users" collection in firestore
 router.post('/create', async (req, res) => {
-  if (!req.body || !req.body.firstName || !req.body.lastName || !req.body.email || !req.body.password){
-    res.json({error: "Missing fields on request"});
+  let passRE = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,26}$/);
+  let emailRE = new RegExp(/\b[A-Za-z0-9._%+-]+@([Uu][Cc][Ss][Dd].[Ee][Dd][Uu])\b/);
+  console.log(req.body.email.match(emailRE));
+  console.log(req.body.password.match(passRE));
+  if (!req.body || !req.body.firstName || req.body.firstName == "" || req.body.lastName == "" || !req.body.lastName 
+      || !req.body.email || !req.body.password || !req.body.email.match(emailRE) || !req.body.password.match(passRE)){
+    res.json({error: "Missing fields on request or wrong format for inputs"});
   }
   else {
     //console.log(req.body)
