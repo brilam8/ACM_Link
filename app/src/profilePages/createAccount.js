@@ -21,6 +21,12 @@ const defaultValues = {
   PasswordTextField: ""
 }
 
+const StyledButton = styled(Button)`
+  && {
+    background-color: #333333;
+  }
+`
+
 const OuterDiv = styled.div`
   display: flex;
   flex: 1;
@@ -166,7 +172,7 @@ function CreateAccount() {
                   />
                 } 
               />
-              <Button raised 
+              <StyledButton raised 
                 className="button" 
                 type="submit" 
                 style = {{marginLeft:'15%', marginTop: '25px', width: "70%"}} 
