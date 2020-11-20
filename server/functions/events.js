@@ -88,7 +88,6 @@ router.get('/getOwnerEvent/:creator_id/:event_id', async (req, res) => {
     res.status(400).send('No user with the given id exists');
   } else {
     result = userQuery.data();
-    console.log('74', result);
   }
   
   // Checks to see if user has an open event with that passed-in event_id
@@ -102,8 +101,12 @@ router.get('/getOwnerEvent/:creator_id/:event_id', async (req, res) => {
   }
   if (userEvents.empty) {
     res.status(400).send('User does not have any open events');
+    console.log('User does not have any open events');
+    return;
   } else if (!found) {
     res.status(400).send('User does not have an event with that id');
+    console.log('User does not have an event with that id');
+    return;
   }
 
   // Gets event data
@@ -112,7 +115,7 @@ router.get('/getOwnerEvent/:creator_id/:event_id', async (req, res) => {
   query.forEach(doc => {
     finalResult.push(doc.data());
   })
-  res.json(finalResult);
+  res.json(finalResult[0]);
 })
 
 

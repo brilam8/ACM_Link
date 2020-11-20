@@ -8,10 +8,9 @@ import {
   DialogContent, 
   DialogActions, 
   DialogButton,
-  SimpleDialog
 } from '@rmwc/dialog';
 import { Select } from '@rmwc/select';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Redirect, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import '@rmwc/textfield/styles';
@@ -53,7 +52,8 @@ function ApplicationForm() {
   const [commentInput, setCommentInput] = useState('');
   const [whyInput, setWhyInput] = useState('');
   const [event, setEvent] = useState({});
-  const [open, setOpen] = useState(false);
+  const [openSubDialog, setOpenSubDialog] = useState(false);
+  const [openCancelDialog, setOpenCancelDialog] = useState(false)
 
   useEffect(()=>{
     fetchEvent();
@@ -68,7 +68,8 @@ function ApplicationForm() {
 
   function handleCancel(event) {
     event.preventDefault();
-    console.log('onCancel handler called');
+    console.log('cancel')
+    setOpenCancelDialog(true);
   }
 
   function handleSubmit(event) {
@@ -77,7 +78,7 @@ function ApplicationForm() {
       return;
     }
     console.log('onSubmit handler called');
-    setOpen(true);
+    setOpenSubDialog(true);
     const output = {
       desc: descInput,
       comments: commentInput,
@@ -99,49 +100,30 @@ function ApplicationForm() {
   return (
     <div className='ApplicationForm'>
       <form onSubmit={event => handleSubmit(event)}>
-        {/* Div1 contains the main top bar for the page */}
-        <Div1>
-          {/* PLACE HAMBURGER COMPONENT HERE */}
-          <Typography use='headline5' style={{
-            'color': 'white',
-            'margin-left': '4%',
-          }}>
-            burger
-          </Typography>
-
-          <Typography use='headline3' style={{
-            'color': 'white',
-          }}>
-            {event.title} Application
-          </Typography>
-
-          <Typography use='headline4' style={{
-            'font-family': 'Nunito',
-            'color': 'white',
-            'margin-right': '4%',
-          }}>
-            acm
-          </Typography>
-        </Div1>       
-
         {/* Div2 will contain the main content of the form including event 
         details and text fields */}
         <Div2>
           {/* First few Typography elements are for event details */}
+          <Typography use='headline3' style={{
+            marginTop: 100,
+          }}>
+            {event.title}
+          </Typography>
+
           <Typography use='headline5' style={{
-            'margin-top': '50px',
+            marginTop: 25,
           }}>
             {event.description}
           </Typography>
 
           <Typography use='headline5' style={{
-            'margin-top': '25px',
+            marginTop: 25,
           }}>
             Maximum Number of Teammates: {event.max_applicants}
           </Typography>
 
           <Typography use='headline5' style={{
-            'margin-top': '25px',
+            marginTop: '25px',
           }}>
             Time: {event.start_date} to {event.end_date}
           </Typography>          
@@ -170,23 +152,28 @@ function ApplicationForm() {
 
           {/* Used for submitting and cancel buttons */}
           <Div3>
-            <LinkStyled type='button' to={'/'}>
-              <Button type='button'>
-                Cancel
-              </Button>
-            </LinkStyled>
+            <Button 
+              type='button' 
+              onClick={event => handleCancel(event)}
+              style={{marginRight: '5%'}}
+            >
+              Cancel
+            </Button>
 
-            <Button raised>
+            <Button 
+              raised
+              style={{marginLeft: '5%'}}
+            >
               Submit
             </Button>
           </Div3>
 
           {/* Dialog box upon hitting Submit */}
           <Dialog
-            open={open}
+            open={openSubDialog}
             onClose={evt => {
               console.log(evt.detail.action);
-              setOpen(false);
+              setOpenSubDialog(false);
             }}
             onClosed={evt => console.log(evt.detail.action)}
           >
@@ -195,11 +182,32 @@ function ApplicationForm() {
               You've submitted your application for {event.title}.
             </DialogContent>
             <DialogActions>
-              <Link to='/'>
+              <LinkStyled to='/test3'>
                 <DialogButton action="accept" isDefaultAction>
                   Sweet!
                 </DialogButton>
-              </Link>
+              </LinkStyled>
+            </DialogActions>
+          </Dialog>
+
+          <Dialog
+            open={openCancelDialog}
+            onClose={evt => {
+              console.log(evt.detail.action);
+              setOpenCancelDialog(false);
+            }}
+            onClosed={evt => console.log(evt.detail.action)}
+          >
+            <DialogTitle>Canceling</DialogTitle>
+            <DialogContent>
+              Are you sure you want to cancel your application for {event.title}?
+            </DialogContent>
+            <DialogActions>
+              <LinkStyled to='/test3'>
+                <DialogButton action="accept" isDefaultAction>
+                  Cancel
+                </DialogButton>
+              </LinkStyled>
             </DialogActions>
           </Dialog>
         </Div2>
@@ -227,8 +235,8 @@ const Div2 = styled.div`
 
 const Div3 = styled.div`
   display: flex;
-  justify-content: space-between;
-  width: 10vw;
+  justify-content: center;
+  width: 50vw;
   margin-top: 25px;
 `;
 
@@ -252,7 +260,7 @@ const MainHeadline = styled(Typography)`
 `;
 
 const LinkStyled = styled(Link)`
-  text-decoration: none;
+text-decoration: none;
 `;
 
 
