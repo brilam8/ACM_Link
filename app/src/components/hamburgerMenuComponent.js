@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Drawer, DrawerHeader, DrawerTitle, DrawerSubtitle, DrawerContent} from '@rmwc/drawer';
 import {List, ListItem} from '@rmwc/list'
 import {Button} from '@rmwc/button'
@@ -7,7 +7,7 @@ import '@rmwc/drawer/styles';
 import '@rmwc/button/styles';
 import '@rmwc/list/styles';
 import styled from 'styled-components';
-import {Link, useHistory, Redirect } from 'react-router-dom';
+import {Link, useHistory, Redirect, useLocation } from 'react-router-dom';
 import {Typography} from '@rmwc/typography';
 import firebase from '../firebase';
 
@@ -23,6 +23,29 @@ const Div1 = styled.div`
 function HamburgerMenu () {
   const history = useHistory();
   const [open, setOpen] = useState(false);
+  const [pageName, setPageName] = useState('');
+
+  //gets current route
+  let location = useLocation();
+
+  //gets the page name and sets the header accordingly
+  useEffect(() => {
+    console.log(`props passed in is: ${location.pathname}`);
+
+    //add a case statement if you want your page to be named something besides your path
+    switch(location.pathname){
+      case "/homepage":
+        setPageName('HomePage');
+        break;
+      case "/settings":
+        setPageName('Settings');
+        break;
+      //defaults to making your path the page name
+      default:
+        const title = location.pathname.slice(1);
+        setPageName(title);
+    }
+  }, [location]);
 
   function handleLogout () {
     firebase.auth().signOut().then(async function(){
@@ -74,7 +97,7 @@ function HamburgerMenu () {
       color: 'white',
       marginLeft: '4%',
     }}>
-      Teammate Finder
+      {pageName}
     </Typography>
 
     <Typography use='headline4' style={{
