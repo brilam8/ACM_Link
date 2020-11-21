@@ -89,7 +89,7 @@ function EventCard({ user_id, event_id }) {
         </CardActions>
       </Card>
 
-      {/* <Card style={{ width: '21rem' }}>
+      <Card style={{ width: '21rem' }}>
         <CardPrimaryAction>
           <CardMedia
             sixteenByNine
@@ -124,7 +124,7 @@ function EventCard({ user_id, event_id }) {
             <CardActionButton>Apply</CardActionButton>
           </CardActionButtons>
         </CardActions>
-      </Card> */}
+      </Card>
     </div>
   );
 }
