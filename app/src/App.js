@@ -13,10 +13,13 @@ import settings from './components/settings';
 import sampleComponent3 from './miscPages/sampleComponent3';
 import buttonPage from './miscPages/buttonPageComponent';
 import HamburgerMenuComponent from './components/hamburgerMenuComponent';
-import resetPass from './profilePages/resetPass'
-import createAccount from './profilePages/createAccount'
-import applicationPage from './applicationPage/applicationPage';
 import searchComponent from './applicationPage/searchComponent';
+import resetPass from './profilePages/resetPass';
+import createAccount from './profilePages/createAccount';
+import applicationComponent from './applicationPage/applicationPage';
+import createEvent from './myEventPages/createEvent';
+import myEvents from './myEventPages/myEvents';
+import checkEvent from './myEventPages/checkEvent'
 
 function App() {
   return (
@@ -43,7 +46,10 @@ const loggedIn = () => (
         <Route exact path='/loginTest' component={loginComp} />
         <Route exact path='/settings' component={settings} />
         <Route exact path='/buttonPage/:UID/:firstName' component={buttonPage} /> 
-        <Route exact path='/applicationPage/:UID/:event_id' component={applicationPage} />
+        <Route exact path='/applicationPage/:UID/:event_id' component={applicationComponent} />
+        <Route exact path='/createEvent' component={createEvent} />
+        <Route exact path='/myEvents' component={myEvents} />
+        <Route exact path='/checkEvent/:event_id' component={checkEvent} />
         <Route exact path='/drawer' component={HamburgerMenuComponent} /> 
         <Route exact path='/search' component={searchComponent}/>
         <Route path='*' component={() => <div>Page not found</div>} />
