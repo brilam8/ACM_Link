@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from "react-hook-form"
 import { Button } from '@rmwc/button';
 import { TextField } from '@rmwc/textfield'
@@ -31,6 +31,17 @@ const OuterDiv = styled.div`
   width: 80vw;
   margin-left: 10vw;
 `;
+
+const AvatarDiv = styled.div`
+  height: 60%;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2%;
+  margin-bottom: 4%;
+`
 
 const StyledButton = styled(Button)`
   && {
@@ -234,7 +245,7 @@ function Settings() {
               /> 
             </form>
           </div>
-          <div style = {{height: "60%", width: "35%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", marginLeft: "2%", marginBottom: "4%",}}>
+          <AvatarDiv>
             <img style = {{ height: "70%", width: "70%"}}
               src={avatarType ? avatar1 : avatar2} 
               alt="avatar"
@@ -243,7 +254,7 @@ function Settings() {
               icon="refresh"
               onClick={() => toggleAvatar()}
             />
-          </div>
+          </AvatarDiv>
       </OuterDiv>
   )
 }
