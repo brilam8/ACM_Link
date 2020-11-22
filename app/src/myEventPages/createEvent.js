@@ -6,6 +6,13 @@ import { TextField } from '@rmwc/textfield';
 import { Select } from '@rmwc/select';
 import { Snackbar, SnackbarAction } from '@rmwc/snackbar'
 import { useHistory } from 'react-router-dom';
+import { 
+  Dialog, 
+  DialogTitle, 
+  DialogContent, 
+  DialogActions, 
+  DialogButton,
+} from '@rmwc/dialog';
 
 const ContainerDiv = styled.div`
     //border:1px #ccc solid;
@@ -37,8 +44,13 @@ const CreateEvent = () => {
     const [maxApplicants, setMaxApplicants] = useState();
     const [endDate, setEndDate] = useState();
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [openDialog, setOpenDialog] = useState(false);
     const history = useHistory();
     
+    const cancelCreateEvent = (event) => {
+        event.preventDefault();
+        setOpenDialog(true);
+    }
     //Runs on submit. Checks for user login and then POSTs the fields in the form
     const createOwnerEvent = (event) => {
         event.preventDefault();
@@ -61,6 +73,7 @@ const CreateEvent = () => {
                     headers: {'Content-Type': 'application/json'}
                 })
                 setOpenSnackbar(true);
+                history.push('/myEvents')
                 return response.json;
             } else {
                 // No user is signed in.
@@ -84,7 +97,21 @@ const CreateEvent = () => {
                     />
                 }
             />
-
+            <Dialog
+                open={openDialog}
+                onClose={evt => {
+                console.log(evt.detail.action);
+                setOpenDialog(false);
+                }}
+                onClosed={evt => console.log(evt.detail.action)}
+            >
+            <DialogTitle>Cancel Event?</DialogTitle>
+            <DialogContent>Are you sure you want to cancel creating this event? Your changes will be discarded.</DialogContent>
+            <DialogActions>
+                <DialogButton action="close" isDefaultAction>No</DialogButton>
+                <DialogButton action="accept" onClick={()=>history.push('/')}>Yes</DialogButton>
+            </DialogActions>
+            </Dialog>
             <form onSubmit={createOwnerEvent}>
                 <ContainerDiv>
                         <EventSelect 
@@ -112,6 +139,7 @@ const CreateEvent = () => {
                         /> 
                         <Button 
                             raised 
+                            onClick={() => setOpenDialog(true)}
                             style={{width: 180, height: 50, alignSelf: 'flex-end', marginRight: '20px', top: 10}} 
                         >
                             Cancel

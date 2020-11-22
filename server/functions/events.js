@@ -30,18 +30,11 @@ router.get('/', async (req, res) => {
 // @desc Gets an event with a given id
 router.get('/:event_id', async (req, res) => {
   // Queries for event
-  const query = await eventsCollection.where(
-    'event_id', '==', req.params.event_id).get();
-  if (query.empty){
+  const event = await eventsCollection.doc(req.params.event_id).get();
+  if (!event){
     res.status(400).send('No such event was found');
   }
-
-  // Pushes event to result array to form response
-  let result = [];
-  query.forEach(doc => {
-    result.push(doc.data());
-  })
-  res.json(result);
+  res.json(event.data());
 })
 
 

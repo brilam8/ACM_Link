@@ -13,10 +13,12 @@ import settings from './components/settings';
 import sampleComponent3 from './miscPages/sampleComponent3';
 import buttonPage from './miscPages/buttonPageComponent';
 import HamburgerMenuComponent from './components/hamburgerMenuComponent';
-import resetPass from './components/resetPass'
-import createAccount from './components/createAccount'
-import applicationComponent from './components/applicationComponent';
-import createEvent from './components/createEvent'
+import resetPass from './profilePages/resetPass';
+import createAccount from './profilePages/createAccount';
+import applicationComponent from './applicationPage/applicationPage';
+import createEvent from './myEventPages/createEvent';
+import myEvents from './myEventPages/myEvents';
+import checkEvent from './myEventPages/checkEvent'
 
 function App() {
   return (
@@ -45,6 +47,8 @@ const loggedIn = () => (
         <Route exact path='/buttonPage/:UID/:firstName' component={buttonPage} /> 
         <Route exact path='/applicationPage/:UID/:event_id' component={applicationComponent} />
         <Route exact path='/createEvent' component={createEvent} />
+        <Route exact path='/myEvents' component={myEvents} />
+        <Route exact path='/checkEvent/:event_id' component={checkEvent} />
         <Route exact path='/drawer' component={HamburgerMenuComponent} /> 
         <Route path='*' component={() => <div>Page not found</div>} />
       </Switch>
