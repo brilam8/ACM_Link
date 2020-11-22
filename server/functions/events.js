@@ -30,18 +30,11 @@ router.get('/', async (req, res) => {
 // @desc Gets an event with a given id
 router.get('/:event_id', async (req, res) => {
   // Queries for event
-  const query = await eventsCollection.where(
-    'event_id', '==', req.params.event_id).get();
-  if (query.empty){
+  const event = await eventsCollection.doc(req.params.event_id).get();
+  if (!event){
     res.status(400).send('No such event was found');
   }
-
-  // Pushes event to result array to form response
-  let result = [];
-  query.forEach(doc => {
-    result.push(doc.data());
-  })
-  res.json(result);
+  res.json(event.data());
 })
 
 
@@ -145,7 +138,7 @@ router.post('/setStatus/:event_id', async (req, res) => {
 // @desc creates an event and stores it in the database
 router.post('/create/:user_id', async (req, res) => {
   if(!req.body || !req.body.description || !req.body.end_date || 
-    !req.body.max_applicants || !req.body.start_date || !req.body.status ||
+    !req.body.max_applicants || !req.body.status ||
     !req.body.title || !req.body.type) {
     res.send("Missing fields on request");
   } else {
@@ -155,10 +148,10 @@ router.post('/create/:user_id', async (req, res) => {
       applications: [],
       creator_id: req.params.user_id,
       description: req.body.description,
-      end_date: req.body.end_date,
+      end_date: new Date(req.body.end_date),
       event_id: newEventRef.id,
       max_applicants: req.body.max_applicants,
-      start_date: req.body.start_date,
+      start_date: new Date(),
       status: req.body.status,
       title: req.body.title,
       type: req.body.type     
@@ -179,6 +172,7 @@ router.post('/create/:user_id', async (req, res) => {
     await newEventRef.set(event).then(function() {
       console.log("Document written with ID: ", newEventRef.id);
       res.json(event);
+      res.status(200).send();
     })
     .catch(function(error) {
       console.log("Error adding document", error);
