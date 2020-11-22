@@ -19,8 +19,6 @@ import avatar2 from "../images/avatar-2.png"
 
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
-
-
 const OuterDiv = styled.div`
   display: flex;
   flex: 1;
