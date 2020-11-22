@@ -16,16 +16,6 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(cors());
 
-//example API call
-app.get('/api/customers', (req, res) => {
-  const collection = db.collection('fakeCollection').doc();
-  const customers = {
-    eventName: "title"
-  }
-  collection.set(customers);
-  res.json(customers)
-})
-
 function checkAuth(req, res, next){
   if (req.headers.authtoken) {
     admin.auth().verifyIdToken(req.headers.authtoken)
@@ -61,7 +51,7 @@ app.get('/api/getCustomers/:postID/:userID', async (req, res) => {
 })
 
 //get all the user routes from users.js
-//app.use('/users', checkAuth)
+app.use('/users', checkAuth)
 app.use('/users', users)
 app.use('/events', events)
 app.use('/applications', applications)

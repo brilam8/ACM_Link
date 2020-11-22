@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Textfield from '@material-ui/core/Textfield';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
@@ -50,7 +50,6 @@ function LoginComp() {
       .catch((error) => {
         setLoginStatus("Error getting auth token")
       });
-      console.log(idToken);
       try {
         const res = await fetch('/users',{
           method: 'GET',

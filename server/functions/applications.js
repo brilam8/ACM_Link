@@ -61,7 +61,7 @@ router.post('/create/:applicant_id/:event_id', async (req, res) => {
 
 
 
-// TODO:
+// TODO: Need to fix. Identical with route below(?)
 // @route GET getApplication(user_id)
 // @desc Returns the application of the clicked user
 router.get('/getApplicant/:application_id', async (req,res) => {
