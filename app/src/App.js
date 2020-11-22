@@ -13,6 +13,7 @@ import settings from './components/settings';
 import sampleComponent3 from './miscPages/sampleComponent3';
 import buttonPage from './miscPages/buttonPageComponent';
 import HamburgerMenuComponent from './components/hamburgerMenuComponent';
+import searchComponent from './applicationPage/searchComponent';
 import resetPass from './profilePages/resetPass';
 import createAccount from './profilePages/createAccount';
 import applicationComponent from './applicationPage/applicationPage';
@@ -50,6 +51,7 @@ const loggedIn = () => (
         <Route exact path='/myEvents' component={myEvents} />
         <Route exact path='/checkEvent/:event_id' component={checkEvent} />
         <Route exact path='/drawer' component={HamburgerMenuComponent} /> 
+        <Route exact path='/search' component={searchComponent}/>
         <Route path='*' component={() => <div>Page not found</div>} />
       </Switch>
     </div>
