@@ -32,7 +32,7 @@ function SearchForm() {
 
   async function handleFilter() {
     console.log("HANDLING FILTER");
-    const filteredEvents = await results.filter(event => event.type.toLowerCase().includes(input.toLowerCase()));
+    const filteredEvents = await results.filter(event => event.title.toLowerCase().includes(input.toLowerCase()));
     setfilteredEvents(await filteredEvents);
   }
 /**
@@ -69,19 +69,15 @@ function SearchForm() {
     <div className="SearchForm">
       <div style={{ 'marginLeft': '50px' }}>
         <div className="App">
-          <input type="text"  placeholder="Search Event Type" onChange={e => setInput(e.target.value)}></input>
+          <input type="text"  placeholder="Event Title:" onChange={e => setInput(e.target.value)}></input>
           <h1>Search Posts</h1>
           {filteredEvents.map(event => {
             // event.status = event.status.toString(); <-- Have yet to test
             return (
               // Printing the title and description of each event, along with the status
               <>
-                <h1> Title: {event.title}</h1>
-                <h2> Description: {event.description}</h2>
-                <h3>Type: {event.type} </h3>
-                <h1> -------------------</h1>
                 <EventCard
-                  user_id= '6PRMGwVGACILQwTnbIHC'        
+                  user_id= {event.creator_id}        
                   event_id= {event.event_id}
                   />
               </>
