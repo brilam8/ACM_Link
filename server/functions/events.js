@@ -30,18 +30,11 @@ router.get('/', async (req, res) => {
 // @desc Gets an event with a given id
 router.get('/:event_id', async (req, res) => {
   // Queries for event
-  const query = await eventsCollection.where(
-    'event_id', '==', req.params.event_id).get();
-  if (query.empty){
+  const event = await eventsCollection.doc(req.params.event_id).get();
+  if (!event){
     res.status(400).send('No such event was found');
   }
-
-  // Pushes event to result array to form response
-  let result = [];
-  query.forEach(doc => {
-    result.push(doc.data());
-  })
-  res.json(result);
+  res.json(event.data());
 })
 
 
@@ -145,7 +138,7 @@ router.post('/setStatus/:event_id', async (req, res) => {
 // @desc creates an event and stores it in the database
 router.post('/create/:user_id', async (req, res) => {
   if(!req.body || !req.body.description || !req.body.end_date || 
-    !req.body.max_applicants || !req.body.start_date || !req.body.status ||
+    !req.body.max_applicants || !req.body.status ||
     !req.body.title || !req.body.type) {
     res.send("Missing fields on request");
   } else {
@@ -155,10 +148,10 @@ router.post('/create/:user_id', async (req, res) => {
       applications: [],
       creator_id: req.params.user_id,
       description: req.body.description,
-      end_date: req.body.end_date,
+      end_date: new Date(req.body.end_date),
       event_id: newEventRef.id,
       max_applicants: req.body.max_applicants,
-      start_date: req.body.start_date,
+      start_date: new Date(),
       status: req.body.status,
       title: req.body.title,
       type: req.body.type     
@@ -179,6 +172,7 @@ router.post('/create/:user_id', async (req, res) => {
     await newEventRef.set(event).then(function() {
       console.log("Document written with ID: ", newEventRef.id);
       res.json(event);
+      res.status(200).send();
     })
     .catch(function(error) {
       console.log("Error adding document", error);
@@ -187,6 +181,205 @@ router.post('/create/:user_id', async (req, res) => {
   }
 })
 
+router.get('/api/homework', async(req, res) => {
+  const eventCollection = await db.collection('events');
+  
+  const test = {
+    event_id: "0101",
+    creater_id: "1010",
+    title: "Homework group",
+    type: "HOMEWORK",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const test2 = {
+    event_id: "1111",
+    creater_id: "2222",
+    title: "Looking for gaming team",
+    type: "VIDEOGAMES",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const test3 = {
+    event_id: "3333",
+    creater_id: "3232",
+    title: "Side project group",
+    type: "PROJECTS",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+
+  eventCollection.set(test);
+  res.json(test);
+  eventCollection.set(test2);
+  res.json(test2);
+  eventCollection.set(test3);
+  res.json(test3);
+ 
+  const homework = await eventCollection.where('type', '==', 'HOMEWORK');
+  const query = await homework.get();
+  let results = [];
+  query.forEach(doc => {
+    results = [...results, doc.data()]
+  });
+  console.log(results);
+  res.json(results);
+});
+ 
+router.get('/api/videogames', async(req, res) => {
+  const eventCollection = await db.collection('events');
+  
+  const test = {
+    event_id: "1234",
+    creater_id: "4321",
+    title: "Finding homework group",
+    type: "HOMEWORK",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const test2 = {
+    event_id: "1357",
+    creater_id: "7531",
+    title: "Looking for League team",
+    type: "VIDEOGAMES",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const test3 = {
+    event_id: "2468",
+    creater_id: "8642",
+    title: "Seeking project group",
+    type: "PROJECTS",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+
+  eventCollection.doc().set(test);
+  res.json(test);
+  eventCollection.doc().set(test2);
+  res.json(test2);
+  eventCollection.doc().set(test3);
+  res.json(test3);
+ 
+  const videoGame = await eventCollection.where('type', '==', 'VIDEOGAMES');
+  const query = await videoGame.get();
+  let results = [];
+  query.forEach(doc => {
+    results = [...results, doc.data()]
+  });
+  console.log(results);
+  res.json(results);
+});
+ 
+router.get('/api/projects', async(req, res) => {
+  const eventCollection = await db.collection('events');
+  
+  const test = {
+    event_id: "4500",
+    creater_id: "0123",
+    title: "Hw group",
+    type: "HOMEWORK",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const test2 = {
+    event_id: "1357",
+    creater_id: "7531",
+    title: "Looking for League team",
+    type: "VIDEOGAMES",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const test3 = {
+    event_id: "2468",
+    creater_id: "8642",
+    title: "Seeking project group",
+    type: "PROJECTS",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+
+  eventCollection.set(test);
+  res.json(test);
+  eventCollection.set(test2);
+  res.json(test2);
+  eventCollection.set(test3);
+  res.json(test3);
+ 
+  const project = await eventCollection.where('type', '==', 'PROJECTS');
+  const query = await project.get();
+  let results = [];
+  query.forEach(doc => {
+    results = [...results, doc.data()]
+  });
+  console.log(results);
+  res.json(results);
+});
+ 
+router.get('/api/misc', async(req, res) => {
+  const eventCollection = await db.collection('events');
+  
+  const test = {
+    event_id: "1234",
+    creater_id: "4321",
+    title: "Finding homework group",
+    type: "HOMEWORK",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const test2 = {
+    event_id: "1357",
+    creater_id: "7531",
+    title: "Looking for League team",
+    type: "VIDEOGAMES",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+ 
+  const test3 = {
+    event_id: "2468",
+    creater_id: "8642",
+    title: "Seeking project group",
+    type: "PROJECTS",
+    status: true,
+    start: "2020-10-31",
+    end: "2020-11-01"
+  }
+
+  eventCollection.set(test);
+  res.json(test);
+  eventCollection.set(test2);
+  res.json(test2);
+  eventCollection.set(test3);
+  res.json(test3);
+
+  const misc = await eventCollection.where('type', '==', 'OTHER');
+  const query = await misc.get();
+  let results = [];
+  query.forEach(doc => {
+    results = [...results, doc.data()]
+  });
+  console.log(results);
+  res.json(results);
+});
 
 // @route GET getApplicants
 // @desc Returns all of the applications for a given event_id
