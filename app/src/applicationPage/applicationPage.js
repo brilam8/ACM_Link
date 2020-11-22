@@ -62,7 +62,7 @@ function ApplicationForm() {
   async function fetchEvent() {
     const response = await fetch(`/events/${params.event_id}`);
     const data = await response.json();
-    setEvent(data[0]);
+    setEvent(data);
     console.log(event);
   }
 
