@@ -18,6 +18,7 @@ import resetPass from './profilePages/resetPass';
 import createAccount from './profilePages/createAccount';
 import applicationComponent from './applicationPage/applicationPage';
 import createEvent from './myEventPages/createEvent';
+import homepageComponent from './components/homepageComponents';
 import myEvents from './myEventPages/myEvents';
 import checkEvent from './myEventPages/checkEvent'
 
@@ -41,7 +42,7 @@ const loggedIn = () => (
     <div>
       <HamburgerMenuComponent/>
       <Switch>
-        <Route exact path='/homepage' component={sampleComponent2} />
+        <Route exact path='/homepage' component={homepageComponent} /> 
         <Route exact path='/test' component={sampleComponent3} /> 
         <Route exact path='/loginTest' component={loginComp} />
         <Route exact path='/settings' component={settings} />
