@@ -29,13 +29,6 @@ const StyledButton = styled(Button)`
   }
 `
 
-const AvatarDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`
-
 const OuterDiv = styled.div`
   display: flex;
   flex: 1;
