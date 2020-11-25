@@ -118,7 +118,7 @@ const CreateEvent = () => {
                             required 
                             label='Event Type' 
                             placeholder='Select one' 
-                            options={['Games', 'Homework', 'Projects']} 
+                            options={['VIDEOGAMES', 'HOMEWORK', 'PROJECTS', 'MISC']} 
                             onChange={(e) => setType(e.target.value)} 
                         />
                         <EventFields 
