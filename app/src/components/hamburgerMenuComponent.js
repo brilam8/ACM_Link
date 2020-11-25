@@ -78,7 +78,7 @@ function HamburgerMenu () {
             <Link to={`/homepage`} onClick={() => setOpen(false)} style={{ textDecoration: 'none' }}>
               <ListItem>Homepage</ListItem>
             </Link>
-            <Link to={`/test`} onClick={() => setOpen(false)} style={{ textDecoration: 'none' }}>
+            <Link to={`/search`} onClick={() => setOpen(false)} style={{ textDecoration: 'none' }}>
               <ListItem>Search for Posts</ListItem>
             </Link>
             <Link to={`/myEvents`} onClick={() => setOpen(false)} style={{ textDecoration: 'none' }}>

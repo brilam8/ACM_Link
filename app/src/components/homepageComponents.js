@@ -11,46 +11,43 @@ import '@rmwc/button/styles';
 import '@rmwc/typography/styles';
 import '@rmwc/textfield/styles';
 import '@rmwc/icon/styles';
+import EventCard from '../components/eventCardComponent';
 //import Cards from '@rmwc/card/styles';
 
 function EventsArray() {
 
   const history = useHistory();
-  const [buttons, setButtons] = useState([]);
-  const [emailInput, setEmailInput] = useState('');
-
-  
+  const [VideoGames, setVideoGames] = useState([]);
+  const [HW, setHW] = useState([]);
+  const [Projects, setProjects] = useState([]);
+  const [MISC, setMISC] = useState([]);
 
   async function fetchVideoUsers() {
-    const response = await fetch('/events/api/videogames');
+    const response = await fetch('/events/homepage/videogames');
     const json = await response.json();
     console.log(json);
-    setButtons(buttons.concat(json));
-    console.log(buttons);
-  }
+    setVideoGames(VideoGames.concat(json));
+  } 
 
   async function fetchHWUsers() {
-    const response = await fetch('/events/api/homework');
+    const response = await fetch('/events/homepage/homework');
     const json = await response.json();
     console.log(json);
-    setButtons(buttons.concat(json));
-    console.log(buttons);
+    setHW(HW.concat(json));
   }
 
   async function fetchProjectUsers() {
-    const response = await fetch('/events/api/projects');
+    const response = await fetch('/events/homepage/projects');
     const json = await response.json();
     console.log(json);
-    setButtons(buttons.concat(json));
-    console.log(buttons);
+    setProjects(Projects.concat(json));
   }
 
   async function fetchMiscUsers() {
-    const response = await fetch('/events/api/misc');
+    const response = await fetch('/events/homepage/misc');
     const json = await response.json();
     console.log(json);
-    setButtons(buttons.concat(json));
-    console.log(buttons);
+    setMISC(MISC.concat(json));
   }
 
   useEffect(()=>{
@@ -62,123 +59,50 @@ function EventsArray() {
   
   return (
     <div>
-        <TextField 
-            //icon="search"
-            //trailingIcon="close"
-            style = {{
-              width: "25%",
-              margin: "2.5% 0% 2.5% 4%",
-            
-            }} 
-            value = {emailInput}
-            label="Search posts" 
-        />
-        <Button raised
-           //onClick={() => history.push("/createAccount")} 
-          style = {{
-          width: "10%",
-          margin: "0% 0% 0% 2.5%",
-          float: "center",
-          backgroungColor: "black"
-          }} 
-          label="SEARCH"
-        /> 
-        <Button raised
-          onClick={() => history.push("/applicationPage/:UID/:event_id")} 
-          style = {{
-          width: "10%",
-          margin: "3.25% 4% 0% 0%",
-          float: "right",
-          }}
-          label="+ NEW POST"
-        /> 
-          <br/>
         <Typography style = {{margin: "2.5% 0% 2.5% 4%"}} use="headline3">Videogames</Typography>
-        <div>
-            {buttons.map((user) => {
+        <div style={{display: 'flex', alignItems: 'center'}}>
+            {VideoGames.map((user) => {
                 return (
-                    <Typography>
-                    {user.event_id}
-                    {user.max_applicants}
-                    </Typography>
-                );
-            })}
-        </div>
-        <div>
-            {buttons.map((user) => {
-                return (
-                    <Typography>
-                    {user.event_id}
-                    </Typography>
-                );
-        })}
-        </div>
-        <div>
-            {buttons.map((user) => {
-                return (
-                    <Typography>
-                    {user.event_id}
-                    </Typography>
+                    <EventCard
+                        user_id= {user.creator_id}        
+                        event_id= {user.event_id}
+                    />
                 );
             })}
         </div>
         <br/>
         <Typography style = {{margin: "2.5% 0% 2.5% 4%"}} use="headline3">Homework</Typography>
-        <div>
-            {buttons.map((user) => {
+        <div style={{display: 'flex', alignItems: 'center'}}>
+            {HW.map((user) => {
                 return (
-                    <Typography>
-                    {user.event_id}
-                    {user.max_applicants}
-                    </Typography>
-                );
-            })}
-        </div>
-        <div>
-            {buttons.map((user) => {
-                return (
-                    <Typography>
-                    {user.event_id}
-                    </Typography>
-                );
-        })}
-        </div>
-        <div>
-            {buttons.map((user) => {
-                return (
-                    <Typography>
-                    {user.event_id}
-                    </Typography>
+                    <EventCard
+                        user_id= {user.creator_id}        
+                        event_id= {user.event_id}
+                    />
                 );
             })}
         </div>
         <br/>
         <Typography style = {{margin: "2.5% 0% 2.5% 4%"}} use="headline3">Projects</Typography>
-        <div>
-            {buttons.map((user) => {
+        <div style={{display: 'flex', alignItems: 'center'}}>
+            {Projects.map((user) => {
                 return (
-                    <Typography>
-                    {user.event_id}
-                    {user.max_applicants}
-                    </Typography>
+                    <EventCard
+                        user_id= {user.creator_id}        
+                        event_id= {user.event_id}
+                    />
                 );
             })}
         </div>
-        <div>
-            {buttons.map((user) => {
+        <br/>
+        <Typography style = {{margin: "2.5% 0% 2.5% 4%"}} use="headline3">Misc</Typography>
+        <div style={{display: 'flex', alignItems: 'center'}}>
+            {MISC.map((user) => {
                 return (
-                    <Typography>
-                    {user.event_id}
-                    </Typography>
-                );
-        })}
-        </div>
-        <div>
-            {buttons.map((user) => {
-                return (
-                    <Typography>
-                    {user.event_id}
-                    </Typography>
+                    <EventCard
+                        user_id= {user.creator_id}        
+                        event_id= {user.event_id}
+                    />
                 );
             })}
         </div>

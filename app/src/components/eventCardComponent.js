@@ -88,43 +88,6 @@ function EventCard({ user_id, event_id }) {
           </CardActionButtons>
         </CardActions>
       </Card>
-
-      <Card style={{ width: '21rem' }}>
-        <CardPrimaryAction>
-          <CardMedia
-            sixteenByNine
-            style={{
-              backgroundImage: 'url(images/backgrounds/mb-bg-fb-16.png)'
-            }}
-          />
-          <div style={{ padding: '0 1rem 1rem 1rem' }}>
-            <Typography use="headline6" tag="h2">
-              Our Changing Planet
-            </Typography>
-            <Typography
-              use="subtitle2"
-              tag="h3"
-              theme="textSecondaryOnBackground"
-              style={{ marginTop: '-1rem' }}
-            >
-              by Kurt Wagner
-            </Typography>
-            <Typography
-              use="body1"
-              tag="div"
-              theme="textSecondaryOnBackground"
-            >
-              Visit ten places on our planet that are undergoing the biggest
-              changes today.
-            </Typography>
-          </div>
-        </CardPrimaryAction>
-        <CardActions>
-          <CardActionButtons>
-            <CardActionButton>Apply</CardActionButton>
-          </CardActionButtons>
-        </CardActions>
-      </Card>
     </div>
   );
 }
