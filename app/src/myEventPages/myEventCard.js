@@ -31,10 +31,11 @@ function EventCard({ event_id }) {
     setEvent(json);
   }
 
+  //TODO add MISC category
   const imageMap = {
-    'Games': `url(${gamesImg})`,
-    'Projects': `url(${projectsImg})`,
-    'Homework': `url(${homeworkImg})`,
+    'VIDEOGAMES': `url(${gamesImg})`,
+    'PROJECTS': `url(${projectsImg})`,
+    'HOMEWORK': `url(${homeworkImg})`,
   }
 
   return (
