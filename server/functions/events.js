@@ -181,7 +181,7 @@ router.post('/create/:user_id', async (req, res) => {
   }
 })
 
-router.get('/api/homework', async(req, res) => {
+router.get('/homepage/homework', async(req, res) => {
   const eventCollection = await db.collection('events');
   
   const homework = await eventCollection.where('type', '==', 'HOMEWORK');
@@ -194,7 +194,7 @@ router.get('/api/homework', async(req, res) => {
   res.json(results);
 });
  
-router.get('/api/videogames', async(req, res) => {
+router.get('/homepage/videogames', async(req, res) => {
   const eventCollection = await db.collection('events');
  
   const videoGame = await eventCollection.where('type', '==', 'VIDEOGAMES');
@@ -207,7 +207,7 @@ router.get('/api/videogames', async(req, res) => {
   res.json(results);
 });
  
-router.get('/api/projects', async(req, res) => {
+router.get('/homepage/projects', async(req, res) => {
   const eventCollection = await db.collection('events');
  
   const project = await eventCollection.where('type', '==', 'PROJECTS');
@@ -220,7 +220,7 @@ router.get('/api/projects', async(req, res) => {
   res.json(results);
 });
  
-router.get('/api/misc', async(req, res) => {
+router.get('/homepage/misc', async(req, res) => {
   const eventCollection = await db.collection('events');
 
   const misc = await eventCollection.where('type', '==', 'OTHER');
