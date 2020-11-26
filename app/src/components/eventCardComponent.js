@@ -24,13 +24,20 @@ function EventCard({ user_id, event_id }) {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    fetchEvent();
-    fetchUser();
+    async function grabUserInfo() {
+      firebase.auth().onAuthStateChanged(async function(user) {
+        fetchEvent();
+        fetchUser();
+      });
+    }
+    grabUserInfo();
   }, []);
 
   async function fetchUser() {
     const currUser = firebase.auth().currentUser;
+    console.log("HELLO CHECKING CURR USER");
     if (currUser) {
+      console.log("INSIDE");
       const idToken = await firebase.auth().currentUser.getIdToken(true)
       const response = await fetch(`/users/${user_id}`,{
         method: 'GET',
@@ -77,7 +84,7 @@ function EventCard({ user_id, event_id }) {
               theme="textSecondaryOnBackground"
               style={{ marginTop: '-1rem' }}
             >
-              by {user_id.firstName} {user_id.lastName}
+              by {user.firstName} {user.lastName}
             </Typography>
             <Typography
               use="body1"
@@ -92,7 +99,7 @@ function EventCard({ user_id, event_id }) {
         <CardActions>
           <CardActionButtons>
           <Link 
-            to={`/applicationPage/${user_id.user_id}/${event.event_id}`}
+            to={`/applicationPage/${user_id}/${event.event_id}`}
           >
             <CardActionButton>
               View More
