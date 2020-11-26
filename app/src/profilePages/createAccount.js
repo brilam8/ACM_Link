@@ -5,6 +5,7 @@ import { Typography } from '@rmwc/typography';
 import { Button } from '@rmwc/button';
 import { TextField } from '@rmwc/textfield';
 import { Snackbar, SnackbarAction } from '@rmwc/snackbar';
+import { IconButton } from '@rmwc/icon-button'
 import "typeface-roboto";
 import '@rmwc/snackbar/styles'
 import '@rmwc/button/styles';
@@ -173,7 +174,7 @@ function CreateAccount() {
                     label="Password" 
                   />
                 } 
-              />              
+              />
               <StyledButton raised 
                 className="button" 
                 type="submit" 

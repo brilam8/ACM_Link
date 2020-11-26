@@ -14,7 +14,7 @@ import '@rmwc/typography/styles';
 import gamesImg from '../images/games.jpg';
 import homeworkImg from '../images/homework.jpg';
 import projectsImg from '../images/projects.jpg';
-
+import firebase from '../firebase';
 
 function EventCard({ user_id, event_id }) {
   const [event, setEvent] = useState({});
@@ -26,10 +26,17 @@ function EventCard({ user_id, event_id }) {
   }, []);
 
   async function fetchUser() {
-    const response = await fetch(`/users/${user_id}`);
-    const json = await response.json();
-    console.log('user', json);
-    setUser(json);
+    const currUser = firebase.auth().currentUser;
+    if (currUser) {
+      const idToken = await firebase.auth().currentUser.getIdToken(true)
+      const response = await fetch(`/users/${user_id}`,{
+        method: 'GET',
+        headers: {"Content-Type": "application/json", "AuthToken" : idToken}
+      })
+      const json = await response.json();
+      console.log('user', json);
+      setUser(json);
+    }
   }
 
   async function fetchEvent() {

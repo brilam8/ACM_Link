@@ -16,21 +16,6 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(cors());
 
-function checkAuth(req, res, next){
-  if (req.headers.authtoken) {
-    admin.auth().verifyIdToken(req.headers.authtoken)
-    .then(() => {
-      next();
-    })
-    .catch(() => {
-      res.status(403).send("Unauthorized")
-    });
-  }
-  else {
-    res.status(403).send("Unauthorized")
-  }
-}
-
 app.get('/api/getCustomers/:postID/:userID', async (req, res) => {
 
   //gets all docs in users that has the search id match the param sent in
@@ -51,7 +36,6 @@ app.get('/api/getCustomers/:postID/:userID', async (req, res) => {
 })
 
 //get all the user routes from users.js
-app.use('/users', checkAuth)
 app.use('/users', users)
 app.use('/events', events)
 app.use('/applications', applications)

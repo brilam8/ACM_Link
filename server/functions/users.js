@@ -9,20 +9,20 @@ router.use(express.urlencoded({
 }));
 router.use(express.json());
 
-// function checkAuth(req, res, next){
-//   if (req.headers.authtoken) {
-//     admin.auth().verifyIdToken(req.headers.authtoken)
-//     .then(() => {
-//       next();
-//     })
-//     .catch(() => {
-//       res.status(403).send("Unauthorized");
-//     });
-//   }
-//   else {
-//     res.status(403).send("Unauthorized");
-//   }
-// }
+function checkAuth(req, res, next){
+  if (req.headers.authtoken) {
+    admin.auth().verifyIdToken(req.headers.authtoken)
+    .then(() => {
+      next();
+    })
+    .catch(() => {
+      res.status(403).send("Unauthorized");
+    });
+  }
+  else {
+    res.status(403).send("Unauthorized");
+  }
+}
 
 const userCollection = db.collection("users");
 
@@ -31,8 +31,6 @@ const userCollection = db.collection("users");
 router.post('/create', async (req, res) => {
   let passRE = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,26}$/);
   let emailRE = new RegExp(/\b[A-Za-z0-9._%+-]+@([Uu][Cc][Ss][Dd].[Ee][Dd][Uu])\b/);
-  console.log(req.body.email.match(emailRE));
-  console.log(req.body.password.match(passRE));
   if (!req.body || !req.body.firstName || req.body.firstName == "" || req.body.lastName == "" || !req.body.lastName 
       || !req.body.email || !req.body.password || !req.body.email.match(emailRE) || !req.body.password.match(passRE)){
     res.json({error: "Missing fields on request or wrong format for inputs"});
@@ -77,9 +75,9 @@ router.post('/create', async (req, res) => {
 // TODO: Add checkauth arguement
 // @route PUT user
 // @desc Updates a user object with new name fields
-router.put('/updateName/:userId', async (req, res) => {
+router.put('/updateName/:userId', checkAuth, async (req, res) => {
   if (!req.params.userId) return res.status(400).send("No user id provided");
-  if (!req.body.firstName || !req.body.lastName) return res.status(400).send("No names provided")
+  if (!req.body.firstName || !req.body.lastName) return res.status(400).send("No names provided");
   const userRef = await userCollection.doc(req.params.userId);
   const doc = await userRef.get();
   if (!doc.exists) {
@@ -103,9 +101,9 @@ router.put('/updateName/:userId', async (req, res) => {
 
 // @route PUT user
 // @desc Updates a user object with new name fields
-router.put('/updateIcon/:userId', async (req, res) => {
+router.put('/updateIcon/:userId', checkAuth, async (req, res) => {
   if (!req.params.userId) return res.status(400).send("No user id provided");
-  if (req.body.avatar_type == null) return res.status(400).send("No bool provided")
+  if (req.body.avatar_type == null) return res.status(400).send("No bool provided");
   const userRef = await userCollection.doc(req.params.userId);
   const doc = await userRef.get();
   if (!doc.exists) {
@@ -125,7 +123,7 @@ router.put('/updateIcon/:userId', async (req, res) => {
 
 // @route GET user
 // @desc returns a user object from the "users" collection in firestore given an id
-router.get('/:userId', async (req, res) => {
+router.get('/:userId', checkAuth, async (req, res) => {
   if (!req.params.userId) res.status(400).send("No user id provided");
   const userRef = await userCollection.doc(req.params.userId);
   const doc = await userRef.get();
@@ -140,7 +138,7 @@ router.get('/:userId', async (req, res) => {
 // TODO: Add checkAuth argument
 // @route GET user(s)
 // @desc returns user object(s) from the "users" collection in firestore given query (or queries)
-router.get('/', async (req, res) => {
+router.get('/', checkAuth, async (req, res) => {
   let queryResults = await userCollection.get();
   let results = [];
   queryResults.forEach(doc => {
