@@ -43,7 +43,7 @@ const OuterDiv = styled.div`
 
 function CreateAccount() {
 
-  const {register, handleSubmit, reset, control, errors} = useForm({defaultValues});
+  const {handleSubmit, control} = useForm({defaultValues});
   const history = useHistory();
   const [revealPassword, setRevealPassword] = useState(false)
   const [open, setOpen] = useState(false);

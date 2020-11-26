@@ -15,6 +15,9 @@ import gamesImg from '../images/games.jpg';
 import homeworkImg from '../images/homework.jpg';
 import projectsImg from '../images/projects.jpg';
 import firebase from '../firebase';
+import otherImg from '../images/other.jpg';
+
+// TODO: Get current logged-in user for application pages.
 
 function EventCard({ user_id, event_id }) {
   const [event, setEvent] = useState({});
@@ -50,16 +53,18 @@ function EventCard({ user_id, event_id }) {
     'VIDEOGAMES': `url(${gamesImg})`,
     'PROJECTS': `url(${projectsImg})`,
     'HOMEWORK': `url(${homeworkImg})`,
+    'OTHER': `url(${otherImg})`,
   }
 
   return (
     <div>
-      <Card style={{ width: '21rem' }}>
+      <Card style={{ width: '18rem', height: '21rem', marginLeft: '10px', marginRight: '10px' }}>
+
         <CardPrimaryAction>
           <CardMedia
             sixteenByNine
             style={{
-              backgroundImage: imageMap[`${event.type}`]
+              backgroundImage: imageMap[`${event.type}`],
             }}
           />
           <div style={{ padding: '0 1rem 1rem 1rem' }}>
@@ -72,7 +77,7 @@ function EventCard({ user_id, event_id }) {
               theme="textSecondaryOnBackground"
               style={{ marginTop: '-1rem' }}
             >
-              by {user.firstName} {user.lastName}
+              by {user_id.firstName} {user_id.lastName}
             </Typography>
             <Typography
               use="body1"
@@ -83,13 +88,14 @@ function EventCard({ user_id, event_id }) {
             </Typography>
           </div>
         </CardPrimaryAction>
+
         <CardActions>
           <CardActionButtons>
           <Link 
-            to={`/applicationPage/${user.user_id}/${event.event_id}`}
+            to={`/applicationPage/${user_id.user_id}/${event.event_id}`}
           >
             <CardActionButton>
-              Apply
+              View More
             </CardActionButton>
           </Link>
           </CardActionButtons>
