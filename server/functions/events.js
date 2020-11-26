@@ -34,7 +34,46 @@ router.get('/:event_id', async (req, res) => {
   if (!event){
     res.status(400).send('No such event was found');
   }
-  res.json(event.data());
+  // Converting Timestamp objects to Strings for frontend rendering
+  let eventData = event.data();
+  const newStartDate = eventData['start_date'].toDate();
+  const newEndDate = eventData['end_date'].toDate();
+
+  // Adjusting start hours, minutes, and time of day
+  let newStartHours;
+  let newEndHours;
+  let newStartMinutes = newStartDate.getMinutes();
+  let newEndMinutes = newEndDate.getMinutes();
+  let start_timeOfDay = 'am';
+  let end_timeOfDay = 'am';
+  if (newStartDate.getHours() > 12) {
+    newStartHours = newStartDate.getHours() - 12;
+    start_timeOfDay = 'pm'
+  } else {
+    newStartHours = newStartDate.getHours();
+  }
+  if (newEndDate.getHours() > 12) {
+    newEndHours = newEndDate.getHours() - 12;
+    end_timeOfDay = 'pm'
+  } else {
+    newEndHours = newEndDate.getHours();
+  }
+  if (newStartMinutes == 0) {
+    newStartMinutes = `${newStartMinutes}0`;
+  }
+  if (newEndMinutes == 0) {
+    newEndMinutes = `${newEndMinutes}0`;
+  }
+
+  // String injection for new dates to render
+  startDate = `${newStartDate.getMonth() + 1}/${newStartDate.getDate()}/${newStartDate.getFullYear()}
+              at ${newStartHours}:${newStartMinutes}${start_timeOfDay}`
+
+  endDate = `${newEndDate.getMonth() + 1}/${newEndDate.getDate()}/${newEndDate.getFullYear()}
+              at ${newEndHours}:${newEndMinutes}${end_timeOfDay}`
+  eventData['start_date'] = startDate;
+  eventData['end_date'] = endDate;
+  res.json(eventData);
 })
 
 

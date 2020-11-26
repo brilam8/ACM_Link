@@ -7,7 +7,7 @@ import '@rmwc/drawer/styles';
 import '@rmwc/button/styles';
 import '@rmwc/list/styles';
 import styled from 'styled-components';
-import {Link, useHistory, Redirect, useLocation } from 'react-router-dom';
+import {Link, useHistory, useLocation } from 'react-router-dom';
 import {Typography} from '@rmwc/typography';
 import firebase from '../firebase';
 

@@ -9,20 +9,20 @@ router.use(express.urlencoded({
 }));
 router.use(express.json());
 
-// function checkAuth(req, res, next){
-//   if (req.headers.authtoken) {
-//     admin.auth().verifyIdToken(req.headers.authtoken)
-//     .then(() => {
-//       next();
-//     })
-//     .catch(() => {
-//       res.status(403).send("Unauthorized");
-//     });
-//   }
-//   else {
-//     res.status(403).send("Unauthorized");
-//   }
-// }
+function checkAuth(req, res, next){
+  if (req.headers.authtoken) {
+    admin.auth().verifyIdToken(req.headers.authtoken)
+    .then(() => {
+      next();
+    })
+    .catch(() => {
+      res.status(403).send("Unauthorized");
+    });
+  }
+  else {
+    res.status(403).send("Unauthorized");
+  }
+}
 
 const userCollection = db.collection("users");
 
@@ -71,7 +71,7 @@ router.post('/create', async (req, res) => {
 // TODO: Add checkauth arguement
 // @route PUT user
 // @desc Updates a user object with new name fields
-router.put('/update/:userId', async (req, res) => {
+router.put('/update/:userId', checkAuth, async (req, res) => {
   if (!req.params.userId) res.status(400).send("No user id provided");
   if (!req.body.firstName || !req.body.lastName) res.status(400).send("No names provided")
   const userRef = await userCollection.doc(req.params.userId);
@@ -105,7 +105,7 @@ router.get('/:userId', async (req, res) => {
 // TODO: Add checkAuth argument
 // @route GET user(s)
 // @desc returns user object(s) from the "users" collection in firestore given query (or queries)
-router.get('/', async (req, res) => {
+router.get('/', checkAuth, async (req, res) => {
   let queryResults = await userCollection.get();
   let results = [];
   queryResults.forEach(doc => {

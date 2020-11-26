@@ -11,7 +11,6 @@ import '@rmwc/button/styles';
 import '@rmwc/typography/styles';
 import '@rmwc/textfield/styles';
 import '@rmwc/icon/styles';
-import firebase from '../firebase';
 import styled from 'styled-components';
 
 const defaultValues = {
@@ -34,7 +33,7 @@ const OuterDiv = styled.div`
 
 function CreateAccount() {
 
-  const {register, handleSubmit, reset, control, errors} = useForm({defaultValues});
+  const {handleSubmit, control} = useForm({defaultValues});
   const history = useHistory();
   const [revealPassword, setRevealPassword] = useState(false)
   const [open, setOpen] = useState(false);

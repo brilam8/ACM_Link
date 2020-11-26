@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Typography } from '@rmwc/typography';
@@ -27,7 +27,6 @@ function PasswordReset() {
 
   const history = useHistory();
   const [emailInput, setEmailInput] = useState('');
-  const [loginStatus, setLoginStatus] = useState('');
   const [open, setOpen] = useState(false);
   const [snackMessage, setMessage] = useState("");
 
@@ -37,7 +36,7 @@ function PasswordReset() {
   */
   async function sendPasswordReset() {
     try {
-      let res = await firebase.auth().sendPasswordResetEmail(emailInput);
+      await firebase.auth().sendPasswordResetEmail(emailInput);
         setMessage("An email has been sent! Please check your email to reset your password.")
         setOpen(true);
         await new Promise(r => setTimeout(r, 2000));
