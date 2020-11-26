@@ -9,7 +9,7 @@ import {
 import sampleComponent2 from './miscPages/sampleComponent2';
 import loginComp from './profilePages/loginComp';
 import login from './profilePages/login';
-import settings from './components/settings';
+import settings from './profilePages/settings';
 import sampleComponent3 from './miscPages/sampleComponent3';
 import buttonPage from './miscPages/buttonPageComponent';
 import HamburgerMenuComponent from './components/hamburgerMenuComponent';

@@ -23,6 +23,12 @@ const OuterDiv = styled.div`
   margin: auto;
 `;
 
+const StyledButton = styled(Button)`
+  && {
+    background-color: #333333;
+  }
+`
+
 function PasswordReset() {
 
   const history = useHistory();
@@ -77,7 +83,7 @@ function PasswordReset() {
             label="Email" 
           />
         </div>
-        <Button raised
+        <StyledButton raised
           onClick={()=> sendPasswordReset()} 
           style = {{width: "30%", marginTop: "15px", marginBottom: "22px"}} 
           label="Send Reset Email"

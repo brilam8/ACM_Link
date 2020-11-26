@@ -3,22 +3,32 @@ import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from "react-hook-form"
 import { Typography } from '@rmwc/typography';
 import { Button } from '@rmwc/button';
-import { TextField } from '@rmwc/textfield'
-import { Snackbar, SnackbarAction } from '@rmwc/snackbar'
+import { TextField } from '@rmwc/textfield';
+import { Snackbar, SnackbarAction } from '@rmwc/snackbar';
+import { IconButton } from '@rmwc/icon-button'
 import "typeface-roboto";
 import '@rmwc/snackbar/styles'
 import '@rmwc/button/styles';
 import '@rmwc/typography/styles';
 import '@rmwc/textfield/styles';
 import '@rmwc/icon/styles';
+import '@rmwc/icon-button/styles';
+import '@rmwc/radio/styles';
 import styled from 'styled-components';
 
 const defaultValues = {
   FirstNameTextField: "",
   LastNameTextField: "",
   EmailTextField: "",
-  PasswordTextField: ""
+  PasswordTextField: "",
+  avatarTypeButton: true
 }
+
+const StyledButton = styled(Button)`
+  && {
+    background-color: #333333;
+  }
+`
 
 const OuterDiv = styled.div`
   display: flex;
@@ -165,13 +175,14 @@ function CreateAccount() {
                   />
                 } 
               />
-              <Button raised 
+              <StyledButton raised 
                 className="button" 
                 type="submit" 
                 style = {{marginLeft:'15%', marginTop: '25px', width: "70%"}} 
                 label="CREATE ACCOUNT"  
               /> 
             </form>
+            
           </div>
       </OuterDiv>
   )

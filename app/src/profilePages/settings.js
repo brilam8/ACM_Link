@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useForm, Controller } from "react-hook-form"
 import { Button } from '@rmwc/button';
 import { TextField } from '@rmwc/textfield'
 import { Snackbar, SnackbarAction } from '@rmwc/snackbar'
+import { IconButton } from '@rmwc/icon-button'
 import '@rmwc/snackbar/styles'
 import "typeface-roboto";
 import '@rmwc/button/styles';
 import '@rmwc/typography/styles';
 import '@rmwc/textfield/styles';
 import '@rmwc/icon/styles';
+import '@rmwc/icon-button/styles';
 import firebase from '../firebase';
-import avatar from "../images/avatar1.png"
+import avatar1 from "../images/avatar-1.png"
+import avatar2 from "../images/avatar-2.png"
+
 firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-
-
 
 const OuterDiv = styled.div`
   display: flex;
@@ -28,8 +30,21 @@ const OuterDiv = styled.div`
   margin-left: 10vw;
 `;
 
+const AvatarDiv = styled.div`
+  height: 60%;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2%;
+  margin-bottom: 4%;
+`
+
 const StyledButton = styled(Button)`
-  background-color: #333333;
+  && {
+    background-color: #333333;
+  }
 `
 
 function Settings() {
@@ -46,6 +61,7 @@ function Settings() {
   const [revealPassword, setReveal] = useState(false);
   const [origFirstName, setOrigFirstName] = useState('');
   const [origLastName, setOrigLastName] = useState('');
+  const [avatarType, setAvatarType] = useState(true);
   
 
   // Toggles whether or not you can visibly see the password.
@@ -63,8 +79,28 @@ function Settings() {
     })
   }
 
+  function toggleReveal() {
+    setReveal(!revealPassword);
+  }
+
+  async function toggleAvatar () {
+    const currUser = firebase.auth().currentUser;
+    if (currUser) {
+      setAvatarType(!avatarType);
+      const idToken = await firebase.auth().currentUser.getIdToken(true)
+      let res = await fetch(`/users/updateIcon/${currUser.uid}`,{
+        method: 'PUT',
+        body: JSON.stringify({avatar_type: !avatarType}),
+        headers: {"Content-Type": "application/json", "AuthToken" : idToken}
+      })
+      if (res.ok){
+        setMessage("Update successful!");
+        setOpen(true);
+      }
+    }
+  }
+
   async function saveInfo(data) {
-    console.log("should save info");
     const currUser = firebase.auth().currentUser;
     if (currUser) {
       const pass = data.PasswordTextField;
@@ -88,13 +124,15 @@ function Settings() {
       if (userData.firstName !== origFirstName || userData.lastName !== origLastName) {
         console.log("Updating name.");
         const idToken = await firebase.auth().currentUser.getIdToken(true)
-        let res = await fetch(`/users/update/${currUser.uid}`,{
+        let res = await fetch(`/users/updateName/${currUser.uid}`,{
           method: 'PUT',
           body: JSON.stringify(userData),
           headers: {"Content-Type": "application/json", "AuthToken" : idToken}
         })
         if (res.ok){
           setMessage("Update successful!");
+          setOrigFirstName(userData.firstName);
+          setOrigLastName(userData.lastName);
           setOpen(true);
         }
       }
@@ -104,7 +142,7 @@ function Settings() {
   useEffect(() => {
     async function grabUserInfo() {
       firebase.auth().onAuthStateChanged(async function(user) {
-        if (user) {
+        if (user && origLastName == "" && origFirstName == "") {
           console.log("Grabbing user info!")
           const idToken = await firebase.auth().currentUser.getIdToken(true)
           .catch((error) => {
@@ -120,6 +158,7 @@ function Settings() {
             setValue("LastNameTextField", res.lastName);
             setOrigFirstName(res.firstName);
             setOrigLastName(res.lastName);
+            setAvatarType(res.avatar_type);
           } catch(error) {
             console.log(`Error grabbing users: ${error.code} - ${error.message}`)
           }
@@ -204,7 +243,16 @@ function Settings() {
               /> 
             </form>
           </div>
-          <img style = {{marginLeft: "125px", marginBottom: "100px", height: "350px", width: "350px"}}src={avatar} alt="avatar"/>
+          <AvatarDiv>
+            <img style = {{ height: "70%", width: "70%"}}
+              src={avatarType ? avatar1 : avatar2} 
+              alt="avatar"
+            />
+            <IconButton
+              icon="refresh"
+              onClick={() => toggleAvatar()}
+            />
+          </AvatarDiv>
       </OuterDiv>
   )
 }
