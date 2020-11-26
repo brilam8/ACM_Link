@@ -23,7 +23,7 @@ function EventsArray() {
   const [MISC, setMISC] = useState([]);
 
   async function fetchVideoUsers() {
-    const response = await fetch('/events/homepage/videogames');
+    const response = await fetch('/events/homepage/games');
     const json = await response.json();
     console.log(json);
     setVideoGames(VideoGames.concat(json));
@@ -44,7 +44,7 @@ function EventsArray() {
   }
 
   async function fetchMiscUsers() {
-    const response = await fetch('/events/homepage/misc');
+    const response = await fetch('/events/homepage/other');
     const json = await response.json();
     console.log(json);
     setMISC(MISC.concat(json));
@@ -95,7 +95,7 @@ function EventsArray() {
             })}
         </div>
         <br/>
-        <Typography style = {{margin: "2.5% 0% 2.5% 4%"}} use="headline3">Misc</Typography>
+        <Typography style = {{margin: "2.5% 0% 2.5% 4%"}} use="headline3">Other</Typography>
         <div style={{display: 'flex', alignItems: 'center'}}>
             {MISC.map((user) => {
                 return (

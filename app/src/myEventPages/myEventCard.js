@@ -15,7 +15,6 @@ import gamesImg from '../images/games.jpg';
 import homeworkImg from '../images/homework.jpg';
 import projectsImg from '../images/projects.jpg';
 
-
 function EventCard({ event_id }) {
   const [event, setEvent] = useState({});
 
@@ -33,7 +32,7 @@ function EventCard({ event_id }) {
 
   //TODO add MISC category
   const imageMap = {
-    'VIDEOGAMES': `url(${gamesImg})`,
+    'GAMES': `url(${gamesImg})`,
     'PROJECTS': `url(${projectsImg})`,
     'HOMEWORK': `url(${homeworkImg})`,
   }

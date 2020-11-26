@@ -65,7 +65,7 @@ const CreateEvent = () => {
                     max_applicants: maxApplicants,
                     status: true,
                     title: title,
-                    type: type
+                    type: type.toUpperCase()
                 }
                 const response = fetch(`/events/create/${user.uid}`, {
                     method: 'POST',
@@ -118,7 +118,7 @@ const CreateEvent = () => {
                             required 
                             label='Event Type' 
                             placeholder='Select one' 
-                            options={['VIDEOGAMES', 'HOMEWORK', 'PROJECTS', 'MISC']} 
+                            options={['Games', 'Homework', 'Projects', 'Other']} 
                             onChange={(e) => setType(e.target.value)} 
                         />
                         <EventFields 

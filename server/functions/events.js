@@ -194,11 +194,11 @@ router.get('/homepage/homework', async(req, res) => {
   res.json(results);
 });
  
-router.get('/homepage/videogames', async(req, res) => {
+router.get('/homepage/games', async(req, res) => {
   const eventCollection = await db.collection('events');
  
-  const videoGame = await eventCollection.where('type', '==', 'VIDEOGAMES');
-  const query = await videoGame.get();
+  const game = await eventCollection.where('type', '==', 'GAMES');
+  const query = await game.get();
   let results = [];
   query.forEach(doc => {
     results = [...results, doc.data()]
@@ -220,11 +220,11 @@ router.get('/homepage/projects', async(req, res) => {
   res.json(results);
 });
  
-router.get('/homepage/misc', async(req, res) => {
+router.get('/homepage/other', async(req, res) => {
   const eventCollection = await db.collection('events');
 
-  const misc = await eventCollection.where('type', '==', 'OTHER');
-  const query = await misc.get();
+  const other = await eventCollection.where('type', '==', 'OTHER');
+  const query = await other.get();
   let results = [];
   query.forEach(doc => {
     results = [...results, doc.data()]
