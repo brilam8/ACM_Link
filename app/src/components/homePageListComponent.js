@@ -8,7 +8,7 @@ export default function ListComponent({ title, list }) {
   return (
     <div style={{margin: 40}}>
       <Typography style = {{'margin-top': "40px"}} use="headline3">{title}</Typography>
-      <div style={{display: 'flex', alignItems: 'center', marginTop: 10}}>
+      <div style={{display: 'flex', alignItems: 'center', marginTop: 10, flexWrap: 'wrap'}}>
         {list.map((user) => {
           console.log(user);
           return (

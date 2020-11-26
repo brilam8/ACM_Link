@@ -41,7 +41,7 @@ function EventCard({ event_id }) {
 
   return (
     <div>
-      <Card style={{ width: '21rem', margin: '15px'}}>
+      <Card style={{ width: '20rem', height: '20rem', margin: '15px'}}>
         <CardPrimaryAction>
           <CardMedia
             sixteenByNine

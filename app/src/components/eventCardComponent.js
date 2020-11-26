@@ -65,7 +65,7 @@ function EventCard({ user_id, event_id }) {
 
   return (
     <div>
-      <Card style={{ width: '18rem', height: '21rem', marginLeft: '10px', marginRight: '10px' }}>
+      <Card style={{ width: '18rem', height: '21rem', margin: '10px' }}>
 
         <CardPrimaryAction>
           <CardMedia
