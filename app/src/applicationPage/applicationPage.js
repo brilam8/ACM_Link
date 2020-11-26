@@ -9,8 +9,7 @@ import {
   DialogActions, 
   DialogButton,
 } from '@rmwc/dialog';
-import { Select } from '@rmwc/select';
-import { Link, Redirect, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import '@rmwc/textfield/styles';
@@ -18,28 +17,6 @@ import '@rmwc/button/styles';
 import '@rmwc/typography/styles';
 import '@rmwc/dialog/styles';
 import '@rmwc/select/styles';
-
-
-{/* TODO: 
-
-1. Don't know how to make multiline TextField components.
-  
-2. Enter key reroutes page to '/'. handleCancel nor handleSubmit are 
-called. Don't know how to fix this.
-
-Solutions Tried:
-1. Instead of Dialog, used Simple Dialog. First con: there is a redundant
-built-in Cancel button. Second con: Cancel and Accept buttons cannot reroute
-to another page. Both call handleSubmit() and send identical applications to 
-the database.
-2. Commenting out SOLELY dialog component fixes form and submits application 
-upon pressing Enter key.
-
-Sites visited: 
-1. https://stackoverflow.com/questions/33211672/how-to-submit-a-form-using-enter-key-in-react-js
-2. https://stackoverflow.com/questions/33211672/how-to-submit-a-form-using-enter-key-in-react-js/33212911 
-
-*/}
 
 
 // @params Takes a user_id and creator_id. 
@@ -63,7 +40,6 @@ function ApplicationForm() {
     const response = await fetch(`/events/${params.event_id}`);
     const data = await response.json();
     setEvent(data);
-    console.log(event);
   }
 
   function handleCancel(event) {
@@ -100,9 +76,9 @@ function ApplicationForm() {
   return (
     <div className='ApplicationForm'>
       <form onSubmit={event => handleSubmit(event)}>
-        {/* Div2 will contain the main content of the form including event 
+        {/* Div1 will contain the main content of the form including event 
         details and text fields */}
-        <Div2>
+        <Div1>
           {/* First few Typography elements are for event details */}
           <Typography use='headline3' style={{
             marginTop: 100,
@@ -112,6 +88,8 @@ function ApplicationForm() {
 
           <Typography use='headline5' style={{
             marginTop: 25,
+            width: '70%',
+            textAlign: 'center'
           }}>
             {event.description}
           </Typography>
@@ -131,7 +109,7 @@ function ApplicationForm() {
 
           <TextFieldStyled1
             label="Tell us a bit about yourself"
-            multiline
+            multiline="true"
             required
             outlined
             onChange={e=>setDescInput(e.target.value)}
@@ -151,7 +129,7 @@ function ApplicationForm() {
           />
 
           {/* Used for submitting and cancel buttons */}
-          <Div3>
+          <Div2>
             <Button 
               type='button' 
               onClick={event => handleCancel(event)}
@@ -166,7 +144,7 @@ function ApplicationForm() {
             >
               Submit
             </Button>
-          </Div3>
+          </Div2>
 
           {/* Dialog box upon hitting Submit */}
           <Dialog
@@ -210,22 +188,13 @@ function ApplicationForm() {
               </LinkStyled>
             </DialogActions>
           </Dialog>
-        </Div2>
+        </Div1>
       </form>
     </div>
   );
 }
 
-
 const Div1 = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: black;
-  height: 8vh;
-`;
-
-const Div2 = styled.div`
   display: flex; 
   flex-direction: column;
   justify-content: center ;
@@ -233,7 +202,7 @@ const Div2 = styled.div`
   height: 55vh;
 `;
 
-const Div3 = styled.div`
+const Div2 = styled.div`
   display: flex;
   justify-content: center;
   width: 50vw;
@@ -250,17 +219,17 @@ const TextFieldStyled2 = styled(TextField)`
   margin-top: 25px;
 `;
 
-const BurgerMenu = styled(Typography)`
-  color: white;
-  margin-left: 4%;
-`;
+// const BurgerMenu = styled(Typography)`
+//   color: white;
+//   margin-left: 4%;
+// `;
 
-const MainHeadline = styled(Typography)`
-  color: white;
-`;
+// const MainHeadline = styled(Typography)`
+//   color: white;
+// `;
 
 const LinkStyled = styled(Link)`
-text-decoration: none;
+  text-decoration: none;
 `;
 
 
