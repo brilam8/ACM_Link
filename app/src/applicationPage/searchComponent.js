@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
-import Textfield from '@material-ui/core/Textfield';
 import Button from '@material-ui/core/Button';
 import { Checkbox } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider'
-import { Typography } from '@rmwc/typography'
 import EventCard from '../components/eventCardComponent';
 
 
 function SearchForm() {
-  const [output, setOutput] = useState([])
+  // const [output, setOutput] = useState([])
   const [input, setInput] = useState('');
-  const [inputSubmit, setInputSubmit] = useState('');
+  // const [inputSubmit, setInputSubmit] = useState('');
 
 
   //Array set to store results from the fetch function
   const [results, setResults] = useState([]);
   //Textbox element used for filtering the events.
-  const [search, setSearch] = useState('')
+  // const [search, setSearch] = useState('')
   //Array set to store the filtered events.
   const [filteredEvents, setfilteredEvents] = useState([]);
 
@@ -24,42 +22,42 @@ function SearchForm() {
    * Fetches all the events from the database and stores the elements within an array.
    */
   async function handleSubmit() {
-    setInputSubmit(input);
+    // setInputSubmit(input);
     console.log("FETCHING");
     const results = await fetch("http://localhost:5000/events/");
     setResults(await results.json());;
   }
 
-  async function handleFilter() {
+  function handleFilter() {
     console.log("HANDLING FILTER");
-    const filteredEvents = await results.filter(event => event.type.toLowerCase().includes(input.toLowerCase()));
-    setfilteredEvents(await filteredEvents);
+    const filteredEvents = results.filter(event => event.type.toLowerCase().includes(input.toLowerCase()));
+    setfilteredEvents(filteredEvents);
   }
 /**
  * Column filtering based on the homework filter
  */
-  async function homeworkFilter() {
-    console.log("HANDLING FILTER HOMEWORKL");
-    const filteredEvents = await results.filter(event => event.type.toLowerCase().includes("homework"));
-    setfilteredEvents(await filteredEvents);
+  function homeworkFilter() {
+    console.log("HANDLING FILTER HOMEWORK");
+    const filteredEvents = results.filter(event => event.type.toLowerCase().includes("homework"));
+    setfilteredEvents(filteredEvents);
   }
 
 /**
  * Column filtering based on the games filter
  */
-  async function gamesFilter() {
+  function gamesFilter() {
     console.log("HANDLING FILTER GAMES");
-    const filteredEvents = await results.filter(event => event.type.toLowerCase().includes("games"));
-    setfilteredEvents(await filteredEvents);
+    const filteredEvents = results.filter(event => event.type.toLowerCase().includes("games"));
+    setfilteredEvents(filteredEvents);
   }
 
 /**
  * Column filtering based on the projects filter.
  */
-  async function projectsFilter() {
+  function projectsFilter() {
     console.log("HANDLING FILTER PROJECTS");
-    const filteredEvents = await results.filter(event => event.type.toLowerCase().includes("projects"));
-    setfilteredEvents(await filteredEvents);
+    const filteredEvents = results.filter(event => event.type.toLowerCase().includes("projects"));
+    setfilteredEvents(filteredEvents);
   }
 
   //Filtering Events based on the type with typing
@@ -91,18 +89,21 @@ function SearchForm() {
         <div>
           {/* Chceckboxes to sort filter. */}
           <p>Games</p>
-          <Checkbox label="Games" onChange={async()=>gamesFilter()}/>
+          <Checkbox label="Games" onChange={()=>gamesFilter()}/>
         </div>
         <div>
           <p>Homework</p>
-          <Checkbox label="Homework" onChange={async()=>homeworkFilter()}/>
+          <Checkbox label="Homework" onChange={()=>homeworkFilter()}/>
         </div>
         <div>
           <p>Projects</p>
-          <Checkbox label="Projects" onChange={async()=>projectsFilter()}/>
+          <Checkbox label="Projects" onChange={()=>projectsFilter()}/>
         </div>
         {/* Button to get all the events and calls async handleSubmit function */}
-        <Button variant="contained" color="primary" onClick={async () => { await handleSubmit(); await handleFilter(); }}>
+        <Button variant="contained" color="primary" onClick={() => { 
+          handleSubmit(); 
+          handleFilter(); 
+        }}>
           Search Events
         </Button>
       </div>

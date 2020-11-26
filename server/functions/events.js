@@ -34,7 +34,46 @@ router.get('/:event_id', async (req, res) => {
   if (!event){
     res.status(400).send('No such event was found');
   }
-  res.json(event.data());
+  // Converting Timestamp objects to Strings for frontend rendering
+  let eventData = event.data();
+  const newStartDate = eventData['start_date'].toDate();
+  const newEndDate = eventData['end_date'].toDate();
+
+  // Adjusting start hours, minutes, and time of day
+  let newStartHours;
+  let newEndHours;
+  let newStartMinutes = newStartDate.getMinutes();
+  let newEndMinutes = newEndDate.getMinutes();
+  let start_timeOfDay = 'am';
+  let end_timeOfDay = 'am';
+  if (newStartDate.getHours() > 12) {
+    newStartHours = newStartDate.getHours() - 12;
+    start_timeOfDay = 'pm'
+  } else {
+    newStartHours = newStartDate.getHours();
+  }
+  if (newEndDate.getHours() > 12) {
+    newEndHours = newEndDate.getHours() - 12;
+    end_timeOfDay = 'pm'
+  } else {
+    newEndHours = newEndDate.getHours();
+  }
+  if (newStartMinutes == 0) {
+    newStartMinutes = `${newStartMinutes}0`;
+  }
+  if (newEndMinutes == 0) {
+    newEndMinutes = `${newEndMinutes}0`;
+  }
+
+  // String injection for new dates to render
+  startDate = `${newStartDate.getMonth() + 1}/${newStartDate.getDate()}/${newStartDate.getFullYear()}
+              at ${newStartHours}:${newStartMinutes}${start_timeOfDay}`
+
+  endDate = `${newEndDate.getMonth() + 1}/${newEndDate.getDate()}/${newEndDate.getFullYear()}
+              at ${newEndHours}:${newEndMinutes}${end_timeOfDay}`
+  eventData['start_date'] = startDate;
+  eventData['end_date'] = endDate;
+  res.json(eventData);
 })
 
 
@@ -194,11 +233,11 @@ router.get('/homepage/homework', async(req, res) => {
   res.json(results);
 });
  
-router.get('/homepage/games', async(req, res) => {
+router.get('/homepage/videogames', async(req, res) => {
   const eventCollection = await db.collection('events');
  
-  const game = await eventCollection.where('type', '==', 'GAMES');
-  const query = await game.get();
+  const videoGame = await eventCollection.where('type', '==', 'VIDEOGAMES');
+  const query = await videoGame.get();
   let results = [];
   query.forEach(doc => {
     results = [...results, doc.data()]
@@ -220,11 +259,11 @@ router.get('/homepage/projects', async(req, res) => {
   res.json(results);
 });
  
-router.get('/homepage/other', async(req, res) => {
+router.get('/homepage/misc', async(req, res) => {
   const eventCollection = await db.collection('events');
 
-  const other = await eventCollection.where('type', '==', 'OTHER');
-  const query = await other.get();
+  const misc = await eventCollection.where('type', '==', 'OTHER');
+  const query = await misc.get();
   let results = [];
   query.forEach(doc => {
     results = [...results, doc.data()]

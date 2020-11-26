@@ -11,6 +11,7 @@
     "@rmwc/drawer": "^6.1.4",
     "@rmwc/icon": "^6.1.4",
     "@rmwc/list": "^6.1.4",
+    "@rmwc/radio": "^6.1.4",
     "@rmwc/select": "^6.1.4",
     "@rmwc/snackbar": "^6.1.4",
     "@rmwc/textfield": "^6.1.4",

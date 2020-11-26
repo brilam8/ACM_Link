@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { Typography } from '@rmwc/typography';
@@ -23,11 +23,16 @@ const OuterDiv = styled.div`
   margin: auto;
 `;
 
+const StyledButton = styled(Button)`
+  && {
+    background-color: #333333;
+  }
+`
+
 function PasswordReset() {
 
   const history = useHistory();
   const [emailInput, setEmailInput] = useState('');
-  const [loginStatus, setLoginStatus] = useState('');
   const [open, setOpen] = useState(false);
   const [snackMessage, setMessage] = useState("");
 
@@ -37,7 +42,7 @@ function PasswordReset() {
   */
   async function sendPasswordReset() {
     try {
-      let res = await firebase.auth().sendPasswordResetEmail(emailInput);
+      await firebase.auth().sendPasswordResetEmail(emailInput);
         setMessage("An email has been sent! Please check your email to reset your password.")
         setOpen(true);
         await new Promise(r => setTimeout(r, 2000));
@@ -78,7 +83,7 @@ function PasswordReset() {
             label="Email" 
           />
         </div>
-        <Button raised
+        <StyledButton raised
           onClick={()=> sendPasswordReset()} 
           style = {{width: "30%", marginTop: "15px", marginBottom: "22px"}} 
           label="Send Reset Email"

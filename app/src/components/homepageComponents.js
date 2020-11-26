@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { Link, useHistory } from 'react-router-dom';
-import { Typography } from '@rmwc/typography';
-import { Button } from '@rmwc/button';
-import { TextField } from '@rmwc/textfield'
-import { Snackbar, SnackbarAction } from '@rmwc/snackbar'
+import { useHistory } from 'react-router-dom';
 import '@rmwc/snackbar/styles'
 import "typeface-roboto";
 import '@rmwc/button/styles';
 import '@rmwc/typography/styles';
 import '@rmwc/textfield/styles';
 import '@rmwc/icon/styles';
-import EventCard from '../components/eventCardComponent';
-//import Cards from '@rmwc/card/styles';
+import ListComponent from './homePageListComponent';
 
 function EventsArray() {
 
-  const history = useHistory();
   const [VideoGames, setVideoGames] = useState([]);
   const [HW, setHW] = useState([]);
   const [Projects, setProjects] = useState([]);
@@ -59,53 +52,25 @@ function EventsArray() {
   
   return (
     <div>
-        <Typography style = {{margin: "2.5% 0% 2.5% 4%"}} use="headline3">Videogames</Typography>
-        <div style={{display: 'flex', alignItems: 'center'}}>
-            {VideoGames.map((user) => {
-                return (
-                    <EventCard
-                        user_id= {user.creator_id}        
-                        event_id= {user.event_id}
-                    />
-                );
-            })}
-        </div>
-        <br/>
-        <Typography style = {{margin: "2.5% 0% 2.5% 4%"}} use="headline3">Homework</Typography>
-        <div style={{display: 'flex', alignItems: 'center'}}>
-            {HW.map((user) => {
-                return (
-                    <EventCard
-                        user_id= {user.creator_id}        
-                        event_id= {user.event_id}
-                    />
-                );
-            })}
-        </div>
-        <br/>
-        <Typography style = {{margin: "2.5% 0% 2.5% 4%"}} use="headline3">Projects</Typography>
-        <div style={{display: 'flex', alignItems: 'center'}}>
-            {Projects.map((user) => {
-                return (
-                    <EventCard
-                        user_id= {user.creator_id}        
-                        event_id= {user.event_id}
-                    />
-                );
-            })}
-        </div>
-        <br/>
-        <Typography style = {{margin: "2.5% 0% 2.5% 4%"}} use="headline3">Other</Typography>
-        <div style={{display: 'flex', alignItems: 'center'}}>
-            {MISC.map((user) => {
-                return (
-                    <EventCard
-                        user_id= {user.creator_id}        
-                        event_id= {user.event_id}
-                    />
-                );
-            })}
-        </div>
+      <ListComponent 
+        title='Videogames'
+        list={VideoGames}
+      />
+
+      <ListComponent
+        title='Homework'
+        list={HW}
+      />
+
+      <ListComponent
+        title='Projects'
+        list={Projects}
+      />
+
+      <ListComponent
+        title='Other'
+        list={MISC}
+      />
     </div>
   );
   
