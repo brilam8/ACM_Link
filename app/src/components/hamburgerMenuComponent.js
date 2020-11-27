@@ -33,12 +33,21 @@ function HamburgerMenu () {
     console.log(`props passed in is: ${location.pathname}`);
 
     //add a case statement if you want your page to be named something besides your path
-    switch(location.pathname){
-      case "/homepage":
-        setPageName('HomePage');
+    switch(location.pathname.split('/')[1]){
+      case "homepage":
+        setPageName('Home Page');
         break;
-      case "/settings":
+      case "settings":
         setPageName('Settings');
+        break;
+      case "createEvent":
+        setPageName('Create Event');
+        break;
+      case "myEvents":
+        setPageName('My Events');
+        break;
+      case "checkEvent":
+        setPageName('Check Event')
         break;
       //defaults to making your path the page name
       default:

@@ -10,16 +10,16 @@ import ListComponent from './homePageListComponent';
 
 function EventsArray() {
 
-  const [VideoGames, setVideoGames] = useState([]);
+  const [games, setGames] = useState([]);
   const [HW, setHW] = useState([]);
   const [Projects, setProjects] = useState([]);
-  const [MISC, setMISC] = useState([]);
+  const [other, setOther] = useState([]);
 
-  async function fetchVideoUsers() {
-    const response = await fetch('/events/homepage/videogames');
+  async function fetchGameUsers() {
+    const response = await fetch('/events/homepage/games');
     const json = await response.json();
     console.log(json);
-    setVideoGames(VideoGames.concat(json));
+    setGames(games.concat(json));
   } 
 
   async function fetchHWUsers() {
@@ -36,25 +36,25 @@ function EventsArray() {
     setProjects(Projects.concat(json));
   }
 
-  async function fetchMiscUsers() {
-    const response = await fetch('/events/homepage/misc');
+  async function fetchOtherUsers() {
+    const response = await fetch('/events/homepage/other');
     const json = await response.json();
     console.log(json);
-    setMISC(MISC.concat(json));
+    setOther(other.concat(json));
   }
 
   useEffect(()=>{
-    fetchVideoUsers();
+    fetchGameUsers();
     fetchHWUsers();
     fetchProjectUsers();
-    fetchMiscUsers();
+    fetchOtherUsers();
   }, []);
   
   return (
     <div>
       <ListComponent 
-        title='Videogames'
-        list={VideoGames}
+        title='Games'
+        list={games}
       />
 
       <ListComponent
@@ -69,7 +69,7 @@ function EventsArray() {
 
       <ListComponent
         title='Other'
-        list={MISC}
+        list={other}
       />
     </div>
   );
