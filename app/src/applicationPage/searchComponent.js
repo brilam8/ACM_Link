@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
-import { Checkbox } from '@material-ui/core';
+import { Checkbox, Typography } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider'
 import EventCard from '../components/eventCardComponent';
 
 
 function SearchForm() {
-  // const [output, setOutput] = useState([])
   const [input, setInput] = useState('');
-  // const [inputSubmit, setInputSubmit] = useState('');
 
 
   //Array set to store results from the fetch function
@@ -16,7 +14,13 @@ function SearchForm() {
   //Textbox element used for filtering the events.
   // const [search, setSearch] = useState('')
   //Array set to store the filtered events.
-  const [filteredEvents, setfilteredEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
+
+  //Boolean values that check whether or not checkboxes are checked 
+  const [homework, setHomework] = useState(false)
+  const [projects, setProjects] = useState(false);
+  const [games, setGames] = useState(false);
+
 
   /**
    * Fetches all the events from the database and stores the elements within an array.
@@ -24,62 +28,94 @@ function SearchForm() {
   async function handleSubmit() {
     // setInputSubmit(input);
     console.log("FETCHING");
-    const results = await fetch("http://localhost:5000/events/");
-    setResults(await results.json());;
+    setResults([]);
+    const response = await fetch("http://localhost:5000/events/");
+    const res = await response.json();
+    setFilteredEvents([]);
+    setResults(res);
+    if(input != '') {
+      handleFilter(res)
+    }
+    else {
+      setFilteredEvents(res);
+    }
   }
 
-  function handleFilter() {
+  function handleFilter(unfilteredResults) {
+    setFilteredEvents([]);
     console.log("HANDLING FILTER");
-    const filteredEvents = results.filter(event => event.type.toLowerCase().includes(input.toLowerCase()));
-    setfilteredEvents(filteredEvents);
+    console.log("got data length = " + unfilteredResults.length)
+    console.log("FILTER " + input);
+    const events = unfilteredResults.filter(event => event.title.toLowerCase().includes(input.toLowerCase()));
+    setFilteredEvents(events);
   }
 /**
  * Column filtering based on the homework filter
  */
   function homeworkFilter() {
-    console.log("HANDLING FILTER HOMEWORK");
-    const filteredEvents = results.filter(event => event.type.toLowerCase().includes("homework"));
-    setfilteredEvents(filteredEvents);
+    if(homework == false) {
+      setFilteredEvents([])
+      console.log("HANDLING FILTER HOMEWORK");
+      const filters = results.filter(event => event.type.includes("HOMEWORK"));
+      setFilteredEvents(filters);
+      setHomework(true)
+    }
+    else {
+      setHomework(false)
+    }
   }
 
 /**
  * Column filtering based on the games filter
  */
   function gamesFilter() {
-    console.log("HANDLING FILTER GAMES");
-    const filteredEvents = results.filter(event => event.type.toLowerCase().includes("games"));
-    setfilteredEvents(filteredEvents);
+    if(games == false) {
+      setFilteredEvents([])
+      console.log("HANDLING FILTER GAMES");
+      const filteredEvents = results.filter(event => event.type.toLowerCase().includes("games"));
+      setFilteredEvents(filteredEvents);
+      setGames(true);
+    }
+    else {
+      setGames(false);
+    }
   }
-
 /**
  * Column filtering based on the projects filter.
  */
   function projectsFilter() {
-    console.log("HANDLING FILTER PROJECTS");
-    const filteredEvents = results.filter(event => event.type.toLowerCase().includes("projects"));
-    setfilteredEvents(filteredEvents);
+    if(projects == false) {
+      setFilteredEvents([])
+      console.log("HANDLING FILTER PROJECTS");
+      const filteredEvents = results.filter(event => event.type.toLowerCase().includes("projects"));
+      setFilteredEvents(filteredEvents);
+      setProjects(true);
+    }
+    else {
+      setProjects(false);
+    }
+  }
+
+  function dateFilter() {
+      const filteredEvents = results.sort((a,b) => b.start_date - a.start_date);
+      setFilteredEvents(filteredEvents);
   }
 
   //Filtering Events based on the type with typing
-  // const filteredEvents = results.filter(event => event.type.toLowerCase().includes(search.toLowerCase()));
-  // const filteredEvents = results.filter(event => event.type.toLowerCase().includes(input.toLowerCase()));
+
   return (
     <div className="SearchForm">
       <div style={{ 'marginLeft': '50px' }}>
         <div className="App">
-          <input type="text"  placeholder="Search Event Type" onChange={e => setInput(e.target.value)}></input>
+          <input type="text"  placeholder="Search Event Title" onChange={e => setInput(e.target.value)}></input>
           <h1>Search Posts</h1>
           {filteredEvents.map(event => {
             // event.status = event.status.toString(); <-- Have yet to test
             return (
               // Printing the title and description of each event, along with the status
               <>
-                <h1> Title: {event.title}</h1>
-                <h2> Description: {event.description}</h2>
-                <h3>Type: {event.type} </h3>
-                <h1> -------------------</h1>
                 <EventCard
-                  user_id= '6PRMGwVGACILQwTnbIHC'        
+                  user_id = {event.creator_id}       
                   event_id= {event.event_id}
                   />
               </>
@@ -99,25 +135,27 @@ function SearchForm() {
           <p>Projects</p>
           <Checkbox label="Projects" onChange={()=>projectsFilter()}/>
         </div>
+        <div>
+          <Typography>
+            Sort By Date:
+            <Checkbox label = "Sort By Date" onChange={()=>dateFilter()}>
+            </Checkbox>
+          </Typography>
+        </div>
         {/* Button to get all the events and calls async handleSubmit function */}
-        <Button variant="contained" color="primary" onClick={() => { 
-          handleSubmit(); 
-          handleFilter(); 
+        <Button variant="contained" color="primary" onClick= { async()=> { 
+          await handleSubmit(); 
         }}>
           Search Events
         </Button>
       </div>
-   
       <Divider />
       <div style={{ 'marginLeft': '50px' }}>
         {/* Displays the searched text*/}
+
       </div>
     </div>
   );
 }
 
 export default SearchForm;
-
-//TODO: 
-//Incorportate the event cards for rickesh
-//ALSO: incorporate the search functionality 
