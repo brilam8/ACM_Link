@@ -11,47 +11,52 @@ import {
 import { Typography } from '@rmwc/typography';
 import '@rmwc/card/styles';
 import '@rmwc/typography/styles';
-import gamesImg from '../images/games.jpg';
-import homeworkImg from '../images/homework.jpg';
-import projectsImg from '../images/projects.jpg';
-import otherImg from '../images/other.jpg';
+import guyImg from '../images/avatar-1.png';
+import girlImg from '../images/avatar-2.png';
 
-function EventCard({ event_id }) {
-  const [event, setEvent] = useState({});
-
+function EventCard({ application_id }) {
+  const [application, setApplication] = useState({});
+  const [appUser, setAppUser] = useState([])
+  const avatar = appUser.avatar_type ? 'MALE' : 'FALSE';
   useEffect(() => {
-    fetchEvent();
+    fetchApplication();
+    fetchAppUser();
   }, []);
 
 
-  async function fetchEvent() {
-    const response = await fetch(`/events/${event_id}`);
+  async function fetchApplication() {
+    const response = await fetch(`/applications/${application_id}`);
     const json = await response.json();
-    //console.log('event', json);
-    setEvent(json);
+    setApplication(json);
   }
 
+  async function fetchAppUser() {
+    const response = await fetch(`/applications/getApplicant/${application_id}`);
+    const json = await response.json();
+    setAppUser(json);
+  }
   //TODO add MISC category
   const imageMap = {
-    'GAMES': `url(${gamesImg})`,
-    'PROJECTS': `url(${projectsImg})`,
-    'HOMEWORK': `url(${homeworkImg})`,
-    'OTHER': `url(${otherImg})`,
+    'MALE': `url(${guyImg})`,
+    'FEMALE': `url(${girlImg})`,
   }
 
   return (
     <div>
-      <Card style={{ width: '20rem', height: '20rem', margin: '15px'}}>
+      <Card style={{ width: '23rem', height: '23rem', margin: '15px'}}>
         <CardPrimaryAction>
           <CardMedia
-            sixteenByNine
+            square
             style={{
-              backgroundImage: imageMap[`${event.type}`]
+              backgroundImage: imageMap[avatar],
+              height: '15rem',
+              width: '15rem',
+              margin: 'auto'
             }}
           />
           <div style={{ padding: '0 1rem 1rem 1rem' }}>
             <Typography use="headline6" tag="h2">
-              {event.title}
+              {appUser.firstName} {appUser.lastName}
             </Typography>
             <Typography
               use="subtitle2"
@@ -59,20 +64,14 @@ function EventCard({ event_id }) {
               theme="textSecondaryOnBackground"
               style={{ marginTop: '-1rem' }}
             >
-            </Typography>
-            <Typography
-              use="body1"
-              tag="div"
-              theme="textSecondaryOnBackground"
-            >
-              {event.description}
+              {application.desc}
             </Typography>
           </div>
         </CardPrimaryAction>
         <CardActions>
           <CardActionButtons>
           <Link 
-            to={`/checkEvent/${event.event_id}`}
+            to={`/checkApplication/${application_id}`}
           >
             <CardActionButton>
               View More

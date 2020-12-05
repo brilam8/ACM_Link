@@ -63,7 +63,7 @@ const CheckEvent = () => {
                 <Button 
                     raised 
                     style={{width: 200, height: 50, marginLeft: '30px', backgroundColor: '#000000'}}
-                    onClick={() => history.push('/checkApplicants')}
+                    onClick={() => history.push(`/checkApplications/${params.event_id}`)}
                 >
                     Check Applications
                 </Button>
