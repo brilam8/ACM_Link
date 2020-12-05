@@ -1,19 +1,17 @@
 import firebase from "firebase/app";
 import "firebase/auth";
+const dotenv = require('dotenv').config();
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCnpmFxTTaEFuGu-DweMM3sQFH1v_xT7TE",
-  authDomain: "teammate-finder-b5bd4.firebaseapp.com",
-  databaseURL: "https://teammate-finder-b5bd4.firebaseio.com",
-  projectId: "teammate-finder-b5bd4",
-  storageBucket: "teammate-finder-b5bd4.appspot.com",
-  messagingSenderId: "1047193842414",
-  appId: "1:1047193842414:web:f7274429d193a41acd39ff",
-  measurementId: "G-T3V4P54TTX"
+  apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASEURL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
+  storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGINGID,
+  appId: process.env.REACT_APP_APPID,
+  measurementId: process.env.REACT_APP_MEASUREMENTID
 };
-
-// Firebase products
-
 
 // Initialize Firebase and Firestore
 firebase.initializeApp(firebaseConfig);

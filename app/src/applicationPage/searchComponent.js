@@ -56,7 +56,9 @@ function SearchForm() {
     if(homework == false) {
       setFilteredEvents([])
       console.log("HANDLING FILTER HOMEWORK");
-      const filters = results.filter(event => event.type.includes("HOMEWORK"));
+      
+      const filters = results.filter(event => event.type.toLowerCase().includes("homework"));
+      //console.log(filters);
       setFilteredEvents(filters);
       setHomework(true)
     }
@@ -73,6 +75,7 @@ function SearchForm() {
       setFilteredEvents([])
       console.log("HANDLING FILTER GAMES");
       const filteredEvents = results.filter(event => event.type.toLowerCase().includes("games"));
+      //console.log(filteredEvents);
       setFilteredEvents(filteredEvents);
       setGames(true);
     }
@@ -88,6 +91,7 @@ function SearchForm() {
       setFilteredEvents([])
       console.log("HANDLING FILTER PROJECTS");
       const filteredEvents = results.filter(event => event.type.toLowerCase().includes("projects"));
+      //console.log(filteredEvents);
       setFilteredEvents(filteredEvents);
       setProjects(true);
     }
@@ -111,8 +115,11 @@ function SearchForm() {
           <h1>Search Posts</h1>
           {filteredEvents.map(event => {
             // event.status = event.status.toString(); <-- Have yet to test
+            //console.log(event.creator_id)
+            console.log(event.event_id)
             return (
               // Printing the title and description of each event, along with the status
+              
               <>
                 <EventCard
                   user_id = {event.creator_id}       
