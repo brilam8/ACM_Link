@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { Checkbox, Typography } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider'
 import EventCard from '../components/eventCardComponent';
-
+import { TextField } from '@rmwc/textfield'
 
 function SearchForm() {
   const [input, setInput] = useState('');
@@ -108,23 +108,24 @@ async function projectsFilter(unfilteredResults) {
     <div className="SearchForm">
       <div style={{ 'marginLeft': '50px' }}>
         <div className="App">
-          <input type="text"  placeholder="Search Event Title" onChange={e => setInput(e.target.value)}></input>
-          <h1>Search Posts</h1>
-          {filteredEvents.map(event => {
-            // event.status = event.status.toString(); <-- Have yet to test
-            return (
-              // Printing the title and description of each event, along with the status
-              <>
-                <EventCard
-                  user_id = {event.creator_id}       
-                  event_id= {event.event_id}
-                  />
-                  <h1>{ event.start_date["_seconds"] }</h1>
-              </>
-            )
-          })}
-        </div>
+        <TextField 
+            style = {{
+              width: "25%",
+              margin: "2.5% 0% 2.5% -2%",
+            }} 
+            value = {input}
+            label="Search posts" 
+            onChange={e => setInput(e.target.value)}
+        />
+        <Button variant="contained" style = {{margin: "2.5% 0% 2.5% 1%"}} color="primary" onClick= { async()=> { 
+          await handleSubmit(); 
+        }}>
+          Search Events
+        </Button>
         <div>
+          <Typography>
+            FILTERS:
+          </Typography>
           {/* Chceckboxes to sort filter. */}
           <Typography>
             Type:
@@ -160,26 +161,36 @@ async function projectsFilter(unfilteredResults) {
               setProjects(false);
             }
             }}/>
-            <Checkbox label = "TESTDateFilter" onChange={()=> {
+            {/* <Checkbox label = "TESTDateFilter" onChange={()=> {
               dateFilter();
-            }}/>
+            }}/> */}
         </div>
-        <div>
-          <Typography>
+        <div >
+          <Typography style = {{margin: "2.5% 0% 1.5% 0%", color:"Black",}} use="headline3">
             Sort by
             </Typography>
             <Typography>
-              Post Name:
               Date:
             </Typography>
             <Checkbox label = "Date" > </Checkbox>
         </div>
-        {/* Button to get all the events and calls async handleSubmit function */}
-        <Button variant="contained" color="primary" onClick= { async()=> { 
-          await handleSubmit(); 
-        }}>
-          Search Events
-        </Button>
+
+          {filteredEvents.map(event => {
+            // event.status = event.status.toString(); <-- Have yet to test
+            return (
+              <div>
+              // Printing the title and description of each event, along with the status
+              <>
+                <EventCard
+                  user_id = {event.creator_id}       
+                  event_id= {event.event_id}
+                  />
+                  {/* <h1>{ event.start_date["_seconds"] }</h1> */}
+              </>
+              </div>
+            )
+          })}
+        </div>
       </div>
       <Divider />
       <div style={{ 'marginLeft': '50px' }}>
