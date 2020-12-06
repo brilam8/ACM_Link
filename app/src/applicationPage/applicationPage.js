@@ -17,6 +17,8 @@ import '@rmwc/button/styles';
 import '@rmwc/typography/styles';
 import '@rmwc/dialog/styles';
 import '@rmwc/select/styles';
+import firebase from '../firebase';
+
 
 
 // @params Takes a user_id and creator_id. 
@@ -66,11 +68,14 @@ function ApplicationForm() {
   }
 
   async function fetchURL(output) {
-    await fetch(`/applications/create/${params.UID}/${params.event_id}`, {
-      method: "POST",
-      body: JSON.stringify(output),
-      headers: {"Content-Type":"application/json"}
-    })
+    const currUser = firebase.auth().currentUser;
+    if (currUser) {
+      await fetch(`/applications/create/${currUser.uid}/${params.event_id}`, {
+        method: "POST",
+        body: JSON.stringify(output),
+        headers: {"Content-Type":"application/json"}
+      })
+    }
   }
 
   return (
