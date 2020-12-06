@@ -35,7 +35,7 @@ const CheckEvent = () => {
         console.log(json)
         setDescription(json.description)
         setTitle(json.title);
-        setType(json.type.toLowerCase());
+        setType(json.type.charAt(0) + json.type.slice(1).toLowerCase());
         setMaxApplicants(json.max_applicants);
         setStartDate(json.start_date.slice(0,10));
         setEndDate(json.end_date.slice(0,10));

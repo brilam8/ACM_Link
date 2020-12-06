@@ -14,7 +14,7 @@ import '@rmwc/typography/styles';
 import guyImg from '../images/avatar-1.png';
 import girlImg from '../images/avatar-2.png';
 
-function EventCard({ application_id }) {
+function EventCard({ application_id, event_id }) {
   const [application, setApplication] = useState({});
   const [appUser, setAppUser] = useState([])
   const avatar = appUser.avatar_type ? 'MALE' : 'FALSE';
@@ -33,6 +33,7 @@ function EventCard({ application_id }) {
   async function fetchAppUser() {
     const response = await fetch(`/applications/getApplicant/${application_id}`);
     const json = await response.json();
+    console.log(json);
     setAppUser(json);
   }
   //TODO add MISC category
@@ -43,7 +44,7 @@ function EventCard({ application_id }) {
 
   return (
     <div>
-      <Card style={{ width: '23rem', height: '23rem', margin: '15px'}}>
+      <Card style={{ width: '20rem', height: '23rem', margin: '15px'}}>
         <CardPrimaryAction>
           <CardMedia
             square
@@ -71,7 +72,7 @@ function EventCard({ application_id }) {
         <CardActions>
           <CardActionButtons>
           <Link 
-            to={`/checkApplication/${application_id}`}
+            to={`/checkApplicant/${event_id}/${application_id}`}
           >
             <CardActionButton>
               View More
