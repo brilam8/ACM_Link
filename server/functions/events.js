@@ -229,8 +229,9 @@ router.get('/homepage/homework', async(req, res) => {
   query.forEach(doc => {
     results = [...results, doc.data()]
   });
-  console.log(results);
-  res.json(results);
+  displayedArr = results.splice(0,6);
+  console.log(displayedArr);
+  res.json(displayedArr);
 });
  
 router.get('/homepage/games', async(req, res) => {
@@ -242,8 +243,9 @@ router.get('/homepage/games', async(req, res) => {
   query.forEach(doc => {
     results = [...results, doc.data()]
   });
-  console.log(results);
-  res.json(results);
+  displayedArr = results.splice(0,6);
+  console.log(displayedArr);
+  res.json(displayedArr);
 });
  
 router.get('/homepage/projects', async(req, res) => {
@@ -255,8 +257,9 @@ router.get('/homepage/projects', async(req, res) => {
   query.forEach(doc => {
     results = [...results, doc.data()]
   });
-  console.log(results);
-  res.json(results);
+  displayedArr = results.splice(0,6);
+  console.log(displayedArr);
+  res.json(displayedArr);
 });
  
 router.get('/homepage/other', async(req, res) => {
@@ -268,8 +271,9 @@ router.get('/homepage/other', async(req, res) => {
   query.forEach(doc => {
     results = [...results, doc.data()]
   });
-  console.log(results);
-  res.json(results);
+  displayedArr = results.splice(0,6);
+  console.log(displayedArr);
+  res.json(displayedArr);;
 });
 
 // @route GET getApplicants
