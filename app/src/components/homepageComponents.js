@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import { Button } from '@rmwc/button';
 import '@rmwc/snackbar/styles'
 import "typeface-roboto";
 import '@rmwc/button/styles';
@@ -8,12 +10,19 @@ import '@rmwc/textfield/styles';
 import '@rmwc/icon/styles';
 import ListComponent from './homePageListComponent';
 
+const StyledButton = styled(Button)`
+  && {
+    background-color: #333333;
+  }
+`;
+
 function EventsArray() {
 
   const [games, setGames] = useState([]);
   const [HW, setHW] = useState([]);
   const [Projects, setProjects] = useState([]);
   const [other, setOther] = useState([]);
+  const history = useHistory();
 
   async function fetchGameUsers() {
     const response = await fetch('/events/homepage/games');
@@ -52,6 +61,19 @@ function EventsArray() {
   
   return (
     <div>
+      <StyledButton raised
+          theme={['secondaryBg', 'onSecondary']}
+          onClick={() => history.push("/search")} 
+          style = {{align: "center", width: "20%", marginTop: "30px", marginLeft: "25%", marginRight: "12%"}}
+          label="SEARCH POSTS"  
+      />
+      <StyledButton raised
+          theme={['secondaryBg', 'onSecondary']}
+          onClick={() => history.push("/createEvent")} 
+          style = {{align: "center", width: "20%", marginTop: "30px"}}
+          label="+ NEW POST"  
+      />
+
       <ListComponent 
         title='Games'
         list={games}

@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { Checkbox, Typography } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider'
 import EventCard from '../components/eventCardComponent';
-
+import { TextField } from '@rmwc/textfield'
 
 function SearchForm() {
   const [input, setInput] = useState('');
@@ -34,10 +34,22 @@ function SearchForm() {
     setFilteredEvents([]);
     setResults(res);
     if(input != '') {
-      handleFilter(res)
+      handleFilter(res);
+    }
+    else if(homework == true) {
+      homeworkFilter(res);
+    }
+    else if(games == true) {
+      gamesFilter(res);
+    }
+    else if(projects == true) {
+      projectsFilter(res);
     }
     else {
       setFilteredEvents(res);
+    }
+    if(dateFilter == true) {
+      dateFilter(res);
     }
   }
 
@@ -52,53 +64,53 @@ function SearchForm() {
 /**
  * Column filtering based on the homework filter
  */
-  function homeworkFilter() {
-    if(homework == false) {
+  async function homeworkFilter(unfilteredResults) {
+    if(homework == true) {
       setFilteredEvents([])
       console.log("HANDLING FILTER HOMEWORK");
-      const filters = results.filter(event => event.type.includes("HOMEWORK"));
-      setFilteredEvents(filters);
-      setHomework(true)
-    }
-    else {
-      setHomework(false)
+      const filters = unfilteredResults.filter(event => event.type.toLowerCase().includes("homework"));
+      setFilteredEvents(filters); 
     }
   }
 
 /**
  * Column filtering based on the games filter
  */
-  function gamesFilter() {
-    if(games == false) {
-      setFilteredEvents([])
-      console.log("HANDLING FILTER GAMES");
-      const filteredEvents = results.filter(event => event.type.toLowerCase().includes("games"));
-      setFilteredEvents(filteredEvents);
-      setGames(true);
-    }
-    else {
-      setGames(false);
-    }
+async function gamesFilter(unfilteredResults) {
+  if(games == true) {
+    setFilteredEvents([])
+    console.log("HANDLING FILTER HOMEWORK");
+    const filters = unfilteredResults.filter(event => event.type.toLowerCase().includes("games"));
+    setFilteredEvents(filters); 
   }
+}
 /**
  * Column filtering based on the projects filter.
  */
-  function projectsFilter() {
-    if(projects == false) {
-      setFilteredEvents([])
-      console.log("HANDLING FILTER PROJECTS");
-      const filteredEvents = results.filter(event => event.type.toLowerCase().includes("projects"));
-      setFilteredEvents(filteredEvents);
-      setProjects(true);
-    }
-    else {
-      setProjects(false);
-    }
+async function projectsFilter(unfilteredResults) {
+  if(projects == true) {
+    setFilteredEvents([])
+    console.log("HANDLING FILTER HOMEWORK");
+    const filters = unfilteredResults.filter(event => event.type.toLowerCase().includes("project"));
+    setFilteredEvents(filters); 
   }
+}
 
-  function dateFilter() {
-      const filteredEvents = results.sort((a,b) => b.start_date - a.start_date);
-      setFilteredEvents(filteredEvents);
+  function dateFilter(unfilteredResults) {
+      console.log(filteredEvents[0].start_date + "STARTING DATE");
+      // const filteredEvents = unfilteredResults.sort((a,b) => b.start_date["_seconds"] - a.start_date["_seconds"]);
+      let filtered = [];
+      let n = unfilteredResults.length;
+      for(let i = 0; i<unfilteredResults.length(); i++) {
+        for(let j = 0; j<n-i-1; j++) {
+          if(unfilteredResults[j].start_date["_seconds"] > unfilteredResults[j+1].start_date["_seconds"]) {
+            let temp = unfilteredResults[j];
+            unfilteredResults[j] = unfilteredResults[j+1];
+            unfilteredResults[j+1] = temp;
+          }
+        }
+      }
+      setFilteredEvents(unfilteredResults);
   }
 
   //Filtering Events based on the type with typing
@@ -107,52 +119,87 @@ function SearchForm() {
     <div className="SearchForm">
       <div style={{ 'marginLeft': '50px' }}>
         <div className="App">
-          <input type="text"  placeholder="Search Event Title" onChange={e => setInput(e.target.value)}></input>
-          <h1>Search Posts</h1>
+        <TextField 
+            style = {{
+              width: "25%",
+              margin: "2.5% 0% 2.5% -2%",
+              color:"black"
+            }} 
+            value = {input}
+            label="Search posts"
+            onChange={e => setInput(e.target.value)}
+        />
+        <Button variant="contained" style = {{margin: "2.5% 0% 2.5% 1%"}} color="primary" onClick= { async()=> { 
+          await handleSubmit(); 
+        }}>
+          Search Events
+        </Button>
+          <Typography>
+            FILTERS:
+          </Typography>
+          {/* Chceckboxes to sort filter. */}
+          <Typography>
+            Type:
+          </Typography>
+          <p>Games</p>
+          <Checkbox label="Games" onChange={()=> {
+            if(games == false) {
+              setGames(true);
+            }
+            else {
+              setGames(false);
+            }
+            }}/>
+        <div>
+          <p>Homework</p>
+          <Checkbox label="Homework" onChange={()=> {
+            if(homework == false) {
+              setHomework(true);
+            }
+            else {
+              setHomework(false);
+            }
+            }}/>
+            
+        </div>
+        <div>
+          <p>Projects</p>
+          <Checkbox label="Projects" onChange={()=> {
+            if(projects == false) {
+              setProjects(true);
+            }
+            else {
+              setProjects(false);
+            }
+            }}/>
+        </div>
+          <Typography style = {{margin: "2.5% 0% 1.5% 0%", color:"Black",}} use="headline3">
+            Sort by
+            </Typography>
+            <Typography>
+              Date:
+            </Typography>
+            <Checkbox label = "Date" > </Checkbox>
+            <div style={{display: 'flex', alignItems: 'center', marginTop: 0, flexWrap: 'wrap'}}>
+        
           {filteredEvents.map(event => {
             // event.status = event.status.toString(); <-- Have yet to test
+            //console.log(event.creator_id)
+            console.log(event.event_id)
             return (
               // Printing the title and description of each event, along with the status
+              
               <>
                 <EventCard
                   user_id = {event.creator_id}       
                   event_id= {event.event_id}
                   />
+                  {/* <h1>{ event.start_date["_seconds"] }</h1> */}
               </>
             )
           })}
+          </div>
         </div>
-        <div>
-          {/* Chceckboxes to sort filter. */}
-          <p>Games</p>
-          <Checkbox label="Games" onChange={()=>gamesFilter()}/>
-        </div>
-        <div>
-          <p>Homework</p>
-          <Checkbox label="Homework" onChange={()=>homeworkFilter()}/>
-        </div>
-        <div>
-          <p>Projects</p>
-          <Checkbox label="Projects" onChange={()=>projectsFilter()}/>
-        </div>
-        <div>
-          <Typography>
-            Sort By Date:
-            <Checkbox label = "Sort By Date" onChange={()=>dateFilter()}>
-            </Checkbox>
-          </Typography>
-        </div>
-        {/* Button to get all the events and calls async handleSubmit function */}
-        <Button variant="contained" color="primary" onClick= { async()=> { 
-          await handleSubmit(); 
-        }}>
-          Search Events
-        </Button>
-      </div>
-      <Divider />
-      <div style={{ 'marginLeft': '50px' }}>
-        {/* Displays the searched text*/}
-
       </div>
     </div>
   );

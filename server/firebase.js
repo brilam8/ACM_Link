@@ -1,18 +1,21 @@
 const firebase = require("firebase/app");
 const admin = require('firebase-admin');
-
+const dotenv = require('dotenv').config({path:'./config/.env'});
 
 const serviceAccount = require("./config/serviceAccountKey.json");
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCnpmFxTTaEFuGu-DweMM3sQFH1v_xT7TE",
-  authDomain: "teammate-finder-b5bd4.firebaseapp.com",
-  databaseURL: "https://teammate-finder-b5bd4.firebaseio.com",
-  projectId: "teammate-finder-b5bd4",
-  storageBucket: "teammate-finder-b5bd4.appspot.com",
-  messagingSenderId: "1047193842414",
-  appId: "1:1047193842414:web:f7274429d193a41acd39ff",
-  measurementId: "G-T3V4P54TTX"
+  apiKey: process.env.FIREBASE_APIKEY,
+  authDomain: process.env.FIREBASE_AUTHDOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASEURL,
+  projectId: process.env.FIREBASE_PROJECTID,
+  storageBucket: process.env.STORAGEBUCKET,
+  messagingSenderId: process.env.MESSAGINGID,
+  appId: process.env.APPID,
+  measurementId: process.env.MEASUREMENTID
 };
+
+//const firebaseConfig = dotenv.parsed.FIREBASE_CONFIG;
 
 // Firebase products
 require("firebase/auth");
@@ -22,7 +25,7 @@ require("firebase/firestore");
 //firebase.initializeApp(firebaseConfig);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://teammate-finder-b5bd4.firebaseio.com"
+  databaseURL: process.env.FIREBASE_DATABASEURL
 })
 const db = admin.firestore();
 module.exports = {db, admin};
