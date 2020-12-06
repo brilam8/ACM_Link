@@ -34,7 +34,46 @@ router.get('/:event_id', async (req, res) => {
   if (!event){
     res.status(400).send('No such event was found');
   }
-  res.json(event.data());
+  // Converting Timestamp objects to Strings for frontend rendering
+  let eventData = event.data();
+  const newStartDate = eventData['start_date'].toDate();
+  const newEndDate = eventData['end_date'].toDate();
+
+  // Adjusting start hours, minutes, and time of day
+  let newStartHours;
+  let newEndHours;
+  let newStartMinutes = newStartDate.getMinutes();
+  let newEndMinutes = newEndDate.getMinutes();
+  let start_timeOfDay = 'am';
+  let end_timeOfDay = 'am';
+  if (newStartDate.getHours() > 12) {
+    newStartHours = newStartDate.getHours() - 12;
+    start_timeOfDay = 'pm'
+  } else {
+    newStartHours = newStartDate.getHours();
+  }
+  if (newEndDate.getHours() > 12) {
+    newEndHours = newEndDate.getHours() - 12;
+    end_timeOfDay = 'pm'
+  } else {
+    newEndHours = newEndDate.getHours();
+  }
+  if (newStartMinutes == 0) {
+    newStartMinutes = `${newStartMinutes}0`;
+  }
+  if (newEndMinutes == 0) {
+    newEndMinutes = `${newEndMinutes}0`;
+  }
+
+  // String injection for new dates to render
+  startDate = `${newStartDate.getMonth() + 1}/${newStartDate.getDate()}/${newStartDate.getFullYear()}
+              at ${newStartHours}:${newStartMinutes}${start_timeOfDay}`
+
+  endDate = `${newEndDate.getMonth() + 1}/${newEndDate.getDate()}/${newEndDate.getFullYear()}
+              at ${newEndHours}:${newEndMinutes}${end_timeOfDay}`
+  eventData['start_date'] = startDate;
+  eventData['end_date'] = endDate;
+  res.json(eventData);
 })
 
 
@@ -181,46 +220,9 @@ router.post('/create/:user_id', async (req, res) => {
   }
 })
 
-router.get('/api/homework', async(req, res) => {
+router.get('/homepage/homework', async(req, res) => {
   const eventCollection = await db.collection('events');
   
-  const test = {
-    event_id: "0101",
-    creater_id: "1010",
-    title: "Homework group",
-    type: "HOMEWORK",
-    status: true,
-    start: "2020-10-31",
-    end: "2020-11-01"
-  }
- 
-  const test2 = {
-    event_id: "1111",
-    creater_id: "2222",
-    title: "Looking for gaming team",
-    type: "VIDEOGAMES",
-    status: true,
-    start: "2020-10-31",
-    end: "2020-11-01"
-  }
- 
-  const test3 = {
-    event_id: "3333",
-    creater_id: "3232",
-    title: "Side project group",
-    type: "PROJECTS",
-    status: true,
-    start: "2020-10-31",
-    end: "2020-11-01"
-  }
-
-  eventCollection.set(test);
-  res.json(test);
-  eventCollection.set(test2);
-  res.json(test2);
-  eventCollection.set(test3);
-  res.json(test3);
- 
   const homework = await eventCollection.where('type', '==', 'HOMEWORK');
   const query = await homework.get();
   let results = [];
@@ -231,48 +233,11 @@ router.get('/api/homework', async(req, res) => {
   res.json(results);
 });
  
-router.get('/api/videogames', async(req, res) => {
+router.get('/homepage/games', async(req, res) => {
   const eventCollection = await db.collection('events');
-  
-  const test = {
-    event_id: "1234",
-    creater_id: "4321",
-    title: "Finding homework group",
-    type: "HOMEWORK",
-    status: true,
-    start: "2020-10-31",
-    end: "2020-11-01"
-  }
  
-  const test2 = {
-    event_id: "1357",
-    creater_id: "7531",
-    title: "Looking for League team",
-    type: "VIDEOGAMES",
-    status: true,
-    start: "2020-10-31",
-    end: "2020-11-01"
-  }
- 
-  const test3 = {
-    event_id: "2468",
-    creater_id: "8642",
-    title: "Seeking project group",
-    type: "PROJECTS",
-    status: true,
-    start: "2020-10-31",
-    end: "2020-11-01"
-  }
-
-  eventCollection.doc().set(test);
-  res.json(test);
-  eventCollection.doc().set(test2);
-  res.json(test2);
-  eventCollection.doc().set(test3);
-  res.json(test3);
- 
-  const videoGame = await eventCollection.where('type', '==', 'VIDEOGAMES');
-  const query = await videoGame.get();
+  const game = await eventCollection.where('type', '==', 'GAMES');
+  const query = await game.get();
   let results = [];
   query.forEach(doc => {
     results = [...results, doc.data()]
@@ -281,45 +246,8 @@ router.get('/api/videogames', async(req, res) => {
   res.json(results);
 });
  
-router.get('/api/projects', async(req, res) => {
+router.get('/homepage/projects', async(req, res) => {
   const eventCollection = await db.collection('events');
-  
-  const test = {
-    event_id: "4500",
-    creater_id: "0123",
-    title: "Hw group",
-    type: "HOMEWORK",
-    status: true,
-    start: "2020-10-31",
-    end: "2020-11-01"
-  }
- 
-  const test2 = {
-    event_id: "1357",
-    creater_id: "7531",
-    title: "Looking for League team",
-    type: "VIDEOGAMES",
-    status: true,
-    start: "2020-10-31",
-    end: "2020-11-01"
-  }
- 
-  const test3 = {
-    event_id: "2468",
-    creater_id: "8642",
-    title: "Seeking project group",
-    type: "PROJECTS",
-    status: true,
-    start: "2020-10-31",
-    end: "2020-11-01"
-  }
-
-  eventCollection.set(test);
-  res.json(test);
-  eventCollection.set(test2);
-  res.json(test2);
-  eventCollection.set(test3);
-  res.json(test3);
  
   const project = await eventCollection.where('type', '==', 'PROJECTS');
   const query = await project.get();
@@ -331,48 +259,11 @@ router.get('/api/projects', async(req, res) => {
   res.json(results);
 });
  
-router.get('/api/misc', async(req, res) => {
+router.get('/homepage/other', async(req, res) => {
   const eventCollection = await db.collection('events');
-  
-  const test = {
-    event_id: "1234",
-    creater_id: "4321",
-    title: "Finding homework group",
-    type: "HOMEWORK",
-    status: true,
-    start: "2020-10-31",
-    end: "2020-11-01"
-  }
- 
-  const test2 = {
-    event_id: "1357",
-    creater_id: "7531",
-    title: "Looking for League team",
-    type: "VIDEOGAMES",
-    status: true,
-    start: "2020-10-31",
-    end: "2020-11-01"
-  }
- 
-  const test3 = {
-    event_id: "2468",
-    creater_id: "8642",
-    title: "Seeking project group",
-    type: "PROJECTS",
-    status: true,
-    start: "2020-10-31",
-    end: "2020-11-01"
-  }
 
-  eventCollection.set(test);
-  res.json(test);
-  eventCollection.set(test2);
-  res.json(test2);
-  eventCollection.set(test3);
-  res.json(test3);
-
-  const misc = await eventCollection.where('type', '==', 'OTHER');
-  const query = await misc.get();
+  const other = await eventCollection.where('type', '==', 'OTHER');
+  const query = await other.get();
   let results = [];
   query.forEach(doc => {
     results = [...results, doc.data()]

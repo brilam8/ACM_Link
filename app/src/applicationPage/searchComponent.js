@@ -174,11 +174,9 @@ async function projectsFilter(unfilteredResults) {
             </Typography>
             <Checkbox label = "Date" > </Checkbox>
         </div>
-
           {filteredEvents.map(event => {
             // event.status = event.status.toString(); <-- Have yet to test
             return (
-              <div>
               // Printing the title and description of each event, along with the status
               <>
                 <EventCard
@@ -187,7 +185,6 @@ async function projectsFilter(unfilteredResults) {
                   />
                   {/* <h1>{ event.start_date["_seconds"] }</h1> */}
               </>
-              </div>
             )
           })}
         </div>

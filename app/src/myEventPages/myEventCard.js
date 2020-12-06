@@ -14,7 +14,7 @@ import '@rmwc/typography/styles';
 import gamesImg from '../images/games.jpg';
 import homeworkImg from '../images/homework.jpg';
 import projectsImg from '../images/projects.jpg';
-
+import otherImg from '../images/other.jpg';
 
 function EventCard({ event_id }) {
   const [event, setEvent] = useState({});
@@ -31,15 +31,17 @@ function EventCard({ event_id }) {
     setEvent(json);
   }
 
+  //TODO add MISC category
   const imageMap = {
-    'Games': `url(${gamesImg})`,
-    'Projects': `url(${projectsImg})`,
-    'Homework': `url(${homeworkImg})`,
+    'GAMES': `url(${gamesImg})`,
+    'PROJECTS': `url(${projectsImg})`,
+    'HOMEWORK': `url(${homeworkImg})`,
+    'OTHER': `url(${otherImg})`,
   }
 
   return (
     <div>
-      <Card style={{ width: '21rem', margin: '15px'}}>
+      <Card style={{ width: '20rem', height: '20rem', margin: '15px'}}>
         <CardPrimaryAction>
           <CardMedia
             sixteenByNine
@@ -73,49 +75,12 @@ function EventCard({ event_id }) {
             to={`/checkEvent/${event.event_id}`}
           >
             <CardActionButton>
-              More Info
+              View More
             </CardActionButton>
           </Link>
           </CardActionButtons>
         </CardActions>
       </Card>
-
-      {/* <Card style={{ width: '21rem' }}>
-        <CardPrimaryAction>
-          <CardMedia
-            sixteenByNine
-            style={{
-              backgroundImage: 'url(images/backgrounds/mb-bg-fb-16.png)'
-            }}
-          />
-          <div style={{ padding: '0 1rem 1rem 1rem' }}>
-            <Typography use="headline6" tag="h2">
-              Our Changing Planet
-            </Typography>
-            <Typography
-              use="subtitle2"
-              tag="h3"
-              theme="textSecondaryOnBackground"
-              style={{ marginTop: '-1rem' }}
-            >
-              by Kurt Wagner
-            </Typography>
-            <Typography
-              use="body1"
-              tag="div"
-              theme="textSecondaryOnBackground"
-            >
-              Visit ten places on our planet that are undergoing the biggest
-              changes today.
-            </Typography>
-          </div>
-        </CardPrimaryAction>
-        <CardActions>
-          <CardActionButtons>
-            <CardActionButton>Apply</CardActionButton>
-          </CardActionButtons>
-        </CardActions>
-      </Card> */}
     </div>
   );
 }

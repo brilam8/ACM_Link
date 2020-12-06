@@ -13,7 +13,6 @@ import {
   DialogActions, 
   DialogButton,
 } from '@rmwc/dialog';
-
 const ContainerDiv = styled.div`
     //border:1px #ccc solid;
     display: flex;
@@ -36,7 +35,7 @@ const EventTextArea = styled(TextField)`
 const EventSelect = styled(Select)`
     padding: 20px;
 `
-
+//TODO add unlimited max applicants
 const CreateEvent = () => {
     const [description, setDescription] = useState('');
     const [title, setTitle] = useState('');
@@ -45,6 +44,7 @@ const CreateEvent = () => {
     const [endDate, setEndDate] = useState();
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
+    const [checkbox, setCheckbox] = useState(false);
     const history = useHistory();
     
     const cancelCreateEvent = (event) => {
@@ -65,7 +65,7 @@ const CreateEvent = () => {
                     max_applicants: maxApplicants,
                     status: true,
                     title: title,
-                    type: type
+                    type: type.toUpperCase()
                 }
                 const response = fetch(`/events/create/${user.uid}`, {
                     method: 'POST',
@@ -109,7 +109,7 @@ const CreateEvent = () => {
             <DialogContent>Are you sure you want to cancel creating this event? Your changes will be discarded.</DialogContent>
             <DialogActions>
                 <DialogButton action="close" isDefaultAction>No</DialogButton>
-                <DialogButton action="accept" onClick={()=>history.push('/')}>Yes</DialogButton>
+                <DialogButton action="accept" onClick={()=>history.push('/myEvents')}>Yes</DialogButton>
             </DialogActions>
             </Dialog>
             <form onSubmit={createOwnerEvent}>
@@ -118,7 +118,7 @@ const CreateEvent = () => {
                             required 
                             label='Event Type' 
                             placeholder='Select one' 
-                            options={['Games', 'Homework', 'Projects']} 
+                            options={['Games', 'Homework', 'Projects', 'Other']} 
                             onChange={(e) => setType(e.target.value)} 
                         />
                         <EventFields 
@@ -127,8 +127,9 @@ const CreateEvent = () => {
                             onChange={(e) => setTitle(e.target.value)}
                         /> 
                         <EventFields 
-                            required 
+                            required
                             type='number'
+                            min='1'
                             label='Max Applicants' 
                             onChange={(e) => setMaxApplicants(Number(e.target.value))} 
                         /> 

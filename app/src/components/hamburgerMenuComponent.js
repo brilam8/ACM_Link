@@ -7,7 +7,7 @@ import '@rmwc/drawer/styles';
 import '@rmwc/button/styles';
 import '@rmwc/list/styles';
 import styled from 'styled-components';
-import {Link, useHistory, Redirect, useLocation } from 'react-router-dom';
+import {Link, useHistory, useLocation } from 'react-router-dom';
 import {Typography} from '@rmwc/typography';
 import firebase from '../firebase';
 
@@ -33,12 +33,21 @@ function HamburgerMenu () {
     console.log(`props passed in is: ${location.pathname}`);
 
     //add a case statement if you want your page to be named something besides your path
-    switch(location.pathname){
-      case "/homepage":
-        setPageName('HomePage');
+    switch(location.pathname.split('/')[1]){
+      case "homepage":
+        setPageName('Home Page');
         break;
-      case "/settings":
+      case "settings":
         setPageName('Settings');
+        break;
+      case "createEvent":
+        setPageName('Create Event');
+        break;
+      case "myEvents":
+        setPageName('My Events');
+        break;
+      case "checkEvent":
+        setPageName('Check Event')
         break;
       //defaults to making your path the page name
       default:
@@ -78,7 +87,7 @@ function HamburgerMenu () {
             <Link to={`/homepage`} onClick={() => setOpen(false)} style={{ textDecoration: 'none' }}>
               <ListItem>Homepage</ListItem>
             </Link>
-            <Link to={`/test`} onClick={() => setOpen(false)} style={{ textDecoration: 'none' }}>
+            <Link to={`/search`} onClick={() => setOpen(false)} style={{ textDecoration: 'none' }}>
               <ListItem>Search for Posts</ListItem>
             </Link>
             <Link to={`/myEvents`} onClick={() => setOpen(false)} style={{ textDecoration: 'none' }}>
