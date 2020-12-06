@@ -160,7 +160,7 @@ function ApplicationForm() {
               You've submitted your application for {event.title}.
             </DialogContent>
             <DialogActions>
-              <LinkStyled to='/test3'>
+              <LinkStyled to='/homepage'>
                 <DialogButton action="accept" isDefaultAction>
                   Sweet!
                 </DialogButton>
