@@ -98,8 +98,19 @@ async function projectsFilter(unfilteredResults) {
 
   function dateFilter(unfilteredResults) {
       console.log(filteredEvents[0].start_date + "STARTING DATE");
-      const filteredEvents = unfilteredResults.sort((a,b) => b.start_date["_seconds"] - a.start_date["_seconds"]);
-      setFilteredEvents(filteredEvents);
+      // const filteredEvents = unfilteredResults.sort((a,b) => b.start_date["_seconds"] - a.start_date["_seconds"]);
+      let filtered = [];
+      let n = unfilteredResults.length;
+      for(let i = 0; i<unfilteredResults.length(); i++) {
+        for(let j = 0; j<n-i-1; j++) {
+          if(unfilteredResults[j].start_date["_seconds"] > unfilteredResults[j+1].start_date["_seconds"]) {
+            let temp = unfilteredResults[j];
+            unfilteredResults[j] = unfilteredResults[j+1];
+            unfilteredResults[j+1] = temp;
+          }
+        }
+      }
+      setFilteredEvents(unfilteredResults);
   }
 
   //Filtering Events based on the type with typing
@@ -112,9 +123,10 @@ async function projectsFilter(unfilteredResults) {
             style = {{
               width: "25%",
               margin: "2.5% 0% 2.5% -2%",
+              color:"black"
             }} 
             value = {input}
-            label="Search posts" 
+            label="Search posts"
             onChange={e => setInput(e.target.value)}
         />
         <Button variant="contained" style = {{margin: "2.5% 0% 2.5% 1%"}} color="primary" onClick= { async()=> { 
@@ -122,7 +134,6 @@ async function projectsFilter(unfilteredResults) {
         }}>
           Search Events
         </Button>
-        <div>
           <Typography>
             FILTERS:
           </Typography>
@@ -139,7 +150,6 @@ async function projectsFilter(unfilteredResults) {
               setGames(false);
             }
             }}/>
-        </div>
         <div>
           <p>Homework</p>
           <Checkbox label="Homework" onChange={()=> {
@@ -150,6 +160,7 @@ async function projectsFilter(unfilteredResults) {
               setHomework(false);
             }
             }}/>
+            
         </div>
         <div>
           <p>Projects</p>
@@ -161,11 +172,7 @@ async function projectsFilter(unfilteredResults) {
               setProjects(false);
             }
             }}/>
-            {/* <Checkbox label = "TESTDateFilter" onChange={()=> {
-              dateFilter();
-            }}/> */}
         </div>
-        <div >
           <Typography style = {{margin: "2.5% 0% 1.5% 0%", color:"Black",}} use="headline3">
             Sort by
             </Typography>
@@ -173,7 +180,8 @@ async function projectsFilter(unfilteredResults) {
               Date:
             </Typography>
             <Checkbox label = "Date" > </Checkbox>
-        </div>
+            <div style={{display: 'flex', alignItems: 'center', marginTop: 0, flexWrap: 'wrap'}}>
+        
           {filteredEvents.map(event => {
             // event.status = event.status.toString(); <-- Have yet to test
             return (
@@ -187,12 +195,8 @@ async function projectsFilter(unfilteredResults) {
               </>
             )
           })}
+          </div>
         </div>
-      </div>
-      <Divider />
-      <div style={{ 'marginLeft': '50px' }}>
-        {/* Displays the searched text*/}
-
       </div>
     </div>
   );
