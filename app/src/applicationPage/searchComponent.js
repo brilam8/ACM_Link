@@ -184,8 +184,11 @@ async function projectsFilter(unfilteredResults) {
         
           {filteredEvents.map(event => {
             // event.status = event.status.toString(); <-- Have yet to test
+            //console.log(event.creator_id)
+            console.log(event.event_id)
             return (
               // Printing the title and description of each event, along with the status
+              
               <>
                 <EventCard
                   user_id = {event.creator_id}       
