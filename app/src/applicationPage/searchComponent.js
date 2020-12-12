@@ -1,9 +1,23 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
-import { Checkbox, Typography } from '@material-ui/core';
+import styled from 'styled-components';
+import { Checkbox } from '@rmwc/checkbox';
 import Divider from '@material-ui/core/Divider'
 import EventCard from '../components/eventCardComponent';
+import { Typography } from '@rmwc/typography';
 import { TextField } from '@rmwc/textfield'
+import '@rmwc/typography/styles';
+import '@rmwc/checkbox/styles';
+
+const OuterDiv = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 15vh;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #333333;
+`;
 
 function SearchForm() {
   const [input, setInput] = useState('');
@@ -117,12 +131,12 @@ async function projectsFilter(unfilteredResults) {
 
   return (
     <div className="SearchForm">
-      <div style={{ 'marginLeft': '50px' }}>
+      <div style={{ 'marginLeft': '80px' }}>
         <div className="App">
         <TextField 
             style = {{
               width: "25%",
-              margin: "2.5% 0% 2.5% -2%",
+              marginTop: '3%',
               color:"black"
             }} 
             value = {input}
@@ -134,70 +148,67 @@ async function projectsFilter(unfilteredResults) {
         }}>
           Search Events
         </Button>
-          <Typography>
-            FILTERS:
-          </Typography>
-          {/* Chceckboxes to sort filter. */}
-          <Typography>
-            Type:
-          </Typography>
-          <p>Games</p>
-          <Checkbox label="Games" onChange={()=> {
-            if(games == false) {
-              setGames(true);
-            }
-            else {
-              setGames(false);
-            }
-            }}/>
-        <div>
-          <p>Homework</p>
-          <Checkbox label="Homework" onChange={()=> {
-            if(homework == false) {
-              setHomework(true);
-            }
-            else {
-              setHomework(false);
-            }
-            }}/>
-            
-        </div>
-        <div>
-          <p>Projects</p>
-          <Checkbox label="Projects" onChange={()=> {
-            if(projects == false) {
-              setProjects(true);
-            }
-            else {
-              setProjects(false);
-            }
-            }}/>
-        </div>
-          <Typography style = {{margin: "2.5% 0% 1.5% 0%", color:"Black",}} use="headline3">
-            Sort by
-            </Typography>
-            <Typography>
-              Date:
-            </Typography>
-            <Checkbox label = "Date" > </Checkbox>
-            <div style={{display: 'flex', alignItems: 'center', marginTop: 0, flexWrap: 'wrap'}}>
-        
-          {filteredEvents.map(event => {
-            // event.status = event.status.toString(); <-- Have yet to test
-            //console.log(event.creator_id)
-            console.log(event.event_id)
-            return (
-              // Printing the title and description of each event, along with the status
-              
-              <>
-                <EventCard
-                  user_id = {event.creator_id}       
-                  event_id= {event.event_id}
-                  />
-                  {/* <h1>{ event.start_date["_seconds"] }</h1> */}
-              </>
-            )
-          })}
+        <div style={{display: 'flex', flexDirection: 'row'}}>
+          <div>
+            <OuterDiv>
+              <Typography use="headline6" style={{textAlign: 'center', color: 'white', backgroundColor: '#333333'}}>
+                FILTERS
+              </Typography>
+              {/* Chceckboxes to sort filter. */}
+              <Typography style={{textAlign:'center'}} use="headline6">
+                Type:
+              </Typography>
+              <Checkbox style={{marginLeft: '5px'}}label="Games" onChange={()=> {
+                if(games == false) {
+                  setGames(true);
+                }
+                else {
+                  setGames(false);
+                }
+                }}
+              />
+              <Checkbox style={{marginLeft: '5px'}} label="Homework" onChange={()=> {
+                if(homework == false) {
+                  setHomework(true);
+                }
+                else {
+                  setHomework(false);
+                }
+                }}
+              />
+              <Checkbox style={{marginLeft: '5px'}} label="Projects" onChange={()=> {
+                if(projects == false) {
+                  setProjects(true);
+                }
+                else {
+                  setProjects(false);
+                }
+                }}
+              />
+              <Typography style = {{textAlign:'center'}} use="headline6">
+                Sort by
+                </Typography>
+                <Checkbox style={{marginLeft: '5px'}} label = "Date" />
+              </OuterDiv>
+            </div>
+            <div style={{display: 'flex', alignItems: 'center', marginLeft: '15px', flexWrap: 'wrap'}}>
+              {filteredEvents.map(event => {
+                // event.status = event.status.toString(); <-- Have yet to test
+                //console.log(event.creator_id)
+                console.log(event.event_id)
+                return (
+                  // Printing the title and description of each event, along with the status
+                  
+                  <>
+                    <EventCard
+                      user_id = {event.creator_id}       
+                      event_id= {event.event_id}
+                      />
+                      {/* <h1>{ event.start_date["_seconds"] }</h1> */}
+                  </>
+                )
+              })}
+            </div>
           </div>
         </div>
       </div>
