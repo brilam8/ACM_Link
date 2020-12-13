@@ -47,7 +47,13 @@ function HamburgerMenu () {
         setPageName('My Events');
         break;
       case "checkEvent":
-        setPageName('Check Event')
+        setPageName('View Event')
+        break;
+      case "search":
+        setPageName('Search Events')
+        break;
+      case "applicationPage":
+        setPageName("Apply!")
         break;
       //defaults to making your path the page name
       default:

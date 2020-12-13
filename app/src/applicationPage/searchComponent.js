@@ -135,108 +135,109 @@ function SearchForm() {
         </Button>
           {/* <div style={{display: 'flex', alignItems: 'center', marginTop: 0, flexWrap: 'wrap'}}> */}
           {/* <div className="huge-container" style={{display: 'flex', width: '100%',}}> */}
-          <div className="left-side" style={{}}>
-            <Box
-              border={2}
-              alignItems="center"
-              justifyContent="center"
-              style={{ width: '10%' }}
-            >
-              <Typography>
-                <Box
-                  bgcolor="#212121"
-                  borderBottom={2}
-                  borderTop={2}
-                >
-                  <h3 style={{ color: 'white', textAlign: 'center' }}>FILTERS:</h3>
-                </Box>
-              </Typography>
-              {/* Chceckboxes to sort filter. */}
-              <Typography>
-                <h3 style={{ textAlign: 'center', margin: "2.5% 0% 2.5% 1%" }}>Type:</h3>
-              </Typography>
-              {/* <p>Games</p> */}
-              <FormControlLabel
-                control={
-                  <Checkbox label="Games" name="Games" onChange={() => {
-                    if (games == false) {
-                      setGames(true);
-                    }
-                    else {
-                      setGames(false);
-                    }
-                  }} />
-                }
-                label="Games"
-              />
-              <div>
+          <div style={{display: 'flex', flexDirection: 'row'}}>
+            <div className="left-side" style={{}}>
+              <Box
+                border={2}
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Typography>
+                  <Box
+                    bgcolor="#212121"
+                    borderBottom={2}
+                    borderTop={2}
+                  >
+                    <h3 style={{ color: 'white', textAlign: 'center' }}>FILTERS:</h3>
+                  </Box>
+                </Typography>
+                {/* Chceckboxes to sort filter. */}
+                <Typography>
+                  <h3 style={{ textAlign: 'center', margin: "2.5% 0% 2.5% 1%" }}>Type:</h3>
+                </Typography>
+                {/* <p>Games</p> */}
                 <FormControlLabel
-                  label="Homework"
                   control={
-                    <Checkbox onChange={() => {
-                      if (homework == false) {
-                        setHomework(true);
+                    <Checkbox label="Games" name="Games" style = {{marginLeft: '15px'}} onChange={() => {
+                      if (games == false) {
+                        setGames(true);
                       }
                       else {
-                        setHomework(false);
+                        setGames(false);
                       }
                     }} />
                   }
+                  label="Games"
                 />
-
-              </div>
-              <div>
-                <FormControlLabel
-                  control={
-                    <Checkbox label="Projects" onChange={() => {
-                      if (projects == false) {
-                        setProjects(true);
-                      }
-                      else {
-                        setProjects(false);
-                      }
-                    }} />
-                  }
-                  label="Projects"
-                />
-              </div>
-              <Typography>
-                <h3 style={{ textAlign: 'center', margin: "3% 0% 1.5% 0%" }}>Sort By:</h3>
-              </Typography>
-              {/* </Box> */}
-              {/* </div> */}
-              <div style={{ display: 'flex', alignItems: 'center', marginTop: 0, flexWrap: 'wrap' }}>
-                <FormControlLabel
-                  control={
-                    <Checkbox label="Date"> onChange={() => {
-                      if (date == false) {
-                        setDate(true);
-                      }
-                      else {
-                        setDate(false);
-                      }
-                    }}/</Checkbox>
-                  }
-                  label="Date"
-                />
-              </div>
-            </Box>
-          </div>
-          {/* <div className="right-side" style={{ 'flex': 2, 'width': '100%', }}> */}
-          <div style={{ display: 'flex', alignItems: 'center', marginTop: 0, flexWrap: 'wrap' }}>
-            {filteredEvents.map(event => {
-              return (
-                // Printing the title and description of each event, along with the status
-
-                <>
-                  <EventCard
-                    user_id={event.creator_id}
-                    event_id={event.event_id}
+                <div>
+                  <FormControlLabel
+                    label="Homework"
+                    control={
+                      <Checkbox style = {{marginLeft: '15px'}} onChange={() => {
+                        if (homework == false) {
+                          setHomework(true);
+                        }
+                        else {
+                          setHomework(false);
+                        }
+                      }} />
+                    }
                   />
-                  {/* <h1>{ event.start_date["_seconds"] }</h1> */}
-                </>
-              )
-            })}
+
+                </div>
+                <div>
+                  <FormControlLabel
+                    control={
+                      <Checkbox label="Projects" style = {{marginLeft: '15px'}} onChange={() => {
+                        if (projects == false) {
+                          setProjects(true);
+                        }
+                        else {
+                          setProjects(false);
+                        }
+                      }} />
+                    }
+                    label="Projects"
+                  />
+                </div>
+                <Typography>
+                  <h3 style={{ textAlign: 'center', margin: "3% 0% 1.5% 0%" }}>Sort By:</h3>
+                </Typography>
+                {/* </Box> */}
+                {/* </div> */}
+                <div style={{ display: 'flex', alignItems: 'center', marginTop: 0, flexWrap: 'wrap' }}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox  style = {{marginLeft: '15px'}} label="Date"> onChange={() => {
+                        if (date == false) {
+                          setDate(true);
+                        }
+                        else {
+                          setDate(false);
+                        }
+                      }}/</Checkbox>
+                    }
+                    label="Date"
+                  />
+                </div>
+              </Box>
+            </div>
+            {/* <div className="right-side" style={{ 'flex': 2, 'width': '100%', }}> */}
+            <div style={{ display: 'flex', alignItems: 'center', marginLeft: '25px', flexWrap: 'wrap' }}>
+              {filteredEvents.map(event => {
+                return (
+                  // Printing the title and description of each event, along with the status
+
+                  <>
+                    <EventCard
+                      user_id={event.creator_id}
+                      event_id={event.event_id}
+                    />
+                    {/* <h1>{ event.start_date["_seconds"] }</h1> */}
+                  </>
+                )
+              })}
+            </div>
           </div>
         </div>
       </div>
