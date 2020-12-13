@@ -156,7 +156,7 @@ async function projectsFilter(unfilteredResults) {
               </Typography>
               {/* Chceckboxes to sort filter. */}
               <Typography style={{textAlign:'center'}} use="headline6">
-                Type:
+                Type
               </Typography>
               <Checkbox style={{marginLeft: '5px'}}label="Games" onChange={()=> {
                 if(games == false) {
