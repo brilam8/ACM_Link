@@ -34,11 +34,13 @@ const MyEvents = () => {
                 setClosedEvents(closedEvents.concat(json.filter((event) => event.status === false)));
             }
         })
-
+    
     }
     useEffect(() => {
         fetchEvents();
     }, [])
+
+
     return(
         <div>
             <CreateEventContainer>

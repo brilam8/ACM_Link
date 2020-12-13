@@ -43,14 +43,11 @@ const CreateEvent = () => {
     const [maxApplicants, setMaxApplicants] = useState();
     const [endDate, setEndDate] = useState();
     const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [openDialog, setOpenDialog] = useState(false);
+    const [openCancelDialog, setOpenCancelDialog] = useState(false);
+    const [openSubmitDialog, setOpenSubmitDialog] = useState(false);
     const [checkbox, setCheckbox] = useState(false);
     const history = useHistory();
     
-    const cancelCreateEvent = (event) => {
-        event.preventDefault();
-        setOpenDialog(true);
-    }
     //Runs on submit. Checks for user login and then POSTs the fields in the form
     const createOwnerEvent = (event) => {
         event.preventDefault();
@@ -72,8 +69,7 @@ const CreateEvent = () => {
                     body: JSON.stringify(data),
                     headers: {'Content-Type': 'application/json'}
                 })
-                setOpenSnackbar(true);
-                history.push('/myEvents')
+                setOpenSubmitDialog(true);
                 return response.json;
             } else {
                 // No user is signed in.
@@ -98,10 +94,10 @@ const CreateEvent = () => {
                 }
             />
             <Dialog
-                open={openDialog}
+                open={openCancelDialog}
                 onClose={evt => {
                 console.log(evt.detail.action);
-                setOpenDialog(false);
+                setOpenCancelDialog(false);
                 }}
                 onClosed={evt => console.log(evt.detail.action)}
             >
@@ -110,6 +106,21 @@ const CreateEvent = () => {
             <DialogActions>
                 <DialogButton action="close" isDefaultAction>No</DialogButton>
                 <DialogButton action="accept" onClick={()=>history.push('/myEvents')}>Yes</DialogButton>
+            </DialogActions>
+            </Dialog>
+
+            <Dialog
+                open={openSubmitDialog}
+                onClose={evt => {
+                console.log(evt.detail.action);
+                setOpenSubmitDialog(false);
+                }}
+                onClosed={evt => console.log(evt.detail.action)}
+            >
+            <DialogTitle>Event Created</DialogTitle>
+            <DialogContent>Your post is created, you can go to "My Posts" to find it.</DialogContent>
+            <DialogActions>
+                <DialogButton action="accept" onClick={()=>history.push('/homepage')}>Home</DialogButton>
             </DialogActions>
             </Dialog>
             <form onSubmit={createOwnerEvent}>
@@ -140,7 +151,7 @@ const CreateEvent = () => {
                         /> 
                         <Button 
                             raised 
-                            onClick={() => setOpenDialog(true)}
+                            onClick={() => setOpenCancelDialog(true)}
                             style={{width: 180, height: 50, alignSelf: 'flex-end', marginRight: '20px', top: 10}} 
                         >
                             Cancel
