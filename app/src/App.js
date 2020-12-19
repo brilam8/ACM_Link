@@ -20,8 +20,9 @@ import applicationComponent from './applicationPage/applicationPage';
 import createEvent from './myEventPages/createEvent';
 import homepageComponent from './components/homepageComponents';
 import myEvents from './myEventPages/myEvents';
-import checkEvent from './myEventPages/checkEvent'
-
+import checkEvent from './myEventPages/checkEvent';
+import checkApplications from './myEventPages/checkApplications';
+import checkApplicant from './myEventPages/checkApplicant';
 function App() {
   return (
     <div>
@@ -51,6 +52,8 @@ const loggedIn = () => (
         <Route exact path='/createEvent' component={createEvent} />
         <Route exact path='/myEvents' component={myEvents} />
         <Route exact path='/checkEvent/:event_id' component={checkEvent} />
+        <Route exact path='/checkApplications/:event_id' component={checkApplications} />
+        <Route exact path='/checkApplicant/:event_id/:application_id' component={checkApplicant} />
         <Route exact path='/drawer' component={HamburgerMenuComponent} /> 
         <Route exact path='/search' component={searchComponent}/>
         <Route path='*' component={() => <div>Page not found</div>} />
