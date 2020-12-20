@@ -40,7 +40,6 @@ const MyEvents = () => {
         fetchEvents();
     }, [])
 
-
     return(
         <div>
             <CreateEventContainer>
@@ -56,13 +55,13 @@ const MyEvents = () => {
             <TypographyStyled use='headline4'>My Open Posts</TypographyStyled>
             <EventsContainer>
             {openEvents.map((event) => (
-                <EventCard key={event.event_id} event_id={event.event_id} />
+                <EventCard key={event.event_id} event_id={event.event_id} closed={false}/>
             ))}
             </EventsContainer>
             <TypographyStyled use='headline4'>My Closed Posts</TypographyStyled>
             <EventsContainer>
             {closedEvents.map((event) => (
-                <EventCard key={event.event_id} event_id={event.event_id} />
+                <EventCard key={event.event_id} event_id={event.event_id} closed={true}/>
             ))}
             </EventsContainer>
         </div>
