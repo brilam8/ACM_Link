@@ -31,8 +31,6 @@ const OuterDiv = styled.div`
 `;
 
 const AvatarDiv = styled.div`
-  height: 60%;
-  width: 35%;
   display: flex;
   flex-direction: column;
   align-items: center;

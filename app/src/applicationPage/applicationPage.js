@@ -86,7 +86,7 @@ function ApplicationForm() {
         <Div1>
           {/* First few Typography elements are for event details */}
           <Typography use='headline3' style={{
-            marginTop: 100,
+            marginTop: 25,
           }}>
             {event.title}
           </Typography>
@@ -204,7 +204,6 @@ const Div1 = styled.div`
   flex-direction: column;
   justify-content: center ;
   align-items: center;
-  height: 55vh;
 `;
 
 const Div2 = styled.div`
