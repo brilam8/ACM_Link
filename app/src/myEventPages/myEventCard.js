@@ -15,15 +15,40 @@ import gamesImg from '../images/games.jpg';
 import homeworkImg from '../images/homework.jpg';
 import projectsImg from '../images/projects.jpg';
 import otherImg from '../images/other.jpg';
-
-function EventCard({ event_id }) {
+//TODO Try to get page to not refresh
+function EventCard({ event_id, closed }) {
   const [event, setEvent] = useState({});
-
+  const status = closed ? 'Reopen' : 'Archive';
   useEffect(() => {
     fetchEvent();
   }, []);
 
-
+  const handleArchive = (event) => {
+    event.preventDefault();
+    const data = {
+      status: false
+    }
+    const response = fetch(`/events/setStatus/${event_id}`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {'Content-Type': 'application/json'}
+    });
+    window.location.reload();
+    return response.json;
+  }
+  const handleReopen = (event) => {
+    event.preventDefault();
+    const data = {
+      status: true
+    }
+    const response = fetch(`/events/setStatus/${event_id}`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {'Content-Type': 'application/json'}
+    });
+    window.location.reload();
+    return response.json;
+  }
   async function fetchEvent() {
     const response = await fetch(`/events/${event_id}`);
     const json = await response.json();
@@ -78,6 +103,9 @@ function EventCard({ event_id }) {
               View More
             </CardActionButton>
           </Link>
+            <CardActionButton onClick={closed ? handleReopen : handleArchive}>
+              {status}
+            </CardActionButton>
           </CardActionButtons>
         </CardActions>
       </Card>
