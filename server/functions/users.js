@@ -57,16 +57,16 @@ router.post('/create', async (req, res) => {
 
       newUserRef.set(user)
       .then(function(){
-        console.log("Successfully created a new user: ", userRecord.uid);
+        //console.log("Successfully created a new user: ", userRecord.uid);
         res.json(userRecord);
       })
       .catch(function(error) {
-        console.error("Error adding user document: ", error)
+        //console.error("Error adding user document: ", error)
         res.status(400).send(error)
       })
     })
     .catch(function(error){
-      console.log("Error creating a new user: ", error);
+      //console.log("Error creating a new user: ", error);
       res.status(400).send(error);
     });
   }

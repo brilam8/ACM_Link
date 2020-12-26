@@ -49,11 +49,11 @@ router.post('/create/:applicant_id/:event_id', async (req, res) => {
 
     // Updates application collection with a new document
     await newApplicationRef.set(application).then(() => {
-      console.log("Document written with ID: ", newApplicationRef.id);
+      //console.log("Document written with ID: ", newApplicationRef.id);
       res.json(application);
     })
     .catch((error) => {
-      console.error("Error adding document ", error);
+      //console.error("Error adding document ", error);
       res.status(400).send(error);
     })    
   }
