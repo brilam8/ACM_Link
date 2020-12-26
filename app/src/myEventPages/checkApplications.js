@@ -39,7 +39,7 @@ const CheckApplications = () => {
                 {applications.length === 0 ? <Typography use='headline3'>No applications yet!</Typography> : <Typography use='headline3'>That's all for now!</Typography>}
                 <Button 
                     raised 
-                    style={{width: 200, height: 50, marginRight: '30px', backgroundColor: '#f44336'}}
+                    style={{width: 200, height: 50, marginRight: '30px', marginTop: '30px', backgroundColor: '#f44336'}}
                     onClick={() => history.push(`/checkEvent/${params.event_id}`)}
                 >
                     Back

@@ -55,6 +55,9 @@ function HamburgerMenu () {
       case "applicationPage":
         setPageName("Apply!")
         break;
+      case "checkApplications":
+        setPageName("View Your Applicants")
+        break;
       //defaults to making your path the page name
       default:
         const title = location.pathname.slice(1);

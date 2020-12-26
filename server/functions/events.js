@@ -133,11 +133,11 @@ router.get('/getOwnerEvent/:creator_id/:event_id', async (req, res) => {
   }
   if (userEvents.empty) {
     res.status(400).send('User does not have any open events');
-    console.log('User does not have any open events');
+    //console.log('User does not have any open events');
     return;
   } else if (!found) {
     res.status(400).send('User does not have an event with that id');
-    console.log('User does not have an event with that id');
+    //console.log('User does not have an event with that id');
     return;
   }
 
@@ -209,12 +209,12 @@ router.post('/create/:user_id', async (req, res) => {
 
     // Writes event to database
     await newEventRef.set(event).then(function() {
-      console.log("Document written with ID: ", newEventRef.id);
+      //console.log("Document written with ID: ", newEventRef.id);
       res.json(event);
       res.status(200).send();
     })
     .catch(function(error) {
-      console.log("Error adding document", error);
+      //console.log("Error adding document", error);
       res.status(400).send(error);
     })
   }
@@ -230,7 +230,7 @@ router.get('/homepage/homework', async(req, res) => {
     results = [...results, doc.data()]
   });
   displayedArr = results.splice(0,6);
-  console.log(displayedArr);
+  //console.log(displayedArr);
   res.json(displayedArr);
 });
  
@@ -244,7 +244,7 @@ router.get('/homepage/games', async(req, res) => {
     results = [...results, doc.data()]
   });
   displayedArr = results.splice(0,6);
-  console.log(displayedArr);
+  //console.log(displayedArr);
   res.json(displayedArr);
 });
  
@@ -258,7 +258,7 @@ router.get('/homepage/projects', async(req, res) => {
     results = [...results, doc.data()]
   });
   displayedArr = results.splice(0,6);
-  console.log(displayedArr);
+  //console.log(displayedArr);
   res.json(displayedArr);
 });
  
@@ -272,7 +272,7 @@ router.get('/homepage/other', async(req, res) => {
     results = [...results, doc.data()]
   });
   displayedArr = results.splice(0,6);
-  console.log(displayedArr);
+  //console.log(displayedArr);
   res.json(displayedArr);;
 });
 

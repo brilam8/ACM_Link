@@ -58,7 +58,7 @@ const CheckEvent = () => {
                     style={{width: 200, height: 50, marginRight: '30px', backgroundColor: '#f44336'}}
                     onClick={() => history.push('/myEvents')}
                 >
-                    Close Post
+                    Back to My Posts
                 </Button>
                 <Button 
                     raised 
