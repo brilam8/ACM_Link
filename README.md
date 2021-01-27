@@ -46,9 +46,3 @@ You can find all of the firebase keys after you create an account and app [here]
 - `/server` - main folder for back-end infrastructure
 - `/server/config` - folder with all configuration files for databases/firebase
 - `/server/functions` - contains all routes
-
-### NOTES
-
-- When running tests, mongod will be spun up in memory for easy tests ([mongodb-memory-server](https://github.com/nodkz/mongodb-memory-server)).
-  - Otherwise, the app will attempt to connect to the MongoDB database referred to in the .env connection string variable.
-
