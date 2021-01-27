@@ -21,9 +21,8 @@ Get a development environment running.
 4. Rename the example environment file in `/server/config/` and edit its contents for a testing environment
    - `cp .env.example .env` to rename the example environment file
    - Edit the contents to reflect the `.env` configuration displayed below
-5. Run `npm run dev` to boot up your backend server in development mode.
-   - Use `npm start` to regularly launch your backend server.
-   - Use `npm run test` to run unit tests on your routes
+5. Run `npm start` in the `/app` directory to start the front-end server.
+6. Run `npm run server` in the `/server` directory to boot up the back-end server.
 
 #### Example .env configuration
 
@@ -42,10 +41,11 @@ You can find all of the firebase keys
 
 ### File Hierarchy
 
-- `/src` - main folder of the project
-- `/src/database` - folder containing everything about the mongoDB database
-- `/src/database/models` - folder with all database models
-- `/src/routes` - contains all routes
+- `/app` - main folder for front-end infrastructure
+- `/app/src` - folder containing all front-end components and functionality
+- `/server` - main folder for back-end infrastructure
+- `/server/config` - folder with all configuration files for databases/firebase
+- `/server/functions` - contains all routes
 
 ### NOTES
 
