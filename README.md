@@ -17,7 +17,7 @@ Get a development environment running.
 
 1. Clone the repository to your local machine ```git clone https://github.com/brilam8/ACM_Link.git```
 2. Navigate to your project directory via terminal
-3. Run `npm install` in two directories: `/app` and `server` to install all dependencies for both the front-end and back-end server.
+3. Run `npm install` in two directories: `/app` and `/server` to install all dependencies for both the front-end and back-end server.
 4. Rename the example environment file in `/server/config/` and edit its contents for a testing environment
    - `cp .env.example .env` to rename the example environment file
    - Edit the contents to reflect the `.env` configuration displayed below
