@@ -37,7 +37,7 @@ FIREBASE_APPID=example
 FIREBASE_MEASUREMENTID=example
 ```
 
-You can find all of the firebase keys 
+You can find all of the firebase keys after you create an account and app [here](https://firebase.google.com/)
 
 ### File Hierarchy
 
