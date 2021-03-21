@@ -1,5 +1,5 @@
 # ACM Link
-Built in React, Express.js, with Firebase and Firestore integration. ACM Link is a web application that allows you to search and find teammates for your group!
+Built in React, Express.js, with Firebase and Firestore. ACM Link is a web application that allows you to search and find teammates for your group!
 
 
 
