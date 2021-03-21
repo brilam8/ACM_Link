@@ -5,7 +5,6 @@ const dotenv = require('dotenv').config();
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASEURL,
   projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
   storageBucket: process.env.REACT_APP_STORAGEBUCKET,
   messagingSenderId: process.env.REACT_APP_MESSAGINGID,
@@ -13,6 +12,7 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_MEASUREMENTID
 };
 
+console.log(firebaseConfig)
 // Initialize Firebase and Firestore
 firebase.initializeApp(firebaseConfig);
 export default firebase;
