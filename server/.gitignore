@@ -3,3 +3,4 @@ serviceAccountKey.json
 .env
 .DS_Store
 /.vscode/*
+*.env
